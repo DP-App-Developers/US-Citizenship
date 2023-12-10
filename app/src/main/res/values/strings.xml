@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">US Citizenship</string>
+    <string name="title_all_questions">All Questions</string>
+    <string name="back_button">Back</string>
 </resources>
