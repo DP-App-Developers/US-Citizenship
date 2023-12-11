@@ -14,15 +14,18 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.navigation.compose.rememberNavController
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import com.example.uscitizenship.ui.AllQuestionsScreen
+import com.example.uscitizenship.ui.AllQuestionsViewModel
 import com.example.uscitizenship.ui.HomeScreen
 
 enum class MainScreen(@StringRes val title: Int) {
@@ -33,6 +36,7 @@ enum class MainScreen(@StringRes val title: Int) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun USCitizenApp(
+    viewModel: AllQuestionsViewModel = viewModel(),
     navController: NavHostController = rememberNavController()
 ) {
     // Get current back stack entry
@@ -51,6 +55,8 @@ fun USCitizenApp(
             )
         }
     ) { innerPadding ->
+        val uiState by viewModel.uiState.collectAsState()
+
         NavHost(
             navController = navController,
             startDestination = MainScreen.Home.name,
@@ -66,7 +72,8 @@ fun USCitizenApp(
             }
             composable(route = MainScreen.AllQuestions.name) {
                 AllQuestionsScreen(
-                    modifier = Modifier.fillMaxSize()
+                    questions = uiState.questions,
+                    modifier = Modifier.fillMaxSize(),
                 )
             }
         }
