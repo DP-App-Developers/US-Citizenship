@@ -416,7 +416,479 @@ class AllQuestionsLocalDataSource() {
                         "run for federal office"
                     ),
                 ),
-
+                // 51
+                Question(
+                    question = "What are two rights of everyone living in the United States?",
+                    answer = listOf(
+                        "freedom of expression",
+                        "freedom of speech",
+                        "freedom of assembly",
+                        "freedom to petition the government",
+                        "freedom of religion",
+                        "the right to bear arms"
+                    ),
+                ),
+                // 52
+                Question(
+                    question = "What do we show loyalty to when we say the Pledge of Allegiance?",
+                    answer = listOf(
+                        "the United States",
+                        "the flag"
+                    ),
+                ),
+                // 53
+                Question(
+                    question = "What is one promise you make when you become a United States citizen?",
+                    answer = listOf(
+                        "give up loyalty to other countries",
+                        "defend the Constitution and laws of the United States",
+                        "obey the laws of the United States",
+                        "serve in the U.S. military (if needed)",
+                        "serve (do important work for) the nation (if needed)",
+                        "be loyal to the United States"
+                    ),
+                ),
+                // 54
+                Question(
+                    question = "How old do citizens have to be to vote for President?",
+                    answer = listOf(
+                        "eighteen (18) and older"
+                    ),
+                ),
+                // 55
+                Question(
+                    question = "What are two ways that Americans can participate in their democracy?",
+                    answer = listOf(
+                        "vote",
+                        "join a political party",
+                        "help with a campaign",
+                        "join a civic group",
+                        "join a community group",
+                        "give an elected official your opinion on an issue",
+                        "call Senators and Representatives",
+                        "publicly support or oppose an issue or policy",
+                        "run for office",
+                        "write to a newspaper"
+                    ),
+                ),
+                // 56
+                Question(
+                    question = "When is the last day you can send in federal income tax forms?",
+                    answer = listOf(
+                        "April 15"
+                    ),
+                ),
+                // 57
+                Question(
+                    question = "When must all men register for the Selective Service?",
+                    answer = listOf(
+                        "at age eighteen (18)",
+                        "between eighteen (18) and twenty-six (26)"
+                    ),
+                ),
+                // 58
+                Question(
+                    question = "What is one reason colonists came to America?",
+                    answer = listOf(
+                        "freedom",
+                        "political liberty",
+                        "religious freedom",
+                        "economic opportunity",
+                        "practice their religion",
+                        "escape persecution"
+                    ),
+                ),
+                // 59
+                Question(
+                    question = "Who lived in America before the Europeans arrived?",
+                    answer = listOf(
+                        "American Indians",
+                        "Native Americans"
+                    ),
+                ),
+                // 60
+                Question(
+                    question = "What group of people was taken to America and sold as slaves?",
+                    answer = listOf(
+                        "Africans",
+                        "people from Africa"
+                    ),
+                ),
+                // 61
+                Question(
+                    question = "Why did the colonists fight the British?",
+                    answer = listOf(
+                        "because of high taxes (taxation without representation)",
+                        "because the British army stayed in their houses (boarding, quartering)",
+                        "because they didn't have self-government"
+                    ),
+                ),
+                // 62
+                Question(
+                    question = "Who wrote the Declaration of Independence?",
+                    answer = listOf(
+                        "(Thomas) Jefferson"
+                    ),
+                ),
+                // 63
+                Question(
+                    question = "When was the Declaration of Independence adopted?",
+                    answer = listOf(
+                        "July 4, 1776"
+                    ),
+                ),
+                // 64
+                Question(
+                    question = "There were 13 original states. Name three.",
+                    answer = listOf(
+                        "New Hampshire",
+                        "Massachusetts",
+                        "Rhode Island",
+                        "Connecticut",
+                        "New York",
+                        "New Jersey",
+                        "Pennsylvania",
+                        "Delaware",
+                        "Maryland",
+                        "Virginia",
+                        "North Carolina",
+                        "South Carolina",
+                        "Georgia"
+                    ),
+                ),
+                // 65
+                Question(
+                    question = "What happened at the Constitutional Convention?",
+                    answer = listOf(
+                        "The Constitution was written.",
+                        "The Founding Fathers wrote the Constitution."
+                    ),
+                ),
+                // 66
+                Question(
+                    question = "When was the Constitution written?",
+                    answer = listOf(
+                        "1787"
+                    ),
+                ),
+                // 67
+                Question(
+                    question = "The Federalist Papers supported the passage of the U.S. Constitution. Name one of the writers.",
+                    answer = listOf(
+                        "(James) Madison",
+                        "(Alexander) Hamilton",
+                        "(John) Jay",
+                        "Publius"
+                    ),
+                ),
+                // 68
+                Question(
+                    question = "What is one thing Benjamin Franklin is famous for?",
+                    answer = listOf(
+                        "U.S. diplomat",
+                        "oldest member of the Constitutional Convention",
+                        "first Postmaster General of the United States",
+                        "writer of \"Poor Richard's Almanac\"",
+                        "started the first free libraries"
+                    ),
+                ),
+                // 69
+                Question(
+                    question = "Who is the \"Father of Our Country\"?",
+                    answer = listOf(
+                        "(George) Washington"
+                    ),
+                ),
+                // 70
+                Question(
+                    question = "Who was the first President?",
+                    answer = listOf(
+                        "(George) Washington"
+                    ),
+                ),
+                // 71
+                Question(
+                    question = "What territory did the United States buy from France in 1803?",
+                    answer = listOf(
+                        "the Louisiana Territory",
+                        "Louisiana"
+                    ),
+                ),
+                // 72
+                Question(
+                    question = "Name one war fought by the United States in the 1800s",
+                    answer = listOf(
+                        "War of 1812",
+                        "Mexican-American War",
+                        "Civil War",
+                        "Spanish-American War"
+                    ),
+                ),
+                // 73
+                Question(
+                    question = "Name the U.S. war between the North and the South",
+                    answer = listOf(
+                        "the Civil War",
+                        "the War between the States"
+                    ),
+                ),
+                // 74
+                Question(
+                    question = "Name one problem that led to the Civil War.",
+                    answer = listOf(
+                        "slavery",
+                        "economic reasons",
+                        "states' rights"
+                    ),
+                ),
+                // 75
+                Question(
+                    question = "What was one important thing that Abraham Lincoln did?",
+                    answer = listOf(
+                        "freed the slaves (Emancipation Proclamation)",
+                        "saved (or preserved) the Union",
+                        "led the United States during the Civil War"
+                    ),
+                ),
+                // 76
+                Question(
+                    question = "What did the Emancipation Proclamation do?",
+                    answer = listOf(
+                        "freed the slaves",
+                        "freed slaves in the Confederacy",
+                        "freed slaves in the Confederate states",
+                        "freed slaves in most Southern states"
+                    ),
+                ),
+                // 77
+                Question(
+                    question = "What did Susan B. Anthony do?",
+                    answer = listOf(
+                        "fought for women's rights",
+                        "fought for civil rights"
+                    ),
+                ),
+                // 78
+                Question(
+                    question = "Name one war fought by the United States in the 1900s.",
+                    answer = listOf(
+                        "World War I",
+                        "World War II",
+                        "Korean War",
+                        "Vietnam War",
+                        "(Persian) Gulf War"
+                    ),
+                ),
+                // 79
+                Question(
+                    question = "Who was President during World War I?",
+                    answer = listOf(
+                        "(Woodrow) Wilson"
+                    ),
+                ),
+                // 80
+                Question(
+                    question = "Who was President during the Great Depression and World War II?",
+                    answer = listOf(
+                        "(Franklin) Roosevelt"
+                    ),
+                ),
+                // 81
+                Question(
+                    question = "Who did the United States fight in World War II?",
+                    answer = listOf(
+                        "Japan, Germany, and Italy"
+                    ),
+                ),
+                // 82
+                Question(
+                    question = "Before he was President, Eisenhower was a general. What war was he in?",
+                    answer = listOf(
+                        "World War II"
+                    ),
+                ),
+                // 83
+                Question(
+                    question = "During the Cold War, what was the main concern of the United States?",
+                    answer = listOf(
+                        "Communism"
+                    ),
+                ),
+                // 84
+                Question(
+                    question = "What movement tried to end racial discrimination?",
+                    answer = listOf(
+                        "civil rights (movement)"
+                    ),
+                ),
+                // 85
+                Question(
+                    question = "What did Martin Luther King, Jr. do?",
+                    answer = listOf(
+                        "fought for civil rights",
+                        "worked for equality for all Americans"
+                    ),
+                ),
+                // 86
+                Question(
+                    question = "What major event happened on September 11, 2001, in the United States?",
+                    answer = listOf(
+                        "Terrorists attacked the United States."
+                    ),
+                ),
+                // 87
+                Question(
+                    question = "Name one American Indian tribe in the United States.",
+                    answer = listOf(
+                        "Cherokee",
+                        "Navajo",
+                        "Sioux",
+                        "Chippewa",
+                        "Choctaw",
+                        "Pueblo",
+                        "Apache",
+                        "Iroquois",
+                        "Creek",
+                        "Blackfeet",
+                        "Seminole",
+                        "Cheyenne",
+                        "Arawak",
+                        "Shawnee",
+                        "Mohegan",
+                        "Huron",
+                        "Oneida",
+                        "Lakota",
+                        "Crow",
+                        "Teton",
+                        "Hopi",
+                        "Inuit"
+                    ),
+                ),
+                // 88
+                Question(
+                    question = "Name one of the two longest rivers in the United States.",
+                    answer = listOf(
+                        "Missouri (River)",
+                        "Mississippi (River)"
+                    ),
+                ),
+                // 89
+                Question(
+                    question = "What ocean is on the West Coast of the United States?",
+                    answer = listOf(
+                        "Pacific (Ocean)"
+                    ),
+                ),
+                // 90
+                Question(
+                    question = "What ocean is on the East Coast of the United States?",
+                    answer = listOf(
+                        "Atlantic (Ocean)"
+                    ),
+                ),
+                // 91
+                Question(
+                    question = "Name one U.S. territory.",
+                    answer = listOf(
+                        "Puerto Rico",
+                        "U.S. Virgin Islands",
+                        "American Samoa",
+                        "Northern Mariana Islands",
+                        "Guam"
+                    ),
+                ),
+                // 92
+                Question(
+                    question = "Name one state that borders Canada.",
+                    answer = listOf(
+                        "Maine",
+                        "New Hampshire",
+                        "Vermont",
+                        "New York",
+                        "Pennsylvania",
+                        "Ohio",
+                        "Michigan",
+                        "Minnesota",
+                        "North Dakota",
+                        "Montana",
+                        "Idaho",
+                        "Washington",
+                        "Alaska",
+                    ),
+                ),
+                // 93
+                Question(
+                    question = "Name one state that borders Mexico.",
+                    answer = listOf(
+                        "California",
+                        "Arizona",
+                        "New Mexico",
+                        "Texas"
+                    ),
+                ),
+                // 94
+                Question(
+                    question = "What is the capital of the United States?",
+                    answer = listOf(
+                        "Washington, D.C."
+                    ),
+                ),
+                // 95
+                Question(
+                    question = "Where is the Statue of Liberty?",
+                    answer = listOf(
+                        "New York (Harbor)",
+                        "Liberty Island"
+                    ),
+                ),
+                // 96
+                Question(
+                    question = "Why does the flag have 13 stripes?",
+                    answer = listOf(
+                        "because there were 13 original colonies",
+                        "because the stripes represent the original colonies"
+                    ),
+                ),
+                // 97
+                Question(
+                    question = "Why does the flag have 50 stars?",
+                    answer = listOf(
+                        "because there is one star for each state",
+                        "because each star represents a state",
+                        "because there are 50 states"
+                    ),
+                ),
+                // 98
+                Question(
+                    question = "What is the name of the national anthem?",
+                    answer = listOf(
+                        "The Star-Spangled Banner"
+                    ),
+                ),
+                // 99
+                Question(
+                    question = "When do we celebrate Independence Day?",
+                    answer = listOf(
+                        "July 4"
+                    ),
+                ),
+                // 100
+                Question(
+                    question = "Name two national U.S. holidays.",
+                    answer = listOf(
+                        "New Year’s Day",
+                        "Martin Luther King, Jr. Day",
+                        "Presidents’ Day",
+                        "Memorial Day",
+                        "Juneteenth",
+                        "Independence Day",
+                        "Labor Day",
+                        "Columbus Day",
+                        "Veterans Day",
+                        "Thanksgiving",
+                        "Christmas"
+                    ),
+                )
             )
         )
     }
