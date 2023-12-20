@@ -1,6 +1,8 @@
 package com.example.uscitizenship.ui
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,12 +24,15 @@ fun AllQuestionsScreen(
     modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier
+        modifier = modifier.verticalScroll(rememberScrollState())
     ) {
+        var questionCount = 1
         questions.forEach {
+            val questionTitle = it.question
             Text(
-                text = it.question
+                text = "$questionCount. $questionTitle"
             )
+            questionCount++
             val bullet = "\u2022"
             val paragraphStyle = ParagraphStyle(textIndent = TextIndent(restLine = 12.sp))
             Text(
