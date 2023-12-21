@@ -12,6 +12,7 @@ import com.example.uscitizenship.ui.theme.USCitizenshipTheme
 
 @Composable
 fun HomeScreen(
+    onFlashCardsButtonClicked:() -> Unit,
     onAllQuestionsButtonClicked: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -20,7 +21,7 @@ fun HomeScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Button(
-            onClick = { /*TODO*/ }
+            onClick = onFlashCardsButtonClicked
         ) {
             Text("Flash cards")
         }
@@ -37,6 +38,7 @@ fun HomeScreen(
 fun HomePreview() {
     USCitizenshipTheme {
         HomeScreen(
+            onFlashCardsButtonClicked = {},
             onAllQuestionsButtonClicked = {},
             modifier = Modifier.fillMaxSize(),
         )

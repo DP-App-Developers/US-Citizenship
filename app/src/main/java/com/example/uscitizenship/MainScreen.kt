@@ -26,10 +26,12 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.uscitizenship.ui.AllQuestionsScreen
 import com.example.uscitizenship.ui.AllQuestionsViewModel
+import com.example.uscitizenship.ui.FlashCardsScreen
 import com.example.uscitizenship.ui.HomeScreen
 
 enum class MainScreen(@StringRes val title: Int) {
     Home(title = R.string.app_name),
+    FlashCards(title = R.string.title_flash_cards),
     AllQuestions(title = R.string.title_all_questions),
 }
 
@@ -64,10 +66,19 @@ fun USCitizenApp(
         ) {
             composable(route = MainScreen.Home.name) {
                 HomeScreen(
+                    onFlashCardsButtonClicked = {
+                        navController.navigate(MainScreen.FlashCards.name)
+                    },
                     onAllQuestionsButtonClicked = {
                         navController.navigate(MainScreen.AllQuestions.name)
                     },
                     modifier = Modifier.fillMaxSize()
+                )
+            }
+            composable(route = MainScreen.FlashCards.name) {
+                FlashCardsScreen(
+                    questions = uiState.questions,
+                    modifier = Modifier.fillMaxSize(),
                 )
             }
             composable(route = MainScreen.AllQuestions.name) {
