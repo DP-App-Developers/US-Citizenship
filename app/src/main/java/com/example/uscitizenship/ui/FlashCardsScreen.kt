@@ -18,8 +18,10 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.uscitizenship.data.Question
 import com.example.uscitizenship.ui.theme.USCitizenshipTheme
 
@@ -32,10 +34,13 @@ fun FlashCardsScreen(
         modifier = modifier
             .padding(16.dp),
     ) {
-        var questionCount by rememberSaveable {
-            mutableIntStateOf(1)
-        }
-        Text("Card $questionCount / 100")
+        var questionCount by rememberSaveable { mutableIntStateOf(1) }
+
+        Text(
+            text = "Question $questionCount / 100",
+            fontWeight = FontWeight.Bold,
+            fontSize = 18.sp
+        )
 
         ElevatedCard(
             elevation = CardDefaults.cardElevation(
@@ -46,7 +51,10 @@ fun FlashCardsScreen(
                 .height(200.dp)
                 .clickable { }
         ) {
-            Text(questions[questionCount-1].question)
+            Text(
+                text = questions[questionCount-1].question,
+                fontSize = 20.sp
+            )
         }
 
         Spacer(modifier = Modifier.weight(1f))
