@@ -1,15 +1,22 @@
 package com.example.uscitizenship.ui
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -22,9 +29,12 @@ fun FlashCardsScreen(
     modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier,
+        modifier = modifier
+            .padding(16.dp),
     ) {
-        var questionCount = 1
+        var questionCount by rememberSaveable {
+            mutableIntStateOf(1)
+        }
         Text("Card $questionCount / 100")
 
         ElevatedCard(
@@ -34,23 +44,39 @@ fun FlashCardsScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp)
-                .clickable {  }
+                .clickable { }
         ) {
             Text(questions[questionCount-1].question)
         }
 
+        Spacer(modifier = Modifier.weight(1f))
+
         Row(
             modifier = Modifier
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Button(
                 modifier = Modifier,
-                onClick = {}
+                onClick = {
+                    if (questionCount == 1) {
+                        questionCount = 100
+                    } else {
+                        questionCount--
+                    }
+                }
             ) {
                 Text("Previous")
             }
             Button(
                 modifier = Modifier,
-                onClick = {}
+                onClick = {
+                    if (questionCount == 100) {
+                        questionCount = 1
+                    } else {
+                        questionCount++
+                    }
+                }
             ) {
                 Text("Next")
             }
