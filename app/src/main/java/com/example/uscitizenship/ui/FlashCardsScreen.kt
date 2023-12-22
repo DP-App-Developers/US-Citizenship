@@ -60,7 +60,11 @@ fun FlashCardsScreen(
                 defaultElevation = 6.dp
             )
         ) {
-            Column(modifier = Modifier.padding(12.dp)) {
+            Column(
+                modifier = Modifier
+                    .padding(12.dp)
+                    .fillMaxWidth()
+            ) {
                 Text(
                     text = questions[questionCount - 1].question,
                     fontSize = 20.sp
