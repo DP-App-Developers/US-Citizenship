@@ -1,6 +1,7 @@
 package com.example.uscitizenship.ui
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Divider
@@ -30,13 +31,18 @@ fun AllQuestionsScreen(
         questions.forEach {
             val questionTitle = it.question
             Text(
-                text = "$questionCount. $questionTitle"
+                text = "$questionCount. $questionTitle",
+                modifier = Modifier.padding(
+                    top = 8.dp,
+                    start = 8.dp,
+                    end = 8.dp,
+                )
             )
             questionCount++
             val bullet = "\u2022"
             val paragraphStyle = ParagraphStyle(textIndent = TextIndent(restLine = 12.sp))
             Text(
-                buildAnnotatedString {
+                text = buildAnnotatedString {
                     it.answer.forEach { bulletItem ->
                         withStyle(style = paragraphStyle) {
                             append("\t\t\t")
@@ -45,7 +51,8 @@ fun AllQuestionsScreen(
                             append(bulletItem)
                         }
                     }
-                }
+                },
+                modifier = Modifier.padding(8.dp)
             )
             Divider(thickness = 1.dp, color = Color.Black)
         }
@@ -59,12 +66,16 @@ fun AllQuestionsPreview() {
         AllQuestionsScreen(
             listOf(
                 Question(
-                    question = "1. What is the supreme law of the land?",
-                    answer = listOf(),
+                    question = "What is the supreme law of the land?",
+                    answer = listOf("the Constitution"),
                 ),
                 Question(
-                    question = "2. What does the Constitution do?",
-                    answer = listOf(),
+                    question = "What does the Constitution do?",
+                    answer = listOf(
+                        "sets up the government",
+                        "defines the government",
+                        "protects basic rights of Americans"
+                    ),
                 ),
             )
         )
