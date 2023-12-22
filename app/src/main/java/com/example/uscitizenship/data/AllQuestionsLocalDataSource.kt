@@ -15,16 +15,16 @@ class AllQuestionsLocalDataSource() {
                 Question(
                     question = "What is the supreme law of the land?",
                     answer = listOf(
-                        "the Constitution"
+                        "The Constitution"
                     ),
                 ),
                 // 2
                 Question(
                     question = "What does the Constitution do?",
                     answer = listOf(
-                        "sets up the government",
-                        "defines the government",
-                        "protects basic rights of Americans"
+                        "Sets up the government",
+                        "Defines the government",
+                        "Protects basic rights of Americans"
                     ),
                 ),
                 // 3
@@ -38,51 +38,51 @@ class AllQuestionsLocalDataSource() {
                 Question(
                     question = "What is an amendment?",
                     answer = listOf(
-                        "a change (to the Constitution)",
-                        "an addition (to the Constitution)"
+                        "A change (to the Constitution)",
+                        "An addition (to the Constitution)"
                     ),
                 ),
                 // 5
                 Question(
                     question = "What do we call the first ten amendments to the Constitution?",
                     answer = listOf(
-                        "the Bill of Rights"
+                        "The Bill of Rights"
                     ),
                 ),
                 // 6
                 Question(
                     question = "What is one right or freedom from the First Amendment?",
                     answer = listOf(
-                        "speech",
-                        "religion",
-                        "assembly",
-                        "press",
-                        "petition the government"
+                        "Speech",
+                        "Religion",
+                        "Assembly",
+                        "Press",
+                        "Petition the government"
                     ),
                 ),
                 // 7
                 Question(
                     question = "How many amendments does the Constitution have?",
                     answer = listOf(
-                        "twenty-seven (27)"
+                        "Twenty-seven (27)"
                     ),
                 ),
                 // 8
                 Question(
                     question = "What did the Declaration of Independence do?",
                     answer = listOf(
-                        "announced our independence (from Great Britain)",
-                        "declared our independence (from Great Britain)",
-                        "said that the United States is free (from Great Britain)"
+                        "Announced our independence (from Great Britain)",
+                        "Declared our independence (from Great Britain)",
+                        "Said that the United States is free (from Great Britain)"
                     ),
                 ),
                 // 9
                 Question(
                     question = "What are two rights in the Declaration of Independence?",
                     answer = listOf(
-                        "life",
-                        "liberty",
-                        "pursuit of happiness"
+                        "Life",
+                        "Liberty",
+                        "Pursuit of happiness"
                     ),
                 ),
                 // 10
@@ -96,8 +96,8 @@ class AllQuestionsLocalDataSource() {
                 Question(
                     question = "What is the economic system in the United States?",
                     answer = listOf(
-                        "capitalist economy",
-                        "market economy"
+                        "Capitalist economy",
+                        "Market economy"
                     ),
                 ),
                 // 12
@@ -115,26 +115,26 @@ class AllQuestionsLocalDataSource() {
                     question = "Name one branch or part of the government.",
                     answer = listOf(
                         "Congress",
-                        "legislative",
+                        "Legislative",
                         "President",
-                        "executive",
-                        "the courts",
-                        "judicial"
+                        "Executive",
+                        "The courts",
+                        "Judicial"
                     ),
                 ),
                 // 14
                 Question(
                     question = "What stops one branch of government from becoming too powerful?",
                     answer = listOf(
-                        "checks and balances",
-                        "separation of powers"
+                        "Checks and balances",
+                        "Separation of powers"
                     ),
                 ),
                 // 15
                 Question(
                     question = "Who is in charge of the executive branch?",
                     answer = listOf(
-                        "the President"
+                        "The President"
                     ),
                 ),
                 // 16
@@ -150,21 +150,21 @@ class AllQuestionsLocalDataSource() {
                 Question(
                     question = "What are the two parts of the U.S. Congress?",
                     answer = listOf(
-                        "the Senate and House (of Representatives)"
+                        "The Senate and House (of Representatives)"
                     ),
                 ),
                 // 18
                 Question(
                     question = "How many U.S. Senators are there?",
                     answer = listOf(
-                        "one hundred (100)"
+                        "One hundred (100)"
                     ),
                 ),
                 // 19
                 Question(
                     question = "We elect a U.S. Senator for how many years?",
                     answer = listOf(
-                        "six (6)"
+                        "Six (6)"
                     ),
                 ),
                 // 20
@@ -178,14 +178,14 @@ class AllQuestionsLocalDataSource() {
                 Question(
                     question = "The House of Representatives has how many voting members?",
                     answer = listOf(
-                        "four hundred thirty-five (435)"
+                        "Four hundred thirty-five (435)"
                     ),
                 ),
                 // 22
                 Question(
                     question = "We elect a U.S. Representative for how many years?",
                     answer = listOf(
-                        "two (2)"
+                        "Two (2)"
                     ),
                 ),
                 // 23
@@ -199,7 +199,7 @@ class AllQuestionsLocalDataSource() {
                 Question(
                     question = "Who does a U.S. Senator represent?",
                     answer = listOf(
-                        "all people of the state"
+                        "All people of the state"
                     ),
                 ),
                 // 25
@@ -215,7 +215,7 @@ class AllQuestionsLocalDataSource() {
                 Question(
                     question = "We elect a President for how many years?",
                     answer = listOf(
-                        "four (4)"
+                        "Four (4)"
                     ),
                 ),
                 // 27
@@ -243,42 +243,42 @@ class AllQuestionsLocalDataSource() {
                 Question(
                     question = "If the President can no longer serve, who becomes President?",
                     answer = listOf(
-                        "the Vice President"
+                        "The Vice President"
                     ),
                 ),
                 // 31
                 Question(
                     question = "If both the President and the Vice President can no longer serve, who becomes President?",
                     answer = listOf(
-                        "the Speaker of the House"
+                        "The Speaker of the House"
                     ),
                 ),
                 // 32
                 Question(
                     question = "Who is the Commander in Chief of the military?",
                     answer = listOf(
-                        "the President"
+                        "The President"
                     ),
                 ),
                 // 33
                 Question(
                     question = "Who signs bills to become laws?",
                     answer = listOf(
-                        "the President"
+                        "The President"
                     ),
                 ),
                 // 34
                 Question(
                     question = "Who vetoes bills?",
                     answer = listOf(
-                        "the President"
+                        "The President"
                     ),
                 ),
                 // 35
                 Question(
                     question = "What does the President's Cabinet do?",
                     answer = listOf(
-                        "advises the President"
+                        "Advises the President"
                     ),
                 ),
                 // 36
@@ -307,24 +307,24 @@ class AllQuestionsLocalDataSource() {
                 Question(
                     question = "What does the judicial branch do?",
                     answer = listOf(
-                        "reviews laws",
-                        "explains laws",
-                        "resolves disputes (disagreements)",
-                        "decides if a law goes against the Constitution"
+                        "Reviews laws",
+                        "Explains laws",
+                        "Resolves disputes (disagreements)",
+                        "Decides if a law goes against the Constitution"
                     ),
                 ),
                 // 38
                 Question(
                     question = "What is the highest court in the United States?",
                     answer = listOf(
-                        "the Supreme Court"
+                        "The Supreme Court"
                     ),
                 ),
                 // 39
                 Question(
                     question = "How many justices are on the Supreme Court?",
                     answer = listOf(
-                        "nine (9)"
+                        "Nine (9)"
                     ),
                 ),
                 // 40
@@ -338,21 +338,21 @@ class AllQuestionsLocalDataSource() {
                 Question(
                     question = "Under our Constitution, some powers belong to the federal government. What is one power of the federal government?",
                     answer = listOf(
-                        "to print money",
-                        "to declare war",
-                        "to create an army",
-                        "to make treaties"
+                        "To print money",
+                        "To declare war",
+                        "To create an army",
+                        "To make treaties"
                     ),
                 ),
                 // 42
                 Question(
                     question = "Under our Constitution, some powers belong to the states. What is one power of the states?",
                     answer = listOf(
-                        "provide schooling and education",
-                        "provide protection (police)",
-                        "provide safety (fire departments)",
-                        "give a driver's license",
-                        "approve zoning and land use"
+                        "Provide schooling and education",
+                        "Provide protection (police)",
+                        "Provide safety (fire departments)",
+                        "Give a driver's license",
+                        "Approve zoning and land use"
                     ),
                 ),
                 // 43
@@ -404,71 +404,71 @@ class AllQuestionsLocalDataSource() {
                 Question(
                     question = "What is one responsibility that is only for United States citizens?",
                     answer = listOf(
-                        "serve on a jury",
-                        "vote in a federal election"
+                        "Serve on a jury",
+                        "Vote in a federal election"
                     ),
                 ),
                 // 50
                 Question(
                     question = "Name one right only for United States citizens.",
                     answer = listOf(
-                        "vote in a federal election",
-                        "run for federal office"
+                        "Vote in a federal election",
+                        "Run for federal office"
                     ),
                 ),
                 // 51
                 Question(
                     question = "What are two rights of everyone living in the United States?",
                     answer = listOf(
-                        "freedom of expression",
-                        "freedom of speech",
-                        "freedom of assembly",
-                        "freedom to petition the government",
-                        "freedom of religion",
-                        "the right to bear arms"
+                        "Freedom of expression",
+                        "Freedom of speech",
+                        "Freedom of assembly",
+                        "Freedom to petition the government",
+                        "Freedom of religion",
+                        "The right to bear arms"
                     ),
                 ),
                 // 52
                 Question(
                     question = "What do we show loyalty to when we say the Pledge of Allegiance?",
                     answer = listOf(
-                        "the United States",
-                        "the flag"
+                        "The United States",
+                        "The flag"
                     ),
                 ),
                 // 53
                 Question(
                     question = "What is one promise you make when you become a United States citizen?",
                     answer = listOf(
-                        "give up loyalty to other countries",
-                        "defend the Constitution and laws of the United States",
-                        "obey the laws of the United States",
-                        "serve in the U.S. military (if needed)",
-                        "serve (do important work for) the nation (if needed)",
-                        "be loyal to the United States"
+                        "Give up loyalty to other countries",
+                        "Defend the Constitution and laws of the United States",
+                        "Obey the laws of the United States",
+                        "Serve in the U.S. military (if needed)",
+                        "Serve (do important work for) the nation (if needed)",
+                        "Be loyal to the United States"
                     ),
                 ),
                 // 54
                 Question(
                     question = "How old do citizens have to be to vote for President?",
                     answer = listOf(
-                        "eighteen (18) and older"
+                        "Eighteen (18) and older"
                     ),
                 ),
                 // 55
                 Question(
                     question = "What are two ways that Americans can participate in their democracy?",
                     answer = listOf(
-                        "vote",
-                        "join a political party",
-                        "help with a campaign",
-                        "join a civic group",
-                        "join a community group",
-                        "give an elected official your opinion on an issue",
-                        "call Senators and Representatives",
-                        "publicly support or oppose an issue or policy",
-                        "run for office",
-                        "write to a newspaper"
+                        "Vote",
+                        "Join a political party",
+                        "Help with a campaign",
+                        "Join a civic group",
+                        "Join a community group",
+                        "Give an elected official your opinion on an issue",
+                        "Call Senators and Representatives",
+                        "Publicly support or oppose an issue or policy",
+                        "Run for office",
+                        "Write to a newspaper"
                     ),
                 ),
                 // 56
@@ -482,20 +482,20 @@ class AllQuestionsLocalDataSource() {
                 Question(
                     question = "When must all men register for the Selective Service?",
                     answer = listOf(
-                        "at age eighteen (18)",
-                        "between eighteen (18) and twenty-six (26)"
+                        "At age eighteen (18)",
+                        "Between eighteen (18) and twenty-six (26)"
                     ),
                 ),
                 // 58
                 Question(
                     question = "What is one reason colonists came to America?",
                     answer = listOf(
-                        "freedom",
-                        "political liberty",
-                        "religious freedom",
-                        "economic opportunity",
-                        "practice their religion",
-                        "escape persecution"
+                        "Freedom",
+                        "Political liberty",
+                        "Religious freedom",
+                        "Economic opportunity",
+                        "Practice their religion",
+                        "Escape persecution"
                     ),
                 ),
                 // 59
@@ -511,16 +511,16 @@ class AllQuestionsLocalDataSource() {
                     question = "What group of people was taken to America and sold as slaves?",
                     answer = listOf(
                         "Africans",
-                        "people from Africa"
+                        "People from Africa"
                     ),
                 ),
                 // 61
                 Question(
                     question = "Why did the colonists fight the British?",
                     answer = listOf(
-                        "because of high taxes (taxation without representation)",
-                        "because the British army stayed in their houses (boarding, quartering)",
-                        "because they didn't have self-government"
+                        "Because of high taxes (taxation without representation)",
+                        "Because the British army stayed in their houses (boarding, quartering)",
+                        "Because they didn't have self-government"
                     ),
                 ),
                 // 62
@@ -586,10 +586,10 @@ class AllQuestionsLocalDataSource() {
                     question = "What is one thing Benjamin Franklin is famous for?",
                     answer = listOf(
                         "U.S. diplomat",
-                        "oldest member of the Constitutional Convention",
-                        "first Postmaster General of the United States",
-                        "writer of \"Poor Richard's Almanac\"",
-                        "started the first free libraries"
+                        "Oldest member of the Constitutional Convention",
+                        "First Postmaster General of the United States",
+                        "Writer of \"Poor Richard's Almanac\"",
+                        "Started the first free libraries"
                     ),
                 ),
                 // 69
@@ -610,7 +610,7 @@ class AllQuestionsLocalDataSource() {
                 Question(
                     question = "What territory did the United States buy from France in 1803?",
                     answer = listOf(
-                        "the Louisiana Territory",
+                        "The Louisiana Territory",
                         "Louisiana"
                     ),
                 ),
@@ -628,44 +628,44 @@ class AllQuestionsLocalDataSource() {
                 Question(
                     question = "Name the U.S. war between the North and the South",
                     answer = listOf(
-                        "the Civil War",
-                        "the War between the States"
+                        "The Civil War",
+                        "The War between the States"
                     ),
                 ),
                 // 74
                 Question(
                     question = "Name one problem that led to the Civil War.",
                     answer = listOf(
-                        "slavery",
-                        "economic reasons",
-                        "states' rights"
+                        "Slavery",
+                        "Economic reasons",
+                        "States' rights"
                     ),
                 ),
                 // 75
                 Question(
                     question = "What was one important thing that Abraham Lincoln did?",
                     answer = listOf(
-                        "freed the slaves (Emancipation Proclamation)",
-                        "saved (or preserved) the Union",
-                        "led the United States during the Civil War"
+                        "Freed the slaves (Emancipation Proclamation)",
+                        "Saved (or preserved) the Union",
+                        "Led the United States during the Civil War"
                     ),
                 ),
                 // 76
                 Question(
                     question = "What did the Emancipation Proclamation do?",
                     answer = listOf(
-                        "freed the slaves",
-                        "freed slaves in the Confederacy",
-                        "freed slaves in the Confederate states",
-                        "freed slaves in most Southern states"
+                        "Freed the slaves",
+                        "Freed slaves in the Confederacy",
+                        "Freed slaves in the Confederate states",
+                        "Freed slaves in most Southern states"
                     ),
                 ),
                 // 77
                 Question(
                     question = "What did Susan B. Anthony do?",
                     answer = listOf(
-                        "fought for women's rights",
-                        "fought for civil rights"
+                        "Fought for women's rights",
+                        "Fought for civil rights"
                     ),
                 ),
                 // 78
@@ -718,15 +718,15 @@ class AllQuestionsLocalDataSource() {
                 Question(
                     question = "What movement tried to end racial discrimination?",
                     answer = listOf(
-                        "civil rights (movement)"
+                        "Civil rights (movement)"
                     ),
                 ),
                 // 85
                 Question(
                     question = "What did Martin Luther King, Jr. do?",
                     answer = listOf(
-                        "fought for civil rights",
-                        "worked for equality for all Americans"
+                        "Fought for civil rights",
+                        "Worked for equality for all Americans"
                     ),
                 ),
                 // 86
@@ -845,17 +845,17 @@ class AllQuestionsLocalDataSource() {
                 Question(
                     question = "Why does the flag have 13 stripes?",
                     answer = listOf(
-                        "because there were 13 original colonies",
-                        "because the stripes represent the original colonies"
+                        "Because there were 13 original colonies",
+                        "Because the stripes represent the original colonies"
                     ),
                 ),
                 // 97
                 Question(
                     question = "Why does the flag have 50 stars?",
                     answer = listOf(
-                        "because there is one star for each state",
-                        "because each star represents a state",
-                        "because there are 50 states"
+                        "Because there is one star for each state",
+                        "Because each star represents a state",
+                        "Because there are 50 states"
                     ),
                 ),
                 // 98
