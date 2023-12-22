@@ -26,6 +26,7 @@ fun AllQuestionsScreen(
     ) {
         val borderPadding = 18.dp
         val textSize = 16.sp
+
         var questionCount = 1
         questions.forEach {
             Row(modifier = Modifier.padding(borderPadding)) {
@@ -40,7 +41,6 @@ fun AllQuestionsScreen(
                         fontSize = textSize,
                         modifier = Modifier.padding(bottom = 8.dp)
                     )
-                    questionCount++
                     val bullet = "\u2022"
                     it.answer.forEach {
                         Text(
@@ -51,6 +51,7 @@ fun AllQuestionsScreen(
                 }
             }
             Divider(thickness = 1.dp, color = Color.Black)
+            questionCount++
         }
     }
 }
