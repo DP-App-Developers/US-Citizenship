@@ -25,7 +25,7 @@ fun HomeScreen(
         Button(
             onClick = onFlashCardsButtonClicked
         ) {
-            Text("Flash cards")
+            Text("Flash Cards")
         }
         Button(
             onClick = onAllQuestionsButtonClicked
