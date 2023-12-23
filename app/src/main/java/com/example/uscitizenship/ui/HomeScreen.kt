@@ -25,12 +25,12 @@ fun HomeScreen(
         Button(
             onClick = onFlashCardsButtonClicked
         ) {
-            Text("Flash Cards")
+            Text("FLASH CARDS")
         }
         Button(
             onClick = onAllQuestionsButtonClicked
         ) {
-            Text("All Questions")
+            Text("ALL QUESTIONS")
         }
     }
 }

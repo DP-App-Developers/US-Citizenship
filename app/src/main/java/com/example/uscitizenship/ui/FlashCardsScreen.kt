@@ -110,7 +110,7 @@ fun FlashCardsScreen(
                 }
             },
         ) {
-            Text(text = "Previous")
+            Text(text = "PREVIOUS")
         }
 
         Button(
@@ -126,7 +126,7 @@ fun FlashCardsScreen(
                 }
             },
         ) {
-            Text(text = "Next")
+            Text(text = "NEXT")
         }
     }
 }
