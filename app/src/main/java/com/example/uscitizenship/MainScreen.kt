@@ -28,9 +28,11 @@ import com.example.uscitizenship.ui.AllQuestionsScreen
 import com.example.uscitizenship.ui.AllQuestionsViewModel
 import com.example.uscitizenship.ui.FlashCardsScreen
 import com.example.uscitizenship.ui.HomeScreen
+import com.example.uscitizenship.ui.SettingsScreen
 
 enum class MainScreen(@StringRes val title: Int) {
     Home(title = R.string.app_name),
+    Settings(title = R.string.title_settings),
     FlashCards(title = R.string.title_flash_cards),
     AllQuestions(title = R.string.title_all_questions),
 }
@@ -61,7 +63,8 @@ fun USCitizenApp(
 
         NavHost(
             navController = navController,
-            startDestination = MainScreen.Home.name,
+            startDestination = MainScreen.Settings.name,
+//            startDestination = MainScreen.Home.name,
             modifier = Modifier.padding(innerPadding)
         ) {
             composable(route = MainScreen.Home.name) {
@@ -75,16 +78,17 @@ fun USCitizenApp(
                     modifier = Modifier.fillMaxSize()
                 )
             }
+            composable(route = MainScreen.Settings.name) {
+                SettingsScreen()
+            }
             composable(route = MainScreen.FlashCards.name) {
                 FlashCardsScreen(
                     questions = uiState.questions,
-                    modifier = Modifier.fillMaxSize(),
                 )
             }
             composable(route = MainScreen.AllQuestions.name) {
                 AllQuestionsScreen(
                     questions = uiState.questions,
-                    modifier = Modifier.fillMaxSize(),
                 )
             }
         }

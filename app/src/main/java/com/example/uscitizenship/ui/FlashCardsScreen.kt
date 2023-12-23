@@ -37,14 +37,13 @@ import com.example.uscitizenship.ui.theme.USCitizenshipTheme
 @Composable
 fun FlashCardsScreen(
     questions: List<Question>,
-    modifier: Modifier = Modifier,
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
         var questionCount by rememberSaveable { mutableIntStateOf(1) }
         var expanded by rememberSaveable { mutableStateOf(false) }
 
         Column(
-            modifier = modifier
+            modifier = Modifier
                 .verticalScroll(rememberScrollState())
                 .padding(16.dp),
         ) {

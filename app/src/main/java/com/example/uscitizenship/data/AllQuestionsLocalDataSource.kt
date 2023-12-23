@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.flow
  * Up to date answers: https://uscis.gov/citizenship/testupdates
  *
  */
-class AllQuestionsLocalDataSource() {
+class AllQuestionsLocalDataSource {
     val allQuestions: Flow<List<Question>> = flow {
         emit(
             listOf(

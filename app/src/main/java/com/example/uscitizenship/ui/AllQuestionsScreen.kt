@@ -2,6 +2,7 @@ package com.example.uscitizenship.ui
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -19,10 +20,11 @@ import com.example.uscitizenship.ui.theme.USCitizenshipTheme
 @Composable
 fun AllQuestionsScreen(
     questions: List<Question>,
-    modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier.verticalScroll(rememberScrollState())
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
     ) {
         val borderPadding = 18.dp
         val textSize = 16.sp
