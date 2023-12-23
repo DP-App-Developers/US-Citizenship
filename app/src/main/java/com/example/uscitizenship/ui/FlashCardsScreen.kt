@@ -138,7 +138,7 @@ fun FlashCardsPreview() {
         FlashCardsScreen(
             listOf(
                 Question(
-                    question = "1. What is the supreme law of the land? On the civics test, some answers may change because of federal or state elections, certain judicial appointments, or due to statutory changes or updates. You must answer the question with the name of the official serving at the time of your naturalization interview. On this page, you can find the answers that may have changed on the civics test to the 2008 version of the test On the civics test, some answers may change because of federal or state elections, certain judicial appointments, or due to statutory changes or updates. You must answer the question with the name of the official serving at the time of your naturalization interview. On this page, you can find the answers that may have changed on the civics test to the 2008 version of the test On the civics test, some answers may change because of federal or state elections, certain judicial appointments, or due to statutory changes or updates. You must answer the question with the name of the official serving at the time of your naturalization interview. On this page, you can find the answers that may have changed on the civics test to the 2008 version of the test",
+                    question = "1. What is the supreme law of the land?",
                     answer = listOf("the Constitution"),
                 ),
                 Question(
