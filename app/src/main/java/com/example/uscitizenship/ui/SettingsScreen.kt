@@ -15,7 +15,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
@@ -30,39 +29,76 @@ fun SettingsScreen() {
             fontSize = 16.sp,
         )
 
+        val defaultSelectState = "Select your state"
+
         val states = getStates()
-        var expanded by rememberSaveable { mutableStateOf(false) }
-        var selectedOptionText by rememberSaveable { mutableStateOf("Select your state") }
+        var expandedForStates by rememberSaveable { mutableStateOf(false) }
+        var selectedState by rememberSaveable { mutableStateOf(defaultSelectState) }
         // We want to react on tap/press on TextField to show menu
         ExposedDropdownMenuBox(
-            expanded = expanded,
-            onExpandedChange = { expanded = it },
-            modifier = Modifier
-//                .align(Alignment.CenterHorizontally)
+            expanded = expandedForStates,
+            onExpandedChange = { expandedForStates = it },
         ) {
             TextField(
                 // The `menuAnchor` modifier must be passed to the text field for correctness.
                 modifier = Modifier.menuAnchor(),
                 readOnly = true,
-                value = selectedOptionText,
+                value = selectedState,
                 onValueChange = {},
                 label = { Text("State or District") },
-                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandedForStates) },
                 colors = ExposedDropdownMenuDefaults.textFieldColors(),
             )
             ExposedDropdownMenu(
-                expanded = expanded,
-                onDismissRequest = { expanded = false },
+                expanded = expandedForStates,
+                onDismissRequest = { expandedForStates = false },
             ) {
-                states.forEach { selectionOption ->
+                states.forEach { state ->
                     DropdownMenuItem(
-                        text = { Text(selectionOption) },
+                        text = { Text(state) },
                         onClick = {
-                            selectedOptionText = selectionOption
-                            expanded = false
+                            selectedState = state
+                            expandedForStates = false
                         },
                         contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
                     )
+                }
+            }
+        }
+
+        if (selectedState != defaultSelectState) {
+            val representatives = listOf("Adam", "David", "Susan")
+            var expandedForRep by rememberSaveable { mutableStateOf(false) }
+            var selectedRep by rememberSaveable { mutableStateOf("Select your U.S. Representative") }
+            // We want to react on tap/press on TextField to show menu
+            ExposedDropdownMenuBox(
+                expanded = expandedForRep,
+                onExpandedChange = { expandedForRep = it },
+            ) {
+                TextField(
+                    // The `menuAnchor` modifier must be passed to the text field for correctness.
+                    modifier = Modifier.menuAnchor(),
+                    readOnly = true,
+                    value = selectedRep,
+                    onValueChange = {},
+                    label = { Text("State or District") },
+                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandedForRep) },
+                    colors = ExposedDropdownMenuDefaults.textFieldColors(),
+                )
+                ExposedDropdownMenu(
+                    expanded = expandedForRep,
+                    onDismissRequest = { expandedForRep = false },
+                ) {
+                    representatives.forEach { representative ->
+                        DropdownMenuItem(
+                            text = { Text(representative) },
+                            onClick = {
+                                selectedRep = representative
+                                expandedForRep = false
+                            },
+                            contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
+                        )
+                    }
                 }
             }
         }
