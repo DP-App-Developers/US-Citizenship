@@ -15,6 +15,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -24,7 +25,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -79,9 +79,9 @@ fun FlashCardsScreen(
 
                     if (!expanded) {
                         Icon(
-                            painter = painterResource(id = R.drawable.baseline_expand_circle_down_24),
+                            painter = painterResource(id = R.drawable.baseline_keyboard_arrow_down_24),
                             contentDescription = "reveal answer",
-                            tint = Color.DarkGray,
+                            tint = MaterialTheme.colorScheme.primary,
                             modifier = Modifier.align(Alignment.CenterHorizontally)
                         )
                     } else {
