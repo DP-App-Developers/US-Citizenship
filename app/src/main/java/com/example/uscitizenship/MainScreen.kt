@@ -40,7 +40,7 @@ enum class MainScreen(@StringRes val title: Int) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun USCitizenApp(
-    viewModel: AllQuestionsViewModel = viewModel(),
+    allQuestionsViewModel: AllQuestionsViewModel = viewModel(),
     navController: NavHostController = rememberNavController()
 ) {
     // Get current back stack entry
@@ -59,7 +59,7 @@ fun USCitizenApp(
             )
         }
     ) { innerPadding ->
-        val uiState by viewModel.uiState.collectAsState()
+        val uiState by allQuestionsViewModel.uiState.collectAsState()
 
         NavHost(
             navController = navController,
