@@ -4,6 +4,7 @@ package com.example.uscitizenship.ui
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
@@ -29,11 +30,10 @@ fun SettingsScreen() {
             fontSize = 16.sp,
         )
 
-        val defaultSelectState = "Select your state"
-
+        val defaultStateText = "Select your state"
         val states = getStates()
         var expandedForStates by rememberSaveable { mutableStateOf(false) }
-        var selectedState by rememberSaveable { mutableStateOf(defaultSelectState) }
+        var selectedState by rememberSaveable { mutableStateOf(defaultStateText) }
         // We want to react on tap/press on TextField to show menu
         ExposedDropdownMenuBox(
             expanded = expandedForStates,
@@ -66,10 +66,11 @@ fun SettingsScreen() {
             }
         }
 
-        if (selectedState != defaultSelectState) {
+        if (selectedState != defaultStateText) {
+            val defaultRepresentativeText = "Select your U.S. Representative"
             val representatives = listOf("Adam", "David", "Susan")
             var expandedForRep by rememberSaveable { mutableStateOf(false) }
-            var selectedRep by rememberSaveable { mutableStateOf("Select your U.S. Representative") }
+            var selectedRep by rememberSaveable { mutableStateOf(defaultRepresentativeText) }
             // We want to react on tap/press on TextField to show menu
             ExposedDropdownMenuBox(
                 expanded = expandedForRep,
@@ -81,7 +82,7 @@ fun SettingsScreen() {
                     readOnly = true,
                     value = selectedRep,
                     onValueChange = {},
-                    label = { Text("State or District") },
+                    label = { Text("U.S. Representative") },
                     trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandedForRep) },
                     colors = ExposedDropdownMenuDefaults.textFieldColors(),
                 )
@@ -99,6 +100,12 @@ fun SettingsScreen() {
                             contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
                         )
                     }
+                }
+            }
+
+            if (selectedRep != defaultRepresentativeText) {
+                Button(onClick = {}) {
+                    Text("Save")
                 }
             }
         }
