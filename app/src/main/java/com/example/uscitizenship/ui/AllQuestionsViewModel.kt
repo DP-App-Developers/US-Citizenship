@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.uscitizenship.data.AllQuestionsLocalDataSource
 import com.example.uscitizenship.data.AllQuestionsRepository
+import com.example.uscitizenship.data.RepresentativesLocalDataSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,7 +17,7 @@ class AllQuestionsViewModel : ViewModel() {
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            AllQuestionsRepository(AllQuestionsLocalDataSource()).allQuestions.collect {
+            AllQuestionsRepository(AllQuestionsLocalDataSource(RepresentativesLocalDataSource())).allQuestions.collect {
                 _uiState.value = AllQuestionsUiState(
                     questions = it
                 )
