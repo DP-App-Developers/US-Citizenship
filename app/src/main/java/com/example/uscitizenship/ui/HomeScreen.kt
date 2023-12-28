@@ -16,6 +16,7 @@ import com.example.uscitizenship.ui.theme.USCitizenshipTheme
 fun HomeScreen(
     onFlashCardsButtonClicked:() -> Unit,
     onAllQuestionsButtonClicked: () -> Unit,
+    onSettingsButtonClicked: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -32,6 +33,11 @@ fun HomeScreen(
         ) {
             Text("ALL QUESTIONS")
         }
+        Button(
+            onClick = onSettingsButtonClicked
+        ) {
+            Text("SETTINGS")
+        }
     }
 }
 
@@ -42,6 +48,7 @@ fun HomePreview() {
         HomeScreen(
             onFlashCardsButtonClicked = {},
             onAllQuestionsButtonClicked = {},
+            onSettingsButtonClicked = {},
             modifier = Modifier.fillMaxSize(),
         )
     }

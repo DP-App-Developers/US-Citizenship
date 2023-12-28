@@ -99,6 +99,9 @@ fun USCitizenApp(
                     onAllQuestionsButtonClicked = {
                         navController.navigate(MainScreen.AllQuestions.name)
                     },
+                    onSettingsButtonClicked = {
+                        navController.navigate(MainScreen.Settings.name)
+                    },
                     modifier = Modifier.fillMaxSize()
                 )
             }
