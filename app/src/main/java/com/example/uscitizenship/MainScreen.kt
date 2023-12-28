@@ -26,6 +26,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.uscitizenship.data.Question
+import com.example.uscitizenship.data.UsRepresentativeDataStore
 import com.example.uscitizenship.data.UserStateDataStore
 import com.example.uscitizenship.ui.AllQuestionsScreen
 import com.example.uscitizenship.ui.AllQuestionsViewModel
@@ -66,11 +67,13 @@ fun USCitizenApp(
     ) { innerPadding ->
         val loadingInitial = "loading"
         val userStateDataStore = UserStateDataStore(LocalContext.current)
+        val usRepresentativeDataStore = UsRepresentativeDataStore(LocalContext.current)
         val userStateOrDistrict = userStateDataStore.getUserState.collectAsState(initial = loadingInitial).value
+        val usRepresentative = usRepresentativeDataStore.getUsRepresentative.collectAsState(initial = loadingInitial).value
         val uiState by allQuestionsViewModel.uiState.collectAsState()
-        val questionsWithAnswers = consolidateAnswers(userStateOrDistrict, uiState.questions)
+        val questionsWithAnswers = consolidateAnswers(userStateOrDistrict, usRepresentative, uiState.questions)
 
-        val initialScreen = if (userStateOrDistrict == loadingInitial) {
+        val initialScreen = if (usRepresentative == loadingInitial) {
             MainScreen.Loading.name
         } else if (userStateOrDistrict.isEmpty()) {
             MainScreen.Settings.name
@@ -98,7 +101,7 @@ fun USCitizenApp(
                 )
             }
             composable(route = MainScreen.Settings.name) {
-                SettingsScreen(userStateDataStore)
+                SettingsScreen(userStateDataStore, usRepresentativeDataStore)
             }
             composable(route = MainScreen.FlashCards.name) {
                 FlashCardsScreen(
@@ -117,10 +120,11 @@ fun USCitizenApp(
 // FIXME: Use hilt to inject dataStore to repository
 fun consolidateAnswers(
     userStateOrDistrict: String,
+    usRepresentative: String,
     questions: List<Question>,
 ): List<Question> {
-    if (userStateOrDistrict.isNotEmpty()) {
-        questions[22].answer = listOf(userStateOrDistrict)
+    if (usRepresentative.isNotEmpty()) {
+        questions[22].answer = listOf(usRepresentative)
     }
     return questions
 }

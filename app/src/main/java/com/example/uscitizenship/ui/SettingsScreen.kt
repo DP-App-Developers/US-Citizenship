@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
+import com.example.uscitizenship.data.UsRepresentativeDataStore
 import com.example.uscitizenship.data.UserStateDataStore
 import com.example.uscitizenship.ui.theme.USCitizenshipTheme
 import kotlinx.coroutines.CoroutineScope
@@ -28,7 +29,8 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun SettingsScreen(
-    userStateDataStore: UserStateDataStore
+    userStateDataStore: UserStateDataStore,
+    usRepresentativeDataStore: UsRepresentativeDataStore,
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
         Text(
@@ -114,9 +116,10 @@ fun SettingsScreen(
                 Button(onClick = {
                     CoroutineScope(Dispatchers.IO).launch {
                         userStateDataStore.saveUserState(selectedState)
+                        usRepresentativeDataStore.saveUsRepresentative(selectedRep)
                     }
                 }) {
-                    Text("Save")
+                    Text("SAVE")
                 }
             }
         }
@@ -185,6 +188,9 @@ fun getStates() = listOf(
 @Composable
 fun SettingsPreview() {
     USCitizenshipTheme {
-        SettingsScreen(UserStateDataStore(LocalContext.current))
+        SettingsScreen(
+            UserStateDataStore(LocalContext.current),
+            UsRepresentativeDataStore(LocalContext.current),
+        )
     }
 }
