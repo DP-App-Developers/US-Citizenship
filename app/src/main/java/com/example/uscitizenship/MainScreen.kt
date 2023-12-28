@@ -106,7 +106,13 @@ fun USCitizenApp(
                 )
             }
             composable(route = MainScreen.Settings.name) {
-                SettingsScreen(userStateDataStore, usRepresentativeDataStore)
+                SettingsScreen(
+                    userStateDataStore = userStateDataStore,
+                    usRepresentativeDataStore = usRepresentativeDataStore,
+                    currentUserStateOrDistrict = userStateOrDistrict,
+                    currentUsRepresentative = usRepresentative,
+                    navController = navController,
+                )
             }
             composable(route = MainScreen.FlashCards.name) {
                 FlashCardsScreen(

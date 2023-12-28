@@ -20,6 +20,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.example.uscitizenship.MainScreen
 import com.example.uscitizenship.data.UsRepresentativeDataStore
 import com.example.uscitizenship.data.UserStateDataStore
 import com.example.uscitizenship.data.getStatesAndDistricts
@@ -33,14 +36,27 @@ import kotlinx.coroutines.launch
 fun SettingsScreen(
     userStateDataStore: UserStateDataStore,
     usRepresentativeDataStore: UsRepresentativeDataStore,
+    currentUserStateOrDistrict: String,
+    currentUsRepresentative: String,
+    navController: NavController,
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
-        val defaultStateText = "Select your state"
+        val defaultStateText = currentUserStateOrDistrict.ifEmpty {
+            "Select your state"
+        }
         val states = getStatesAndDistricts()
         var expandedForStates by rememberSaveable { mutableStateOf(false) }
         var selectedState by rememberSaveable { mutableStateOf(defaultStateText) }
-        val defaultRepresentativeText = "Select your U.S. Representative"
-        var representatives by rememberSaveable { mutableStateOf(listOf<String>()) }
+        val selectRepText = "Select your U.S. Representative"
+        val defaultRepresentativeText = currentUsRepresentative.ifEmpty {
+            selectRepText
+        }
+        val defaultReps = if (currentUserStateOrDistrict.isEmpty()) {
+            listOf()
+        } else {
+            getUsRepresentatives(currentUserStateOrDistrict)
+        }
+        var representatives by rememberSaveable { mutableStateOf(defaultReps) }
         var selectedRep by rememberSaveable { mutableStateOf(defaultRepresentativeText) }
 
         Text(
@@ -74,7 +90,7 @@ fun SettingsScreen(
                         onClick = {
                             if (selectedState != state) {
                                 selectedState = state
-                                selectedRep = defaultRepresentativeText
+                                selectedRep = selectRepText
                                 representatives = getUsRepresentatives(selectedState)
                             }
                             expandedForStates = false
@@ -119,11 +135,16 @@ fun SettingsScreen(
                 }
             }
 
-            if (selectedRep != defaultRepresentativeText) {
+            if (selectedRep != selectRepText) {
                 Button(onClick = {
                     CoroutineScope(Dispatchers.IO).launch {
                         userStateDataStore.saveUserState(selectedState)
                         usRepresentativeDataStore.saveUsRepresentative(selectedRep)
+                    }
+                    navController.navigate(MainScreen.Home.name) {
+                        popUpTo(MainScreen.Home.name) {
+                            inclusive = true
+                        }
                     }
                 }) {
                     Text("SAVE")
@@ -138,8 +159,11 @@ fun SettingsScreen(
 fun SettingsPreview() {
     USCitizenshipTheme {
         SettingsScreen(
-            UserStateDataStore(LocalContext.current),
-            UsRepresentativeDataStore(LocalContext.current),
+            userStateDataStore = UserStateDataStore(LocalContext.current),
+            usRepresentativeDataStore = UsRepresentativeDataStore(LocalContext.current),
+            currentUserStateOrDistrict = "Alaska",
+            currentUsRepresentative = "Susan",
+            rememberNavController(),
         )
     }
 }
