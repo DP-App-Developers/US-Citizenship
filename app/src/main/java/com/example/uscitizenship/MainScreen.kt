@@ -1,5 +1,6 @@
 package com.example.uscitizenship
 
+import android.content.Context
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -17,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
@@ -24,6 +26,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.uscitizenship.data.Question
+import com.example.uscitizenship.data.UserStateDataStore
 import com.example.uscitizenship.ui.AllQuestionsScreen
 import com.example.uscitizenship.ui.AllQuestionsViewModel
 import com.example.uscitizenship.ui.FlashCardsScreen
@@ -59,12 +63,20 @@ fun USCitizenApp(
             )
         }
     ) { innerPadding ->
+        val userStateDataStore = UserStateDataStore(LocalContext.current)
+        val userStateOrDistrict = userStateDataStore.getUserState.collectAsState(initial = "abc").value
         val uiState by allQuestionsViewModel.uiState.collectAsState()
+        val questionsWithAnswers = consolidateAnswers(userStateOrDistrict, uiState.questions)
+
+        val initialScreen = if (userStateOrDistrict.isEmpty()) {
+            MainScreen.Settings.name
+        } else {
+            MainScreen.Home.name
+        }
 
         NavHost(
             navController = navController,
-            startDestination = MainScreen.Settings.name,
-//            startDestination = MainScreen.Home.name,
+            startDestination = initialScreen,
             modifier = Modifier.padding(innerPadding)
         ) {
             composable(route = MainScreen.Home.name) {
@@ -79,20 +91,31 @@ fun USCitizenApp(
                 )
             }
             composable(route = MainScreen.Settings.name) {
-                SettingsScreen()
+                SettingsScreen(userStateDataStore)
             }
             composable(route = MainScreen.FlashCards.name) {
                 FlashCardsScreen(
-                    questions = uiState.questions,
+                    questions = questionsWithAnswers,
                 )
             }
             composable(route = MainScreen.AllQuestions.name) {
                 AllQuestionsScreen(
-                    questions = uiState.questions,
+                    questions = questionsWithAnswers,
                 )
             }
         }
     }
+}
+
+// FIXME: Use hilt to inject dataStore to repository
+fun consolidateAnswers(
+    userStateOrDistrict: String,
+    questions: List<Question>,
+): List<Question> {
+    if (userStateOrDistrict.isNotEmpty()) {
+        questions[22].answer = listOf(userStateOrDistrict)
+    }
+    return questions
 }
 
 /**

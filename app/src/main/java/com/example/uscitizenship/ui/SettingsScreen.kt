@@ -17,15 +17,22 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
+import com.example.uscitizenship.data.UserStateDataStore
 import com.example.uscitizenship.ui.theme.USCitizenshipTheme
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @Composable
-fun SettingsScreen() {
+fun SettingsScreen(
+    userStateDataStore: UserStateDataStore
+) {
     Column(modifier = Modifier.fillMaxSize()) {
         Text(
-            // FIXME
+            // FIXME: change wording
             text = "Please provide your state and district information so we can generate accurate answers for your state's capital, Governor, Senators, and Representatives.",
             fontSize = 16.sp,
         )
@@ -104,7 +111,11 @@ fun SettingsScreen() {
             }
 
             if (selectedRep != defaultRepresentativeText) {
-                Button(onClick = {}) {
+                Button(onClick = {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        userStateDataStore.saveUserState(selectedState)
+                    }
+                }) {
                     Text("Save")
                 }
             }
@@ -174,6 +185,6 @@ fun getStates() = listOf(
 @Composable
 fun SettingsPreview() {
     USCitizenshipTheme {
-        SettingsScreen()
+        SettingsScreen(UserStateDataStore(LocalContext.current))
     }
 }

@@ -7,9 +7,7 @@ import kotlinx.coroutines.flow.flow
  * Up to date answers: https://uscis.gov/citizenship/testupdates
  *
  */
-class AllQuestionsLocalDataSource(
-    representativesLocalDataSource: RepresentativesLocalDataSource
-) {
+class AllQuestionsLocalDataSource {
     val allQuestions: Flow<List<Question>> = flow {
         emit(
             listOf(
@@ -194,7 +192,7 @@ class AllQuestionsLocalDataSource(
                 Question(
                     question = "Name your U.S. Representative.",
                     answer = listOf(
-                        representativesLocalDataSource.getRepresentative()
+                        "<Answers will vary>"
                     ),
                 ),
                 // 24
