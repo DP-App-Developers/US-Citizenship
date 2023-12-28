@@ -35,16 +35,20 @@ fun SettingsScreen(
     usRepresentativeDataStore: UsRepresentativeDataStore,
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
+        val defaultStateText = "Select your state"
+        val states = getStatesAndDistricts()
+        var expandedForStates by rememberSaveable { mutableStateOf(false) }
+        var selectedState by rememberSaveable { mutableStateOf(defaultStateText) }
+        val defaultRepresentativeText = "Select your U.S. Representative"
+        var representatives by rememberSaveable { mutableStateOf(listOf<String>()) }
+        var selectedRep by rememberSaveable { mutableStateOf(defaultRepresentativeText) }
+
         Text(
             // FIXME: change wording
             text = "Please provide your state and district information so we can generate accurate answers for your state's capital, Governor, Senators, and Representatives.",
             fontSize = 16.sp,
         )
 
-        val defaultStateText = "Select your state"
-        val states = getStatesAndDistricts()
-        var expandedForStates by rememberSaveable { mutableStateOf(false) }
-        var selectedState by rememberSaveable { mutableStateOf(defaultStateText) }
         // We want to react on tap/press on TextField to show menu
         ExposedDropdownMenuBox(
             expanded = expandedForStates,
@@ -68,7 +72,11 @@ fun SettingsScreen(
                     DropdownMenuItem(
                         text = { Text(state) },
                         onClick = {
-                            selectedState = state
+                            if (selectedState != state) {
+                                selectedState = state
+                                selectedRep = defaultRepresentativeText
+                                representatives = getUsRepresentatives(selectedState)
+                            }
                             expandedForStates = false
                         },
                         contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
@@ -77,11 +85,8 @@ fun SettingsScreen(
             }
         }
 
-        if (selectedState != defaultStateText) {
-            val defaultRepresentativeText = "Select your U.S. Representative"
-            val representatives = getUsRepresentatives(selectedState)
+        if (representatives.isNotEmpty()) {
             var expandedForRep by rememberSaveable { mutableStateOf(false) }
-            var selectedRep by rememberSaveable { mutableStateOf(defaultRepresentativeText) }
             // We want to react on tap/press on TextField to show menu
             ExposedDropdownMenuBox(
                 expanded = expandedForRep,
@@ -101,7 +106,7 @@ fun SettingsScreen(
                     expanded = expandedForRep,
                     onDismissRequest = { expandedForRep = false },
                 ) {
-                    representatives?.forEach { representative ->
+                    representatives.forEach { representative ->
                         DropdownMenuItem(
                             text = { Text(representative) },
                             onClick = {

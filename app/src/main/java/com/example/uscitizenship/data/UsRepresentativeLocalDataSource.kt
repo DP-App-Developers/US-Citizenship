@@ -1,6 +1,6 @@
 package com.example.uscitizenship.data
 
-fun getUsRepresentatives(stateOrDistrict: String): List<String>? {
+fun getUsRepresentatives(stateOrDistrict: String): List<String> {
     val usRepMap = mapOf(
         "Alabama" to listOf(
             "Jerry Carl",
@@ -134,5 +134,5 @@ fun getUsRepresentatives(stateOrDistrict: String): List<String>? {
         "Wisconsin" to listOf(),
         "Wyoming" to listOf(),
     )
-    return usRepMap[stateOrDistrict]
+    return usRepMap[stateOrDistrict] ?: listOf()
 }
