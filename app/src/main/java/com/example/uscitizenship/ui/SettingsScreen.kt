@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.sp
 import com.example.uscitizenship.data.UsRepresentativeDataStore
 import com.example.uscitizenship.data.UserStateDataStore
 import com.example.uscitizenship.data.getStatesAndDistricts
+import com.example.uscitizenship.data.getUsRepresentatives
 import com.example.uscitizenship.ui.theme.USCitizenshipTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -78,7 +79,7 @@ fun SettingsScreen(
 
         if (selectedState != defaultStateText) {
             val defaultRepresentativeText = "Select your U.S. Representative"
-            val representatives = listOf("Adam", "David", "Susan")
+            val representatives = getUsRepresentatives(selectedState)
             var expandedForRep by rememberSaveable { mutableStateOf(false) }
             var selectedRep by rememberSaveable { mutableStateOf(defaultRepresentativeText) }
             // We want to react on tap/press on TextField to show menu
@@ -100,7 +101,7 @@ fun SettingsScreen(
                     expanded = expandedForRep,
                     onDismissRequest = { expandedForRep = false },
                 ) {
-                    representatives.forEach { representative ->
+                    representatives?.forEach { representative ->
                         DropdownMenuItem(
                             text = { Text(representative) },
                             onClick = {
