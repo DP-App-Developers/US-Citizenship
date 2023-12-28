@@ -22,6 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.example.uscitizenship.data.UsRepresentativeDataStore
 import com.example.uscitizenship.data.UserStateDataStore
+import com.example.uscitizenship.data.getStatesAndDistricts
 import com.example.uscitizenship.ui.theme.USCitizenshipTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -40,7 +41,7 @@ fun SettingsScreen(
         )
 
         val defaultStateText = "Select your state"
-        val states = getStates()
+        val states = getStatesAndDistricts()
         var expandedForStates by rememberSaveable { mutableStateOf(false) }
         var selectedState by rememberSaveable { mutableStateOf(defaultStateText) }
         // We want to react on tap/press on TextField to show menu
@@ -125,64 +126,6 @@ fun SettingsScreen(
         }
     }
 }
-
-fun getStates() = listOf(
-    "Alabama",
-    "Alaska",
-    "American Samoa",
-    "Arizona",
-    "Arkansas",
-    "California",
-    "Colorado",
-    "Connecticut",
-    "Delaware",
-    "District of Columbia",
-    "Florida",
-    "Georgia",
-    "Guam",
-    "Hawaii",
-    "Idaho",
-    "Illinois",
-    "Indiana",
-    "Iowa",
-    "Kansas",
-    "Kentucky",
-    "Louisiana",
-    "Maine",
-    "Maryland",
-    "Massachusetts",
-    "Michigan",
-    "Minnesota",
-    "Mississippi",
-    "Missouri",
-    "Montana",
-    "Nebraska",
-    "Nevada",
-    "New Hampshire",
-    "New Jersey",
-    "New Mexico",
-    "New York",
-    "North Carolina",
-    "North Dakota",
-    "Northern Mariana Islands",
-    "Ohio",
-    "Oklahoma",
-    "Oregon",
-    "Pennsylvania",
-    "Rhode Island",
-    "South Carolina",
-    "South Dakota",
-    "Tennessee",
-    "Texas",
-    "Utah",
-    "Vermont",
-    "Virginia",
-    "Virgin Islands",
-    "Washington",
-    "West Virginia",
-    "Wisconsin",
-    "Wyoming",
-)
 
 @Preview(showBackground = true)
 @Composable
