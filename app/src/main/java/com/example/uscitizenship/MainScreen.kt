@@ -1,6 +1,5 @@
 package com.example.uscitizenship
 
-import android.content.Context
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -32,9 +31,11 @@ import com.example.uscitizenship.ui.AllQuestionsScreen
 import com.example.uscitizenship.ui.AllQuestionsViewModel
 import com.example.uscitizenship.ui.FlashCardsScreen
 import com.example.uscitizenship.ui.HomeScreen
+import com.example.uscitizenship.ui.LoadingScreen
 import com.example.uscitizenship.ui.SettingsScreen
 
 enum class MainScreen(@StringRes val title: Int) {
+    Loading(title = R.string.title_loading),
     Home(title = R.string.app_name),
     Settings(title = R.string.title_settings),
     FlashCards(title = R.string.title_flash_cards),
@@ -63,12 +64,15 @@ fun USCitizenApp(
             )
         }
     ) { innerPadding ->
+        val loadingInitial = "loading"
         val userStateDataStore = UserStateDataStore(LocalContext.current)
-        val userStateOrDistrict = userStateDataStore.getUserState.collectAsState(initial = "abc").value
+        val userStateOrDistrict = userStateDataStore.getUserState.collectAsState(initial = loadingInitial).value
         val uiState by allQuestionsViewModel.uiState.collectAsState()
         val questionsWithAnswers = consolidateAnswers(userStateOrDistrict, uiState.questions)
 
-        val initialScreen = if (userStateOrDistrict.isEmpty()) {
+        val initialScreen = if (userStateOrDistrict == loadingInitial) {
+            MainScreen.Loading.name
+        } else if (userStateOrDistrict.isEmpty()) {
             MainScreen.Settings.name
         } else {
             MainScreen.Home.name
@@ -79,6 +83,9 @@ fun USCitizenApp(
             startDestination = initialScreen,
             modifier = Modifier.padding(innerPadding)
         ) {
+            composable(route = MainScreen.Loading.name) {
+                LoadingScreen()
+            }
             composable(route = MainScreen.Home.name) {
                 HomeScreen(
                     onFlashCardsButtonClicked = {
