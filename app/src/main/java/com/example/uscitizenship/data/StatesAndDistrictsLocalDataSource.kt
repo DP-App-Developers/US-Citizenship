@@ -43,6 +43,7 @@ fun getStatesAndDistricts() = listOf(
     "Oklahoma",
     "Oregon",
     "Pennsylvania",
+    "Puerto Rico",
     "Rhode Island",
     "South Carolina",
     "South Dakota",
