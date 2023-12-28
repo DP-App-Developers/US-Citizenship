@@ -28,6 +28,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.uscitizenship.data.Question
 import com.example.uscitizenship.data.UsRepresentativeDataStore
 import com.example.uscitizenship.data.UserStateDataStore
+import com.example.uscitizenship.data.getGovernor
 import com.example.uscitizenship.data.getStateCapital
 import com.example.uscitizenship.ui.AllQuestionsScreen
 import com.example.uscitizenship.ui.AllQuestionsViewModel
@@ -124,9 +125,13 @@ fun consolidateAnswers(
     usRepresentative: String,
     questions: List<Question>,
 ): List<Question> {
+    val stateGovernor = getGovernor(userStateOrDistrict)
     val stateCapital = getStateCapital(userStateOrDistrict)
     if (usRepresentative.isNotEmpty()) {
         questions[22].answer = listOf(usRepresentative)
+    }
+    if (!stateGovernor.isNullOrEmpty()) {
+        questions[42].answer = listOf(stateGovernor)
     }
     if (!stateCapital.isNullOrEmpty()) {
         questions[43].answer = listOf(stateCapital)
