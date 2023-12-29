@@ -3,33 +3,38 @@ package com.example.uscitizenship.data
 fun getUsRepresentatives(stateOrDistrict: String): List<String> {
     val usRepMap = mapOf(
         "Alabama" to listOf(
-            "Jerry Carl",
             "Barry Moore",
-            "Mike Rogers",
-            "Robert Aderholt",
             "Dale Strong",
             "Gary Palmer",
+            "Jerry Carl",
+            "Mike Rogers",
+            "Robert Aderholt",
             "Terri Sewell",
         ),
-        "Alaska" to listOf("Mary Peltola"),
-        "American Samoa" to listOf("Aumua Amata Radewagen"),
+        "Alaska" to listOf(
+            "Mary Peltola"
+        ),
+        "American Samoa" to listOf(
+            "Aumua Amata Radewagen"
+        ),
         "Arizona" to listOf(
-            "David Schweikert",
-            "Elijah Crane",
-            "Ruben Gallego",
-            "Greg Stanton",
             "Andy Biggs",
-            "Juan Ciscomani",
-            "Raul Grijalva",
+            "David Schweikert",
             "Debbie Lesko",
+            "Elijah Crane",
+            "Greg Stanton",
+            "Juan Ciscomani",
             "Paul Gosar",
+            "Raul Grijalva",
+            "Ruben Gallego",
         ),
         "Arkansas" to listOf(
+            "Bruce Westerman",
             "Eric Crawford",
             "J. French Hill",
             "Steve Womack",
-            "Bruce Westerman",
         ),
+        /////////// sorted^^ /////////
         "California" to listOf(
             "LaMalfa, Doug",
             "Huffman, Jared",
