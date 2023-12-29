@@ -77,7 +77,7 @@ fun USCitizenApp(
 
         val initialScreen = if (usRepresentative == loadingInitial) {
             MainScreen.Loading.name
-        } else if (userStateOrDistrict.isEmpty()) {
+        } else if (userStateOrDistrict.isEmpty() || usRepresentative.isEmpty()) {
             MainScreen.Settings.name
         } else {
             MainScreen.Home.name
