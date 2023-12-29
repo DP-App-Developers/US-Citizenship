@@ -34,7 +34,6 @@ fun getUsRepresentatives(stateOrDistrict: String): List<String> {
             "J. French Hill",
             "Steve Womack",
         ),
-        /////////// sorted^^ /////////
         "California" to listOf(
             "Doug LaMalfa",
             "Jared Huffman",
@@ -557,5 +556,5 @@ fun getUsRepresentatives(stateOrDistrict: String): List<String> {
             "Harriet Hageman"
         ),
     )
-    return usRepMap[stateOrDistrict] ?: listOf()
+    return usRepMap[stateOrDistrict]?.sorted() ?: listOf()
 }
