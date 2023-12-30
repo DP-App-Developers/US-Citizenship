@@ -34,11 +34,9 @@ import com.example.uscitizenship.ui.AllQuestionsScreen
 import com.example.uscitizenship.ui.AllQuestionsViewModel
 import com.example.uscitizenship.ui.FlashCardsScreen
 import com.example.uscitizenship.ui.HomeScreen
-import com.example.uscitizenship.ui.LoadingScreen
 import com.example.uscitizenship.ui.SettingsScreen
 
 enum class MainScreen(@StringRes val title: Int) {
-    Loading(title = R.string.title_loading),
     Home(title = R.string.app_name),
     Settings(title = R.string.title_settings),
     FlashCards(title = R.string.title_flash_cards),
@@ -75,34 +73,17 @@ fun USCitizenApp(
         val uiState by allQuestionsViewModel.uiState.collectAsState()
         val questionsWithAnswers = consolidateAnswers(userStateOrDistrict, usRepresentative, uiState.questions)
 
-        val initialScreen = if (usRepresentative == loadingInitial) {
-            MainScreen.Loading.name
-        } else if (userStateOrDistrict.isEmpty() || usRepresentative.isEmpty()) {
-            MainScreen.Settings.name
-        } else {
-            MainScreen.Home.name
-        }
-
         NavHost(
             navController = navController,
-            startDestination = initialScreen,
+            startDestination = MainScreen.Home.name,
             modifier = Modifier.padding(innerPadding)
         ) {
-            composable(route = MainScreen.Loading.name) {
-                LoadingScreen()
-            }
             composable(route = MainScreen.Home.name) {
                 HomeScreen(
-                    onFlashCardsButtonClicked = {
-                        navController.navigate(MainScreen.FlashCards.name)
-                    },
-                    onAllQuestionsButtonClicked = {
-                        navController.navigate(MainScreen.AllQuestions.name)
-                    },
-                    onSettingsButtonClicked = {
-                        navController.navigate(MainScreen.Settings.name)
-                    },
-                    modifier = Modifier.fillMaxSize()
+                    currentUserStateOrDistrict = userStateOrDistrict,
+                    currentUsRepresentative = usRepresentative,
+                    navController = navController,
+                    modifier = Modifier.fillMaxSize(),
                 )
             }
             composable(route = MainScreen.Settings.name) {
