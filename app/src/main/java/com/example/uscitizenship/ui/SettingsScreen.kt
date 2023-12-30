@@ -49,10 +49,10 @@ fun SettingsScreen(
         .fillMaxSize()
         .verticalScroll(rememberScrollState())
         .padding(horizontal = 16.dp)
-        .padding(top = 16.dp)
+        .padding(top = 32.dp)
     ) {
         val defaultStateText = currentUserStateOrDistrict.ifEmpty {
-            "Select your state"
+            "Select your State"
         }
         val states = getStatesAndDistricts()
         var expandedForStates by rememberSaveable { mutableStateOf(false) }
@@ -68,19 +68,9 @@ fun SettingsScreen(
         }
         var representatives by rememberSaveable { mutableStateOf(defaultReps) }
         var selectedRep by rememberSaveable { mutableStateOf(defaultRepresentativeText) }
-
-        if (currentUserStateOrDistrict.isEmpty() || currentUsRepresentative.isEmpty()) {
-            Text(
-                text = "Welcome!",
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(bottom = 8.dp),
-            )
-        }
-
+        
         Text(
-            // FIXME: change wording
-            text = "Please provide your state and district information so we can generate accurate answers for your state's capital, Governor, Senators, and Representatives.",
+            text = "Please select your State and U.S. Representative to update the questions about your State. You can always change it later.",
             fontSize = 16.sp,
             modifier = Modifier.padding(bottom = 8.dp),
         )

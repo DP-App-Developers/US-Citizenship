@@ -1,19 +1,24 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
+@file:OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3Api::class)
 
 package com.example.uscitizenship.ui
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -25,7 +30,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.uscitizenship.MainScreen
@@ -49,40 +53,90 @@ fun HomeScreen(
             )
         }
     } else {
+        val cardColor = MaterialTheme.colorScheme.secondaryContainer
         val newUser = currentUserStateOrDistrict.isEmpty() || currentUsRepresentative.isEmpty()
         var showBottomSheet by rememberSaveable { mutableStateOf(false) }
         Column(
-            modifier = modifier.padding(16.dp),
+            modifier = modifier
+                .verticalScroll(rememberScrollState())
+                .padding(32.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Button(
+            OutlinedCard(
                 onClick = {
                     if (newUser) {
                         showBottomSheet = true
                     } else {
                         navController.navigate(MainScreen.FlashCards.name)
                     }
-                }
+                },
+                colors = CardDefaults.cardColors(
+                    containerColor = cardColor,
+                ),
+                border = BorderStroke(2.dp, MaterialTheme.colorScheme.primary),
+                modifier = Modifier
+                    .padding(4.dp)
+                    .size(width = 240.dp, height = 70.dp)
             ) {
-                Text("FLASH CARDS")
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    Text(
+                        text = "FLASH CARDS",
+                        fontWeight = FontWeight.Bold,
+                    )
+                }
             }
-            Button(
+
+            OutlinedCard(
                 onClick = {
                     if (newUser) {
                         showBottomSheet = true
                     } else {
                         navController.navigate(MainScreen.AllQuestions.name)
                     }
-                }
+                },
+                colors = CardDefaults.cardColors(
+                    containerColor = cardColor,
+                ),
+                border = BorderStroke(2.dp, MaterialTheme.colorScheme.primary),
+                modifier = Modifier
+                    .padding(4.dp)
+                    .size(width = 240.dp, height = 70.dp)
             ) {
-                Text("ALL QUESTIONS")
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    Text(
+                        text = "ALL QUESTIONS",
+                        fontWeight = FontWeight.Bold,
+                    )
+                }
             }
-            Button(
+
+            OutlinedCard(
                 onClick = {
                     navController.navigate(MainScreen.Settings.name)
-                }
+                },
+                colors = CardDefaults.cardColors(
+                    containerColor = cardColor,
+                ),
+                border = BorderStroke(2.dp, MaterialTheme.colorScheme.primary),
+                modifier = Modifier
+                    .padding(4.dp)
+                    .size(width = 240.dp, height = 70.dp)
             ) {
-                Text("SETTINGS")
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    Text(
+                        text = "SETTINGS",
+                        fontWeight = FontWeight.Bold,
+                    )
+                }
             }
         }
 
