@@ -29,6 +29,7 @@ import com.example.uscitizenship.data.Question
 import com.example.uscitizenship.data.UsRepresentativeDataStore
 import com.example.uscitizenship.data.UserStateDataStore
 import com.example.uscitizenship.data.getGovernor
+import com.example.uscitizenship.data.getSenators
 import com.example.uscitizenship.data.getStateCapital
 import com.example.uscitizenship.ui.AllQuestionsScreen
 import com.example.uscitizenship.ui.AllQuestionsViewModel
@@ -117,6 +118,10 @@ fun consolidateAnswers(
 ): List<Question> {
     val stateGovernor = getGovernor(userStateOrDistrict)
     val stateCapital = getStateCapital(userStateOrDistrict)
+    val stateSenators = getSenators(userStateOrDistrict)
+    if (stateSenators.isNotEmpty()) {
+        questions[19].answer = stateSenators
+    }
     if (usRepresentative.isNotEmpty()) {
         questions[22].answer = listOf(usRepresentative)
     }
