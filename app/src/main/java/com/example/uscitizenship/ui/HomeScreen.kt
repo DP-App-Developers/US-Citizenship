@@ -85,7 +85,7 @@ fun HomeScreen(
                     modifier = Modifier.fillMaxSize()
                 ) {
                     Text(
-                        text = "FLASH CARDS",
+                        text = "Flash Cards",
                         fontWeight = FontWeight.Bold,
                         fontFamily = fontFamily,
                     )
@@ -113,7 +113,7 @@ fun HomeScreen(
                     modifier = Modifier.fillMaxSize()
                 ) {
                     Text(
-                        text = "ALL QUESTIONS",
+                        text = "All Questions",
                         fontWeight = FontWeight.Bold,
                         fontFamily = fontFamily,
                     )
@@ -137,7 +137,7 @@ fun HomeScreen(
                     modifier = Modifier.fillMaxSize()
                 ) {
                     Text(
-                        text = "SETTINGS",
+                        text = "Settings",
                         fontWeight = FontWeight.Bold,
                         fontFamily = fontFamily,
                     )
@@ -169,7 +169,7 @@ fun HomeScreen(
                             navController.navigate(MainScreen.Settings.name)
                         }) {
                             Text(
-                                text = "START",
+                                text = "Start",
                             )
                         }
                     }

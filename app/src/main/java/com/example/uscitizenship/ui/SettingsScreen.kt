@@ -69,15 +69,14 @@ fun SettingsScreen(
 
         Text(
             text = "This is to provide you the names of your elected state officials.",
-            fontSize = 14.sp,
-            modifier = Modifier.padding(bottom = 8.dp),
+            modifier = Modifier.padding(bottom = 12.dp),
         )
 
         // We want to react on tap/press on TextField to show menu
         ExposedDropdownMenuBox(
             expanded = expandedForStates,
             onExpandedChange = { expandedForStates = it },
-            modifier = Modifier.padding(bottom = 8.dp),
+            modifier = Modifier.padding(bottom = 12.dp),
         ) {
             TextField(
                 // The `menuAnchor` modifier must be passed to the text field for correctness.
@@ -116,7 +115,7 @@ fun SettingsScreen(
             ExposedDropdownMenuBox(
                 expanded = expandedForRep,
                 onExpandedChange = { expandedForRep = it },
-                modifier = Modifier.padding(bottom = 8.dp),
+                modifier = Modifier.padding(bottom = 12.dp),
             ) {
                 TextField(
                     // The `menuAnchor` modifier must be passed to the text field for correctness.
@@ -160,7 +159,7 @@ fun SettingsScreen(
                         }
                     }
                 ) {
-                    Text("SAVE")
+                    Text("Save")
                 }
             }
         }
