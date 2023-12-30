@@ -48,8 +48,7 @@ fun SettingsScreen(
     Column(modifier = Modifier
         .fillMaxSize()
         .verticalScroll(rememberScrollState())
-        .padding(horizontal = 16.dp)
-        .padding(top = 32.dp)
+        .padding(16.dp)
     ) {
         val defaultStateText = currentUserStateOrDistrict.ifEmpty {
             "Select your State"
@@ -68,10 +67,10 @@ fun SettingsScreen(
         }
         var representatives by rememberSaveable { mutableStateOf(defaultReps) }
         var selectedRep by rememberSaveable { mutableStateOf(defaultRepresentativeText) }
-        
+
         Text(
-            text = "Please select your State and U.S. Representative to update the questions about your State. You can always change it later.",
-            fontSize = 16.sp,
+            text = "This is to provide you the names of your elected state officials.",
+            fontSize = 14.sp,
             modifier = Modifier.padding(bottom = 8.dp),
         )
 
