@@ -2,9 +2,12 @@
 
 package com.example.uscitizenship.ui
 
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
@@ -19,11 +22,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.uscitizenship.MainScreen
@@ -47,7 +50,7 @@ fun SettingsScreen(
     Column(modifier = Modifier
         .fillMaxSize()
         .verticalScroll(rememberScrollState())
-        .padding(16.dp)
+        .padding(20.dp)
     ) {
         val defaultStateText = currentUserStateOrDistrict.ifEmpty {
             "Select your State"
@@ -145,21 +148,28 @@ fun SettingsScreen(
             }
 
             if (selectedRep != selectRepText) {
-                Button(
-                    modifier = Modifier.padding(bottom = 8.dp),
-                    onClick = {
-                        CoroutineScope(Dispatchers.IO).launch {
-                            userStateDataStore.saveUserState(selectedState)
-                            usRepresentativeDataStore.saveUsRepresentative(selectedRep)
-                        }
-                        navController.navigate(MainScreen.Home.name) {
-                            popUpTo(MainScreen.Home.name) {
-                                inclusive = true
+                BoxWithConstraints(
+                    modifier = Modifier.fillMaxWidth(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Button(
+                        modifier = Modifier
+                            .width(maxWidth * 3 / 4)
+                            .padding(bottom = 8.dp),
+                        onClick = {
+                            CoroutineScope(Dispatchers.IO).launch {
+                                userStateDataStore.saveUserState(selectedState)
+                                usRepresentativeDataStore.saveUsRepresentative(selectedRep)
+                            }
+                            navController.navigate(MainScreen.Home.name) {
+                                popUpTo(MainScreen.Home.name) {
+                                    inclusive = true
+                                }
                             }
                         }
+                    ) {
+                        Text("Save")
                     }
-                ) {
-                    Text("Save")
                 }
             }
         }
