@@ -161,11 +161,17 @@ fun HomeScreen(
                         text = "Start by choosing your State and U.S. Representative. This is a one-time task to update the questions about your State.",
                         modifier = Modifier.padding(bottom = 8.dp),
                     )
-                    Button(onClick = {
-                        showBottomSheet = false
-                        navController.navigate(MainScreen.Settings.name)
-                    }) {
-                        Text("START")
+                    Box(modifier = Modifier.fillMaxWidth(),
+                        contentAlignment = Alignment.BottomEnd
+                    ) {
+                        Button(onClick = {
+                            showBottomSheet = false
+                            navController.navigate(MainScreen.Settings.name)
+                        }) {
+                            Text(
+                                text = "START",
+                            )
+                        }
                     }
                 }
             }
