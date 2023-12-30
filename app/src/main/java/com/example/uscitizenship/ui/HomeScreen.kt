@@ -27,6 +27,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -54,6 +55,7 @@ fun HomeScreen(
         }
     } else {
         val cardColor = MaterialTheme.colorScheme.secondaryContainer
+        val fontFamily = FontFamily.SansSerif
         val newUser = currentUserStateOrDistrict.isEmpty() || currentUsRepresentative.isEmpty()
         var showBottomSheet by rememberSaveable { mutableStateOf(false) }
         Column(
@@ -85,6 +87,7 @@ fun HomeScreen(
                     Text(
                         text = "FLASH CARDS",
                         fontWeight = FontWeight.Bold,
+                        fontFamily = fontFamily,
                     )
                 }
             }
@@ -112,6 +115,7 @@ fun HomeScreen(
                     Text(
                         text = "ALL QUESTIONS",
                         fontWeight = FontWeight.Bold,
+                        fontFamily = fontFamily,
                     )
                 }
             }
@@ -135,6 +139,7 @@ fun HomeScreen(
                     Text(
                         text = "SETTINGS",
                         fontWeight = FontWeight.Bold,
+                        fontFamily = fontFamily,
                     )
                 }
             }
