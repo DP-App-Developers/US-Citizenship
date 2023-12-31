@@ -77,7 +77,7 @@ fun HomeScreen(
                 ),
                 border = BorderStroke(2.dp, MaterialTheme.colorScheme.primary),
                 modifier = Modifier
-                    .padding(4.dp)
+                    .padding(bottom = 16.dp)
                     .size(width = 240.dp, height = 70.dp)
             ) {
                 Box(
@@ -105,7 +105,7 @@ fun HomeScreen(
                 ),
                 border = BorderStroke(2.dp, MaterialTheme.colorScheme.primary),
                 modifier = Modifier
-                    .padding(4.dp)
+                    .padding(bottom = 16.dp)
                     .size(width = 240.dp, height = 70.dp)
             ) {
                 Box(
@@ -129,7 +129,7 @@ fun HomeScreen(
                 ),
                 border = BorderStroke(2.dp, MaterialTheme.colorScheme.primary),
                 modifier = Modifier
-                    .padding(4.dp)
+                    .padding(bottom = 16.dp)
                     .size(width = 240.dp, height = 70.dp)
             ) {
                 Box(
