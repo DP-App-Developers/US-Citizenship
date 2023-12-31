@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.uscitizenship"
+    namespace = "com.dpappdev.uscitizenship"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.uscitizenship"
+        applicationId = "com.dpappdev.uscitizenship"
         minSdk = 24
         targetSdk = 33
         versionCode = 1
