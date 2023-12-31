@@ -57,7 +57,7 @@ fun HomeScreen(
         val cardColor = MaterialTheme.colorScheme.secondaryContainer
         val fontFamily = FontFamily.SansSerif
         val newUser = currentUserStateOrDistrict.isEmpty() || currentUsRepresentative.isEmpty()
-        var showBottomSheet by rememberSaveable { mutableStateOf(false) }
+        var showBottomSheet by rememberSaveable { mutableStateOf(newUser) }
         Column(
             modifier = modifier
                 .verticalScroll(rememberScrollState())
