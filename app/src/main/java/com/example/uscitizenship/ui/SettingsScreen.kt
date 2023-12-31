@@ -38,6 +38,7 @@ import com.example.uscitizenship.ui.theme.USCitizenshipTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @Composable
 fun SettingsScreen(
@@ -160,10 +161,13 @@ fun SettingsScreen(
                             CoroutineScope(Dispatchers.IO).launch {
                                 userStateDataStore.saveUserState(selectedState)
                                 usRepresentativeDataStore.saveUsRepresentative(selectedRep)
-                            }
-                            navController.navigate(MainScreen.Home.name) {
-                                popUpTo(MainScreen.Home.name) {
-                                    inclusive = true
+
+                                withContext(Dispatchers.Main) {
+                                    navController.navigate(MainScreen.Home.name) {
+                                        popUpTo(MainScreen.Home.name) {
+                                            inclusive = true
+                                        }
+                                    }
                                 }
                             }
                         }
