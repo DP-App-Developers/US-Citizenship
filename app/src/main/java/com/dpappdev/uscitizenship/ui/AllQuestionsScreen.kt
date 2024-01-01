@@ -6,8 +6,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,17 +22,15 @@ import com.dpappdev.uscitizenship.ui.theme.USCitizenshipTheme
 fun AllQuestionsScreen(
     questions: List<Question>,
 ) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
+    LazyColumn(
+        modifier = Modifier.fillMaxSize()
     ) {
         val borderPadding = 18.dp
         val textSize = 16.sp
 
-        var questionCount = 1
-        questions.forEach {
-            val backgroundColor = if (questionCount % 2 == 0) {
+        itemsIndexed(questions) { index, item ->
+            val questionNumber = index + 1
+            val backgroundColor = if (questionNumber % 2 == 0) {
                 MaterialTheme.colorScheme.surfaceVariant
             } else {
                 MaterialTheme.colorScheme.background
@@ -45,18 +43,18 @@ fun AllQuestionsScreen(
                     .padding(borderPadding)
             ) {
                 Text(
-                    text = "$questionCount.",
+                    text = "$questionNumber.",
                     modifier = Modifier.padding(end = 8.dp)
                 )
 
                 Column {
                     Text(
-                        text = it.question,
+                        text = item.question,
                         fontSize = textSize,
                         modifier = Modifier.padding(bottom = 8.dp)
                     )
                     val bullet = "\u2022"
-                    it.answer.forEach {
+                    item.answer.forEach {
                         Text(
                             text = "$bullet $it",
                             fontSize = textSize,
@@ -64,7 +62,6 @@ fun AllQuestionsScreen(
                     }
                 }
             }
-            questionCount++
         }
     }
 }
