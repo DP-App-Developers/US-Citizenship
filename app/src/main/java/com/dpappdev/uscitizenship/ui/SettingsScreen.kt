@@ -35,10 +35,7 @@ import com.dpappdev.uscitizenship.data.UserStateDataStore
 import com.dpappdev.uscitizenship.data.getStatesAndDistricts
 import com.dpappdev.uscitizenship.data.getUsRepresentatives
 import com.dpappdev.uscitizenship.ui.theme.USCitizenshipTheme
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.runBlocking
 
 @Composable
 fun SettingsScreen(
@@ -158,15 +155,14 @@ fun SettingsScreen(
                             .width(maxWidth * 3 / 4)
                             .padding(bottom = 8.dp),
                         onClick = {
-                            CoroutineScope(Dispatchers.IO).launch {
+                            runBlocking {
+                                // making saving synchronous to prevent showing the new user bottom sheet when going back to home
                                 userStateDataStore.saveUserState(selectedState)
                                 usRepresentativeDataStore.saveUsRepresentative(selectedRep)
 
-                                withContext(Dispatchers.Main) {
-                                    navController.navigate(MainScreen.Home.name) {
-                                        popUpTo(MainScreen.Home.name) {
-                                            inclusive = true
-                                        }
+                                navController.navigate(MainScreen.Home.name) {
+                                    popUpTo(MainScreen.Home.name) {
+                                        inclusive = true
                                     }
                                 }
                             }
