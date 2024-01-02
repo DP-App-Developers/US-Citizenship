@@ -98,7 +98,7 @@ fun USCitizenApp(
             }
             composable(route = MainScreen.FlashCards.name) {
                 FlashCardsScreen(
-                    questions = questionsWithAnswers,
+                    questionsInOrder = questionsWithAnswers,
                 )
             }
             composable(route = MainScreen.AllQuestions.name) {

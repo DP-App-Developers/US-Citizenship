@@ -73,10 +73,12 @@ fun AllQuestionsPreview() {
         AllQuestionsScreen(
             listOf(
                 Question(
+                    questionNumber = 1,
                     question = "What is the supreme law of the land?",
                     answer = listOf("the Constitution"),
                 ),
                 Question(
+                    questionNumber = 2,
                     question = "What does the Constitution do?",
                     answer = listOf(
                         "sets up the government",
