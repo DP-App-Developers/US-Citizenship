@@ -27,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.dpappdev.uscitizenship.MainScreen
@@ -69,8 +70,10 @@ fun SettingsScreen(
         var selectedRep by rememberSaveable { mutableStateOf(defaultRepresentativeText) }
 
         Text(
-            text = "This is to provide you the names of your elected state officials.",
-            modifier = Modifier.padding(bottom = 12.dp),
+//            text = "This is to provide you the names of your elected state officials.",
+            text = "Disclaimer: This application is not affiliated with any government entity.",
+            fontSize = 12.sp,
+            modifier = Modifier.padding(bottom = 24.dp),
         )
 
         // We want to react on tap/press on TextField to show menu
