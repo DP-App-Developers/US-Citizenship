@@ -1,5 +1,8 @@
 # Privacy Policy
 Effective Date: 1/1/2024
+
+The app sources all its information directly from the [USCIS website](https://www.uscis.gov/citizenship/find-study-materials-and-resources/study-for-the-test).
+
 ### No Collection of Personal Information
 The US Citizen app does not collect any personal information from its users. We are committed to maintaining the privacy and confidentiality of your data.
 
@@ -14,3 +17,6 @@ Our app does not require users to create accounts, and therefore, we do not stor
 
 ### Contact Us
 If you have any questions or concerns about our privacy practices, please contact us at dennishong5@gmail.com.
+
+### Disclaimer
+This application is not affiliated with any government entity.
