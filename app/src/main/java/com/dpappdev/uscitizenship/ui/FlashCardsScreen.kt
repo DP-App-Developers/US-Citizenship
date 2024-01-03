@@ -53,7 +53,7 @@ fun FlashCardsScreen(
     }
     val shuffleDataStore = FlashCardsShuffleDataStore(LocalContext.current)
     val isShuffleOn = shuffleDataStore.isShuffleOn.collectAsState(initial = false).value
-    var questions: List<Question>
+    val questions: List<Question>
     val shuffleIconColor: Color
     if (isShuffleOn) {
         questions = questionsShuffled
@@ -145,25 +145,25 @@ fun FlashCardsScreen(
                 .align(Alignment.BottomCenter)
                 .clickable {
                     CoroutineScope(Dispatchers.Main).launch {
-//                        // update index so the question remains the same on the screen
-//                        if (isShuffleOn) {
-//                            // turning shuffle off
-//                            questionsInOrder.forEachIndexed { i, question ->
-//                                if (question.questionNumber == questionNumber) {
-//                                    index = i
-//                                    return@forEachIndexed
-//                                }
-//                            }
-//                        } else {
-//                            // turning shuffle on
-//                            questionsShuffled.forEachIndexed { i, question ->
-//                                if (question.questionNumber == questionNumber) {
-//                                    index = i
-//                                    return@forEachIndexed
-//                                }
-//                            }
-//                        }
                         shuffleDataStore.saveShuffleOn(!isShuffleOn)
+                        // update index so the question remains the same on the screen
+                        if (isShuffleOn) {
+                            // turning shuffle off
+                            questionsInOrder.forEachIndexed { i, question ->
+                                if (question.questionNumber == questionNumber) {
+                                    index = i
+                                    return@forEachIndexed
+                                }
+                            }
+                        } else {
+                            // turning shuffle on
+                            questionsShuffled.forEachIndexed { i, question ->
+                                if (question.questionNumber == questionNumber) {
+                                    index = i
+                                    return@forEachIndexed
+                                }
+                            }
+                        }
                     }
                 }
         )
