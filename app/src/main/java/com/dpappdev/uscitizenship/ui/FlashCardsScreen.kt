@@ -16,6 +16,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -92,7 +93,7 @@ fun FlashCardsScreen(
             ) {
                 Column(
                     modifier = Modifier
-                        .padding(12.dp)
+                        .padding(16.dp)
                         .fillMaxWidth()
                 ) {
                     Row(
@@ -115,7 +116,7 @@ fun FlashCardsScreen(
                         )
                     }
 
-                    Spacer(modifier = Modifier.height(40.dp))
+                    Spacer(modifier = Modifier.height(20.dp))
 
                     if (!expanded) {
                         Icon(
@@ -125,12 +126,28 @@ fun FlashCardsScreen(
                             modifier = Modifier.align(Alignment.CenterHorizontally)
                         )
                     } else {
-                        val bullet = "\u2022"
+                        Divider(color = MaterialTheme.colorScheme.outline)
+                        Spacer(modifier = Modifier.height(20.dp))
                         questions[index].answer.forEach {
-                            Text(
-                                text = "$bullet $it",
-                                fontSize = 20.sp
-                            )
+                            Row(
+                                modifier = Modifier
+                                    .clickable {
+                                        textToSpeech.speak(it, TextToSpeech.QUEUE_FLUSH, null, null)
+                                    },
+                            ) {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.baseline_volume_up_24),
+                                    contentDescription = "read out loud",
+                                    tint = MaterialTheme.colorScheme.primary,
+                                    modifier = Modifier
+                                        .padding(end = 8.dp)
+                                        .padding(top = 2.dp)
+                                )
+                                Text(
+                                    text = it,
+                                    fontSize = 20.sp,
+                                )
+                            }
                         }
                     }
                 }
