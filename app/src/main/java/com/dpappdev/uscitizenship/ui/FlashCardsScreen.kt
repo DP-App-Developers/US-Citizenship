@@ -1,8 +1,10 @@
 package com.dpappdev.uscitizenship.ui
 
+import android.speech.tts.TextToSpeech
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -45,6 +47,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun FlashCardsScreen(
     questionsInOrder: List<Question>,
+    textToSpeech: TextToSpeech,
 ) {
     var index by rememberSaveable { mutableIntStateOf(0) }
     var expanded by rememberSaveable { mutableStateOf(false) }
@@ -92,10 +95,25 @@ fun FlashCardsScreen(
                         .padding(12.dp)
                         .fillMaxWidth()
                 ) {
-                    Text(
-                        text = questions[index].question,
-                        fontSize = 20.sp
-                    )
+                    Row(
+                        modifier = Modifier
+                            .clickable {
+                                textToSpeech.speak(questions[index].question, TextToSpeech.QUEUE_FLUSH, null, null)
+                            },
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.baseline_volume_up_24),
+                            contentDescription = "read out loud",
+                            tint = MaterialTheme.colorScheme.primary,
+                            modifier = Modifier
+                                .padding(end = 8.dp)
+                                .padding(top = 2.dp)
+                        )
+                        Text(
+                            text = questions[index].question,
+                            fontSize = 20.sp,
+                        )
+                    }
 
                     Spacer(modifier = Modifier.height(40.dp))
 
@@ -191,7 +209,7 @@ fun FlashCardsScreen(
 fun FlashCardsPreview() {
     USCitizenshipTheme {
         FlashCardsScreen(
-            listOf(
+            questionsInOrder = listOf(
                 Question(
                     questionNumber = 1,
                     question = "What is the supreme law of the land?",
@@ -206,7 +224,8 @@ fun FlashCardsPreview() {
                         "protects basic rights of Americans"
                     ),
                 ),
-            )
+            ),
+            textToSpeech = TextToSpeech(LocalContext.current) {},
         )
     }
 }

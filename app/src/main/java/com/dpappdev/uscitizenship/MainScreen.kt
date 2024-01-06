@@ -101,6 +101,7 @@ fun USCitizenApp(
             composable(route = MainScreen.FlashCards.name) {
                 FlashCardsScreen(
                     questionsInOrder = questionsWithAnswers,
+                    textToSpeech = textToSpeech,
                 )
             }
             composable(route = MainScreen.AllQuestions.name) {
