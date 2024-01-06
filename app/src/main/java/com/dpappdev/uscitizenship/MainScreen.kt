@@ -1,5 +1,6 @@
 package com.dpappdev.uscitizenship
 
+import android.speech.tts.TextToSpeech
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -47,6 +48,7 @@ enum class MainScreen(@StringRes val title: Int) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun USCitizenApp(
+    textToSpeech: TextToSpeech,
     allQuestionsViewModel: AllQuestionsViewModel = viewModel(),
     navController: NavHostController = rememberNavController()
 ) {
@@ -104,6 +106,7 @@ fun USCitizenApp(
             composable(route = MainScreen.AllQuestions.name) {
                 AllQuestionsScreen(
                     questions = questionsWithAnswers,
+                    textToSpeech = textToSpeech,
                 )
             }
         }

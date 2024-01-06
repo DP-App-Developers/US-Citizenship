@@ -1,6 +1,8 @@
 package com.dpappdev.uscitizenship.ui
 
+import android.speech.tts.TextToSpeech
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,6 +14,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -21,6 +24,7 @@ import com.dpappdev.uscitizenship.ui.theme.USCitizenshipTheme
 @Composable
 fun AllQuestionsScreen(
     questions: List<Question>,
+    textToSpeech: TextToSpeech,
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxSize()
@@ -52,12 +56,18 @@ fun AllQuestionsScreen(
                         text = item.question,
                         fontSize = textSize,
                         modifier = Modifier.padding(bottom = 8.dp)
+                            .clickable {
+                                textToSpeech.speak(item.question, TextToSpeech.QUEUE_FLUSH, null, null)
+                            }
                     )
                     val bullet = "\u2022"
                     item.answer.forEach {
                         Text(
                             text = "$bullet $it",
                             fontSize = textSize,
+                            modifier = Modifier.clickable {
+                                textToSpeech.speak(it, TextToSpeech.QUEUE_FLUSH, null, null)
+                            }
                         )
                     }
                 }
@@ -71,7 +81,7 @@ fun AllQuestionsScreen(
 fun AllQuestionsPreview() {
     USCitizenshipTheme {
         AllQuestionsScreen(
-            listOf(
+            questions = listOf(
                 Question(
                     questionNumber = 1,
                     question = "What is the supreme law of the land?",
@@ -86,7 +96,8 @@ fun AllQuestionsPreview() {
                         "protects basic rights of Americans"
                     ),
                 ),
-            )
+            ),
+            textToSpeech = TextToSpeech(LocalContext.current) {},
         )
     }
 }
