@@ -131,6 +131,7 @@ fun FlashCardsScreen(
                         questions[index].answer.forEach {
                             Row(
                                 modifier = Modifier
+                                    .padding(start = 32.dp)
                                     .clickable {
                                         textToSpeech.speak(it, TextToSpeech.QUEUE_FLUSH, null, null)
                                     },
