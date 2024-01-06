@@ -10,14 +10,17 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.dpappdev.uscitizenship.R
 import com.dpappdev.uscitizenship.data.Question
 import com.dpappdev.uscitizenship.ui.theme.USCitizenshipTheme
 
@@ -29,7 +32,7 @@ fun AllQuestionsScreen(
     LazyColumn(
         modifier = Modifier.fillMaxSize()
     ) {
-        val borderPadding = 18.dp
+        val borderPadding = 16.dp
         val textSize = 16.sp
 
         itemsIndexed(questions) { index, item ->
@@ -46,29 +49,43 @@ fun AllQuestionsScreen(
                     .background(color = backgroundColor)
                     .padding(borderPadding)
             ) {
-                Text(
-                    text = "$questionNumber.",
-                    modifier = Modifier.padding(end = 8.dp)
+                Icon(
+                    painter = painterResource(id = R.drawable.baseline_volume_up_24),
+                    contentDescription = "read out loud",
+                    tint = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier
+                        .padding(end = 8.dp)
+                        .clickable {
+                            textToSpeech.speak(item.question, TextToSpeech.QUEUE_FLUSH, null, null)
+                        },
                 )
 
                 Column {
                     Text(
-                        text = item.question,
+                        text = "$questionNumber. " + item.question,
                         fontSize = textSize,
                         modifier = Modifier.padding(bottom = 8.dp)
                             .clickable {
                                 textToSpeech.speak(item.question, TextToSpeech.QUEUE_FLUSH, null, null)
                             }
                     )
-                    val bullet = "\u2022"
                     item.answer.forEach {
-                        Text(
-                            text = "$bullet $it",
-                            fontSize = textSize,
+                        Row(
                             modifier = Modifier.clickable {
                                 textToSpeech.speak(it, TextToSpeech.QUEUE_FLUSH, null, null)
                             }
-                        )
+                        ) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.baseline_volume_up_24),
+                                contentDescription = "read out loud",
+                                tint = MaterialTheme.colorScheme.primary,
+                                modifier = Modifier.padding(end = 8.dp)
+                            )
+                            Text(
+                                text = it,
+                                fontSize = textSize,
+                            )
+                        }
                     }
                 }
             }
