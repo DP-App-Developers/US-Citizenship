@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Icon
@@ -22,11 +23,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.dpappdev.uscitizenship.R
 import com.dpappdev.uscitizenship.data.Question
+import com.dpappdev.uscitizenship.data.StarredQuestionsDataStore
 import com.dpappdev.uscitizenship.ui.theme.USCitizenshipTheme
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @Composable
 fun AllQuestionsScreen(
     questions: List<Question>,
+    starredQuestions: List<String>,
+    starredQuestionsDataStore: StarredQuestionsDataStore,
     textToSpeech: TextToSpeech,
 ) {
     LazyColumn(
@@ -60,7 +67,9 @@ fun AllQuestionsScreen(
                         },
                 )
 
-                Column {
+                Column(
+                    modifier = Modifier.weight(1f)
+                ) {
                     Text(
                         text = "$questionNumber. " + item.question,
                         fontSize = textSize,
@@ -88,6 +97,37 @@ fun AllQuestionsScreen(
                         }
                     }
                 }
+
+                val starIcon: Int
+                val starIconContentDescription: String
+                if (starredQuestions.contains(questionNumber.toString())) {
+                    starIcon = R.drawable.round_star_24
+                    starIconContentDescription = "unmark question $questionNumber as starred"
+                } else {
+                    starIcon = R.drawable.round_star_outline_24
+                    starIconContentDescription = "mark question $questionNumber as starred"
+                }
+
+                Icon(
+                    painter = painterResource(id = starIcon),
+                    contentDescription = starIconContentDescription,
+                    tint = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier
+                        .size(width = 48.dp, height = 48.dp)
+                        .padding(start = 8.dp)
+                        .clickable {
+                            CoroutineScope(Dispatchers.Main).launch {
+                                starredQuestions.toMutableList().run {
+                                    if (starredQuestions.contains("$questionNumber")) {
+                                        remove("$questionNumber")
+                                    } else {
+                                        add("$questionNumber")
+                                    }
+                                    starredQuestionsDataStore.saveStarredQuestions(joinToString(separator = ","))
+                                }
+                            }
+                        },
+                )
             }
         }
     }
@@ -114,6 +154,8 @@ fun AllQuestionsPreview() {
                     ),
                 ),
             ),
+            starredQuestions = listOf("2, 99"),
+            starredQuestionsDataStore = StarredQuestionsDataStore(LocalContext.current),
             textToSpeech = TextToSpeech(LocalContext.current) {},
         )
     }

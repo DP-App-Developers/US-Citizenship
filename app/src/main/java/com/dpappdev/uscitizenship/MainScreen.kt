@@ -27,6 +27,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.dpappdev.uscitizenship.data.Question
+import com.dpappdev.uscitizenship.data.StarredQuestionsDataStore
 import com.dpappdev.uscitizenship.data.UsRepresentativeDataStore
 import com.dpappdev.uscitizenship.data.UserStateDataStore
 import com.dpappdev.uscitizenship.data.getGovernor
@@ -71,8 +72,11 @@ fun USCitizenApp(
         val loadingInitial = "loading"
         val userStateDataStore = UserStateDataStore(LocalContext.current)
         val usRepresentativeDataStore = UsRepresentativeDataStore(LocalContext.current)
+        val starredQuestionsDataStore = StarredQuestionsDataStore(LocalContext.current)
         val userStateOrDistrict = userStateDataStore.getUserState.collectAsState(initial = loadingInitial).value
         val usRepresentative = usRepresentativeDataStore.getUsRepresentative.collectAsState(initial = loadingInitial).value
+        val starredQuestionsString = starredQuestionsDataStore.getStarredQuestions.collectAsState(initial = "").value
+        val starredQuestions = starredQuestionsString.split(",")
         val uiState by allQuestionsViewModel.uiState.collectAsState()
         val questionsWithAnswers = consolidateAnswers(userStateOrDistrict, usRepresentative, uiState.questions)
 
@@ -107,6 +111,8 @@ fun USCitizenApp(
             composable(route = MainScreen.AllQuestions.name) {
                 AllQuestionsScreen(
                     questions = questionsWithAnswers,
+                    starredQuestions = starredQuestions,
+                    starredQuestionsDataStore = starredQuestionsDataStore,
                     textToSpeech = textToSpeech,
                 )
             }
