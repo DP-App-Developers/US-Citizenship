@@ -40,6 +40,7 @@ import androidx.compose.ui.unit.sp
 import com.dpappdev.uscitizenship.R
 import com.dpappdev.uscitizenship.data.FlashCardsShuffleDataStore
 import com.dpappdev.uscitizenship.data.Question
+import com.dpappdev.uscitizenship.data.StarredQuestionsDataStore
 import com.dpappdev.uscitizenship.ui.theme.USCitizenshipTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -48,6 +49,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun FlashCardsScreen(
     questionsInOrder: List<Question>,
+    starredQuestions: List<String>,
+    starredQuestionsDataStore: StarredQuestionsDataStore,
     textToSpeech: TextToSpeech,
 ) {
     var index by rememberSaveable { mutableIntStateOf(0) }
@@ -72,14 +75,50 @@ fun FlashCardsScreen(
         Column(
             modifier = Modifier
                 .verticalScroll(rememberScrollState())
-                .padding(16.dp),
+                .padding(vertical = 8.dp)
+                .padding(horizontal = 16.dp),
         ) {
-            Text(
-                text = "Question $questionNumber / 100",
-                fontWeight = FontWeight.Bold,
-                fontSize = 18.sp,
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.padding(bottom = 8.dp)
-            )
+            ) {
+                Text(
+                    text = "Question $questionNumber / 100",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 18.sp,
+                )
+
+                val starIcon: Int
+                val starIconContentDescription: String
+                if (starredQuestions.contains(questionNumber.toString())) {
+                    starIcon = R.drawable.round_star_24
+                    starIconContentDescription = "unmark question $questionNumber as starred"
+                } else {
+                    starIcon = R.drawable.round_star_outline_24
+                    starIconContentDescription = "mark question $questionNumber as starred"
+                }
+
+                Icon(
+                    painter = painterResource(id = starIcon),
+                    contentDescription = starIconContentDescription,
+                    tint = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier
+                        .padding(start = 8.dp)
+                        .size(width = 48.dp, height = 48.dp)
+                        .clickable {
+                            CoroutineScope(Dispatchers.Main).launch {
+                                starredQuestions.toMutableList().run {
+                                    if (starredQuestions.contains("$questionNumber")) {
+                                        remove("$questionNumber")
+                                    } else {
+                                        add("$questionNumber")
+                                    }
+                                    starredQuestionsDataStore.saveStarredQuestions(joinToString(separator = ","))
+                                }
+                            }
+                        },
+                )
+            }
 
             ElevatedCard(
                 modifier = Modifier
@@ -243,6 +282,8 @@ fun FlashCardsPreview() {
                     ),
                 ),
             ),
+            starredQuestions = listOf("2,5,84"),
+            starredQuestionsDataStore = StarredQuestionsDataStore(LocalContext.current),
             textToSpeech = TextToSpeech(LocalContext.current) {},
         )
     }

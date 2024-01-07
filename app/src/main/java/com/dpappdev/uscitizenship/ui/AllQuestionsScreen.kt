@@ -113,8 +113,8 @@ fun AllQuestionsScreen(
                     contentDescription = starIconContentDescription,
                     tint = MaterialTheme.colorScheme.primary,
                     modifier = Modifier
-                        .size(width = 48.dp, height = 48.dp)
                         .padding(start = 8.dp)
+                        .size(width = 48.dp, height = 48.dp)
                         .clickable {
                             CoroutineScope(Dispatchers.Main).launch {
                                 starredQuestions.toMutableList().run {
@@ -154,7 +154,7 @@ fun AllQuestionsPreview() {
                     ),
                 ),
             ),
-            starredQuestions = listOf("2, 99"),
+            starredQuestions = listOf("2,5,84"),
             starredQuestionsDataStore = StarredQuestionsDataStore(LocalContext.current),
             textToSpeech = TextToSpeech(LocalContext.current) {},
         )
