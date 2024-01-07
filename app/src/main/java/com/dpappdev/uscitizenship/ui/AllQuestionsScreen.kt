@@ -114,7 +114,7 @@ fun AllQuestionsScreen(
                     tint = MaterialTheme.colorScheme.primary,
                     modifier = Modifier
                         .padding(start = 8.dp)
-                        .size(width = 48.dp, height = 48.dp)
+                        .size(width = 40.dp, height = 40.dp)
                         .clickable {
                             CoroutineScope(Dispatchers.Main).launch {
                                 starredQuestions.toMutableList().run {
