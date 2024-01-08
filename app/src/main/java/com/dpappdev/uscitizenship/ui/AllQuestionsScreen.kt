@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Icon
@@ -25,9 +24,6 @@ import com.dpappdev.uscitizenship.R
 import com.dpappdev.uscitizenship.data.Question
 import com.dpappdev.uscitizenship.data.StarredQuestionsDataStore
 import com.dpappdev.uscitizenship.ui.theme.USCitizenshipTheme
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 @Composable
 fun AllQuestionsScreen(
@@ -73,9 +69,15 @@ fun AllQuestionsScreen(
                     Text(
                         text = "$questionNumber. " + item.question,
                         fontSize = textSize,
-                        modifier = Modifier.padding(bottom = 8.dp)
+                        modifier = Modifier
+                            .padding(bottom = 8.dp)
                             .clickable {
-                                textToSpeech.speak(item.question, TextToSpeech.QUEUE_FLUSH, null, null)
+                                textToSpeech.speak(
+                                    item.question,
+                                    TextToSpeech.QUEUE_FLUSH,
+                                    null,
+                                    null
+                                )
                             }
                     )
                     item.answer.forEach {
@@ -98,35 +100,10 @@ fun AllQuestionsScreen(
                     }
                 }
 
-                val starIcon: Int
-                val starIconContentDescription: String
-                if (starredQuestions.contains(questionNumber.toString())) {
-                    starIcon = R.drawable.round_star_24
-                    starIconContentDescription = "unmark question $questionNumber as starred"
-                } else {
-                    starIcon = R.drawable.round_star_outline_24
-                    starIconContentDescription = "mark question $questionNumber as starred"
-                }
-
-                Icon(
-                    painter = painterResource(id = starIcon),
-                    contentDescription = starIconContentDescription,
-                    tint = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier
-                        .padding(start = 8.dp)
-                        .size(width = 40.dp, height = 40.dp)
-                        .clickable {
-                            CoroutineScope(Dispatchers.Main).launch {
-                                starredQuestions.toMutableList().run {
-                                    if (starredQuestions.contains("$questionNumber")) {
-                                        remove("$questionNumber")
-                                    } else {
-                                        add("$questionNumber")
-                                    }
-                                    starredQuestionsDataStore.saveStarredQuestions(joinToString(separator = ","))
-                                }
-                            }
-                        },
+                StarIcon(
+                    starredQuestions = starredQuestions,
+                    starredQuestionsDataStore = starredQuestionsDataStore,
+                    questionNumber = questionNumber,
                 )
             }
         }

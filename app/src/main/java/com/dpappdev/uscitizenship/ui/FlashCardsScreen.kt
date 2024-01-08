@@ -88,35 +88,10 @@ fun FlashCardsScreen(
                     fontSize = 18.sp,
                 )
 
-                val starIcon: Int
-                val starIconContentDescription: String
-                if (starredQuestions.contains(questionNumber.toString())) {
-                    starIcon = R.drawable.round_star_24
-                    starIconContentDescription = "unmark question $questionNumber as starred"
-                } else {
-                    starIcon = R.drawable.round_star_outline_24
-                    starIconContentDescription = "mark question $questionNumber as starred"
-                }
-
-                Icon(
-                    painter = painterResource(id = starIcon),
-                    contentDescription = starIconContentDescription,
-                    tint = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier
-                        .padding(start = 8.dp)
-                        .size(width = 40.dp, height = 40.dp)
-                        .clickable {
-                            CoroutineScope(Dispatchers.Main).launch {
-                                starredQuestions.toMutableList().run {
-                                    if (starredQuestions.contains("$questionNumber")) {
-                                        remove("$questionNumber")
-                                    } else {
-                                        add("$questionNumber")
-                                    }
-                                    starredQuestionsDataStore.saveStarredQuestions(joinToString(separator = ","))
-                                }
-                            }
-                        },
+                StarIcon(
+                    starredQuestions = starredQuestions,
+                    starredQuestionsDataStore = starredQuestionsDataStore,
+                    questionNumber = questionNumber,
                 )
             }
 
