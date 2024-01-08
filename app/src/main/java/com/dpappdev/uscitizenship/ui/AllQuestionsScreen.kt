@@ -9,7 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -38,8 +38,8 @@ fun AllQuestionsScreen(
         val borderPadding = 16.dp
         val textSize = 16.sp
 
-        itemsIndexed(questions) { index, item ->
-            val questionNumber = index + 1
+        items(questions) { item ->
+            val questionNumber = item.questionNumber
             val backgroundColor = if (questionNumber % 2 == 0) {
                 MaterialTheme.colorScheme.surfaceVariant
             } else {
