@@ -78,7 +78,9 @@ fun USCitizenApp(
         val userStateOrDistrict = userStateDataStore.getUserState.collectAsState(initial = loadingInitial).value
         val usRepresentative = usRepresentativeDataStore.getUsRepresentative.collectAsState(initial = loadingInitial).value
         val starredQuestionsString = starredQuestionsDataStore.getStarredQuestions.collectAsState(initial = "").value
-        val starredQuestions = starredQuestionsString.split(",")
+        // "".split(",") returns {""}, which is not desired
+        // the desired behavior is to return empty list
+        val starredQuestions = starredQuestionsString.split(",").takeIf {it.size > 1 || it[0].isNotEmpty()} ?: emptyList()
         val uiState by allQuestionsViewModel.uiState.collectAsState()
         val questionsWithAnswers = consolidateAnswers(userStateOrDistrict, usRepresentative, uiState.questions)
 
