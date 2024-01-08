@@ -61,7 +61,7 @@ fun StarredQuestionsScreen(
 
         itemsIndexed(starredQuestionsList) { index, item ->
             val questionNumber = item.questionNumber
-            val backgroundColor = if (index % 2 == 0) {
+            val backgroundColor = if (index % 2 == 1) {
                 MaterialTheme.colorScheme.surfaceVariant
             } else {
                 MaterialTheme.colorScheme.background
