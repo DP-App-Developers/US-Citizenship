@@ -38,12 +38,14 @@ import com.dpappdev.uscitizenship.ui.AllQuestionsViewModel
 import com.dpappdev.uscitizenship.ui.FlashCardsScreen
 import com.dpappdev.uscitizenship.ui.HomeScreen
 import com.dpappdev.uscitizenship.ui.SettingsScreen
+import com.dpappdev.uscitizenship.ui.StarredQuestionsScreen
 
 enum class MainScreen(@StringRes val title: Int) {
     Home(title = R.string.app_name),
     Settings(title = R.string.title_settings),
     FlashCards(title = R.string.title_flash_cards),
     AllQuestions(title = R.string.title_all_questions),
+    StarredQuestions(title = R.string.title_starred_questions),
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -93,15 +95,6 @@ fun USCitizenApp(
                     modifier = Modifier.fillMaxSize(),
                 )
             }
-            composable(route = MainScreen.Settings.name) {
-                SettingsScreen(
-                    userStateDataStore = userStateDataStore,
-                    usRepresentativeDataStore = usRepresentativeDataStore,
-                    currentUserStateOrDistrict = userStateOrDistrict,
-                    currentUsRepresentative = usRepresentative,
-                    navController = navController,
-                )
-            }
             composable(route = MainScreen.FlashCards.name) {
                 FlashCardsScreen(
                     questionsInOrder = questionsWithAnswers,
@@ -116,6 +109,23 @@ fun USCitizenApp(
                     starredQuestions = starredQuestions,
                     starredQuestionsDataStore = starredQuestionsDataStore,
                     textToSpeech = textToSpeech,
+                )
+            }
+            composable(route = MainScreen.StarredQuestions.name) {
+                StarredQuestionsScreen(
+                    questions = questionsWithAnswers,
+                    starredQuestions = starredQuestions,
+                    starredQuestionsDataStore = starredQuestionsDataStore,
+                    textToSpeech = textToSpeech,
+                )
+            }
+            composable(route = MainScreen.Settings.name) {
+                SettingsScreen(
+                    userStateDataStore = userStateDataStore,
+                    usRepresentativeDataStore = usRepresentativeDataStore,
+                    currentUserStateOrDistrict = userStateOrDistrict,
+                    currentUsRepresentative = usRepresentative,
+                    navController = navController,
                 )
             }
         }

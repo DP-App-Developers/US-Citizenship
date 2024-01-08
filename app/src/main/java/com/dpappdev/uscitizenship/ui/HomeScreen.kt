@@ -122,6 +122,34 @@ fun HomeScreen(
 
             OutlinedCard(
                 onClick = {
+                    if (newUser) {
+                        showBottomSheet = true
+                    } else {
+                        navController.navigate(MainScreen.StarredQuestions.name)
+                    }
+                },
+                colors = CardDefaults.cardColors(
+                    containerColor = cardColor,
+                ),
+                border = BorderStroke(2.dp, MaterialTheme.colorScheme.primary),
+                modifier = Modifier
+                    .padding(bottom = 16.dp)
+                    .size(width = 240.dp, height = 70.dp)
+            ) {
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    Text(
+                        text = "Starred Questions",
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = fontFamily,
+                    )
+                }
+            }
+
+            OutlinedCard(
+                onClick = {
                     navController.navigate(MainScreen.Settings.name)
                 },
                 colors = CardDefaults.cardColors(
