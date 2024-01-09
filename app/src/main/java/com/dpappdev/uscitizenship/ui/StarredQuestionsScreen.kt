@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Icon
@@ -37,17 +38,24 @@ fun StarredQuestionsScreen(
 ) {
     val borderPadding = 16.dp
     if (starredQuestions.isEmpty()) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(borderPadding)
-        ) {
-            Text(
-                text = "Mark a question as starred and it will show up here.",
-                textAlign = TextAlign.Center,
-                modifier = Modifier.align(Alignment.Center),
-                fontSize = 20.sp
-            )
+        Box(modifier = Modifier
+            .fillMaxSize()
+            .padding(borderPadding)) {
+            Column(modifier = Modifier.align(Alignment.Center)) {
+                Icon(
+                    painter = painterResource(id = R.drawable.shooting_star),
+                    contentDescription = "empty state icon",
+                    tint = MaterialTheme.colorScheme.secondary,
+                    modifier = Modifier
+                        .size(width = 200.dp, height = 200.dp)
+                        .align(Alignment.CenterHorizontally)
+                )
+                Text(
+                    text = "Mark a question as starred and it will show up here.",
+                    textAlign = TextAlign.Center,
+                    fontSize = 20.sp
+                )
+            }
         }
         return
     }
