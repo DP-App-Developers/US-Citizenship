@@ -54,8 +54,6 @@ fun HomeScreen(
             )
         }
     } else {
-        val cardColor = MaterialTheme.colorScheme.secondaryContainer
-        val fontFamily = FontFamily.SansSerif
         val newUser = currentUserStateOrDistrict.isEmpty() || currentUsRepresentative.isEmpty()
         var showBottomSheet by rememberSaveable { mutableStateOf(newUser) }
         Column(
@@ -64,113 +62,45 @@ fun HomeScreen(
                 .padding(32.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            OutlinedCard(
-                onClick = {
+            HomeScreenCard(
+                cardText = "Flash Cards",
+                onCardClick = {
                     if (newUser) {
                         showBottomSheet = true
                     } else {
                         navController.navigate(MainScreen.FlashCards.name)
                     }
                 },
-                colors = CardDefaults.cardColors(
-                    containerColor = cardColor,
-                ),
-                border = BorderStroke(2.dp, MaterialTheme.colorScheme.primary),
-                modifier = Modifier
-                    .padding(bottom = 16.dp)
-                    .size(width = 240.dp, height = 70.dp)
-            ) {
-                Box(
-                    contentAlignment = Alignment.Center,
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    Text(
-                        text = "Flash Cards",
-                        fontWeight = FontWeight.Bold,
-                        fontFamily = fontFamily,
-                    )
-                }
-            }
+            )
 
-            OutlinedCard(
-                onClick = {
+            HomeScreenCard(
+                cardText = "All Questions",
+                onCardClick = {
                     if (newUser) {
                         showBottomSheet = true
                     } else {
                         navController.navigate(MainScreen.AllQuestions.name)
                     }
                 },
-                colors = CardDefaults.cardColors(
-                    containerColor = cardColor,
-                ),
-                border = BorderStroke(2.dp, MaterialTheme.colorScheme.primary),
-                modifier = Modifier
-                    .padding(bottom = 16.dp)
-                    .size(width = 240.dp, height = 70.dp)
-            ) {
-                Box(
-                    contentAlignment = Alignment.Center,
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    Text(
-                        text = "All Questions",
-                        fontWeight = FontWeight.Bold,
-                        fontFamily = fontFamily,
-                    )
-                }
-            }
+            )
 
-            OutlinedCard(
-                onClick = {
+            HomeScreenCard(
+                cardText = "Starred Questions",
+                onCardClick = {
                     if (newUser) {
                         showBottomSheet = true
                     } else {
                         navController.navigate(MainScreen.StarredQuestions.name)
                     }
                 },
-                colors = CardDefaults.cardColors(
-                    containerColor = cardColor,
-                ),
-                border = BorderStroke(2.dp, MaterialTheme.colorScheme.primary),
-                modifier = Modifier
-                    .padding(bottom = 16.dp)
-                    .size(width = 240.dp, height = 70.dp)
-            ) {
-                Box(
-                    contentAlignment = Alignment.Center,
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    Text(
-                        text = "Starred Questions",
-                        fontWeight = FontWeight.Bold,
-                        fontFamily = fontFamily,
-                    )
-                }
-            }
+            )
 
-            OutlinedCard(
-                onClick = {
+            HomeScreenCard(
+                cardText = "Settings",
+                onCardClick = {
                     navController.navigate(MainScreen.Settings.name)
                 },
-                colors = CardDefaults.cardColors(
-                    containerColor = cardColor,
-                ),
-                border = BorderStroke(2.dp, MaterialTheme.colorScheme.primary),
-                modifier = Modifier
-                    .padding(bottom = 16.dp)
-                    .size(width = 240.dp, height = 70.dp)
-            ) {
-                Box(
-                    contentAlignment = Alignment.Center,
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    Text(
-                        text = "Settings",
-                        fontWeight = FontWeight.Bold,
-                        fontFamily = fontFamily,
-                    )
-                }
-            }
+            )
         }
 
         if (showBottomSheet) {
@@ -203,6 +133,34 @@ fun HomeScreen(
                     }
                 }
             }
+        }
+    }
+}
+
+@Composable
+fun HomeScreenCard(
+    cardText: String,
+    onCardClick: () -> Unit,
+) {
+    OutlinedCard(
+        onClick = onCardClick,
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.secondaryContainer,
+        ),
+        border = BorderStroke(2.dp, MaterialTheme.colorScheme.primary),
+        modifier = Modifier
+            .padding(bottom = 16.dp)
+            .size(width = 240.dp, height = 70.dp)
+    ) {
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier.fillMaxSize()
+        ) {
+            Text(
+                text = cardText,
+                fontWeight = FontWeight.Bold,
+                fontFamily = FontFamily.SansSerif,
+            )
         }
     }
 }
