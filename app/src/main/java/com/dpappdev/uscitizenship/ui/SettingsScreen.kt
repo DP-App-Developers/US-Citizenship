@@ -83,7 +83,7 @@ fun SettingsScreen(
         Text(
 //            text = "Disclaimer: This application is not affiliated with any government entity.",
             text = "This is to provide you the names of your elected state officials.",
-            fontSize = 12.sp,
+            fontSize = 14.sp,
             modifier = Modifier.padding(bottom = 12.dp),
         )
 
@@ -91,7 +91,7 @@ fun SettingsScreen(
         ExposedDropdownMenuBox(
             expanded = expandedForStates,
             onExpandedChange = { expandedForStates = it },
-            modifier = Modifier.padding(bottom = 12.dp),
+            modifier = Modifier.padding(bottom = 36.dp),
         ) {
             TextField(
                 // The `menuAnchor` modifier must be passed to the text field for correctness.
@@ -169,7 +169,7 @@ fun SettingsScreen(
                     Button(
                         modifier = Modifier
                             .width(maxWidth * 3 / 4)
-                            .padding(vertical = 8.dp),
+                            .padding(vertical = 24.dp),
                         onClick = {
                             runBlocking {
                                 // making saving synchronous to prevent showing the new user bottom sheet when going back to home
@@ -196,7 +196,7 @@ fun SettingsScreen(
 @Composable
 fun HouseGovWebsite() {
     val annotatedString = buildAnnotatedString {
-        val string = "Visit house.gov to find your U.S. Representative."
+        val string = "Visit house.gov to find your U.S. Representative based on your zip code."
         val startIndex = string.indexOf("house.gov")
         val endIndex = startIndex + 9
         append(string)
@@ -218,7 +218,7 @@ fun HouseGovWebsite() {
             color = LocalContentColor.current,
             fontFamily = FontFamily.Serif,
             fontWeight = FontWeight.Normal,
-            fontSize = 12.sp,
+            fontSize = 14.sp,
             lineHeight = 18.sp,
             letterSpacing = 0.5.sp
         ),
