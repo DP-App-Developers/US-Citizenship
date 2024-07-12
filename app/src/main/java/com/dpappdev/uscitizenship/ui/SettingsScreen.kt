@@ -49,7 +49,6 @@ import com.dpappdev.uscitizenship.data.getUsRepresentatives
 import com.dpappdev.uscitizenship.ui.theme.USCitizenshipTheme
 import kotlinx.coroutines.runBlocking
 
-@OptIn(ExperimentalTextApi::class)
 @Composable
 fun SettingsScreen(
     userStateDataStore: UserStateDataStore,
@@ -126,6 +125,8 @@ fun SettingsScreen(
         }
 
         if (representatives.isNotEmpty()) {
+            HouseGovWebsite()
+
             var expandedForRep by rememberSaveable { mutableStateOf(false) }
             // We want to react on tap/press on TextField to show menu
             ExposedDropdownMenuBox(
@@ -160,43 +161,6 @@ fun SettingsScreen(
                 }
             }
 
-            val annotatedString = buildAnnotatedString {
-                val string = "Visit house.gov to find your U.S. Representative."
-                val startIndex = string.indexOf("house.gov")
-                val endIndex = startIndex + 9
-                append(string)
-                addStyle(
-                    style = SpanStyle(textDecoration = TextDecoration.Underline),
-                    start = startIndex,
-                    end = endIndex,
-                )
-                addUrlAnnotation(
-                    UrlAnnotation("https://www.house.gov/"),
-                    start = startIndex,
-                    end = endIndex,
-                )
-            }
-            val uriHandler = LocalUriHandler.current
-            ClickableText(
-                text = annotatedString,
-                style = TextStyle(
-                    color = LocalContentColor.current,
-                    fontFamily = FontFamily.Serif,
-                    fontWeight = FontWeight.Normal,
-                    fontSize = 12.sp,
-                    lineHeight = 18.sp,
-                    letterSpacing = 0.5.sp
-                ),
-                modifier = Modifier.padding(bottom = 24.dp),
-                onClick = {
-                    annotatedString
-                        .getUrlAnnotations(it, it)
-                        .firstOrNull()?.let { annotation ->
-                            uriHandler.openUri(annotation.item.url)
-                        }
-                }
-            )
-
             if (selectedRep != selectRepText) {
                 BoxWithConstraints(
                     modifier = Modifier.fillMaxWidth(),
@@ -205,7 +169,7 @@ fun SettingsScreen(
                     Button(
                         modifier = Modifier
                             .width(maxWidth * 3 / 4)
-                            .padding(bottom = 8.dp),
+                            .padding(vertical = 8.dp),
                         onClick = {
                             runBlocking {
                                 // making saving synchronous to prevent showing the new user bottom sheet when going back to home
@@ -226,6 +190,47 @@ fun SettingsScreen(
             }
         }
     }
+}
+
+@OptIn(ExperimentalTextApi::class)
+@Composable
+fun HouseGovWebsite() {
+    val annotatedString = buildAnnotatedString {
+        val string = "Visit house.gov to find your U.S. Representative."
+        val startIndex = string.indexOf("house.gov")
+        val endIndex = startIndex + 9
+        append(string)
+        addStyle(
+            style = SpanStyle(textDecoration = TextDecoration.Underline),
+            start = startIndex,
+            end = endIndex,
+        )
+        addUrlAnnotation(
+            UrlAnnotation("https://www.house.gov/"),
+            start = startIndex,
+            end = endIndex,
+        )
+    }
+    val uriHandler = LocalUriHandler.current
+    ClickableText(
+        text = annotatedString,
+        style = TextStyle(
+            color = LocalContentColor.current,
+            fontFamily = FontFamily.Serif,
+            fontWeight = FontWeight.Normal,
+            fontSize = 12.sp,
+            lineHeight = 18.sp,
+            letterSpacing = 0.5.sp
+        ),
+        modifier = Modifier.padding(bottom = 12.dp),
+        onClick = {
+            annotatedString
+                .getUrlAnnotations(it, it)
+                .firstOrNull()?.let { annotation ->
+                    uriHandler.openUri(annotation.item.url)
+                }
+        }
+    )
 }
 
 @Preview(showBackground = true)
