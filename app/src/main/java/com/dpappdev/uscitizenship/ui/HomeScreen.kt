@@ -4,7 +4,6 @@ package com.dpappdev.uscitizenship.ui
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -29,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -45,7 +45,7 @@ fun HomeScreen(
 ) {
     val loading = currentUserStateOrDistrict == "loading" || currentUsRepresentative == "loading"
     if (loading) {
-        BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
+        Box(modifier = Modifier.fillMaxSize()) {
             LinearProgressIndicator(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -57,49 +57,62 @@ fun HomeScreen(
         val newUser = currentUserStateOrDistrict.isEmpty() || currentUsRepresentative.isEmpty()
         var showBottomSheet by rememberSaveable { mutableStateOf(newUser) }
         Column(
-            modifier = modifier
-                .verticalScroll(rememberScrollState())
-                .padding(32.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.fillMaxSize(),
         ) {
-            HomeScreenCard(
-                cardText = "Flash Cards",
-                onCardClick = {
-                    if (newUser) {
-                        showBottomSheet = true
-                    } else {
-                        navController.navigate(MainScreen.FlashCards.name)
-                    }
-                },
-            )
+            Column(
+                modifier = modifier
+                    .weight(1f)
+                    .verticalScroll(rememberScrollState())
+                    .padding(32.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                HomeScreenCard(
+                    cardText = "Flash Cards",
+                    onCardClick = {
+                        if (newUser) {
+                            showBottomSheet = true
+                        } else {
+                            navController.navigate(MainScreen.FlashCards.name)
+                        }
+                    },
+                )
 
-            HomeScreenCard(
-                cardText = "All Questions",
-                onCardClick = {
-                    if (newUser) {
-                        showBottomSheet = true
-                    } else {
-                        navController.navigate(MainScreen.AllQuestions.name)
-                    }
-                },
-            )
+                HomeScreenCard(
+                    cardText = "All Questions",
+                    onCardClick = {
+                        if (newUser) {
+                            showBottomSheet = true
+                        } else {
+                            navController.navigate(MainScreen.AllQuestions.name)
+                        }
+                    },
+                )
 
-            HomeScreenCard(
-                cardText = "Starred Questions",
-                onCardClick = {
-                    if (newUser) {
-                        showBottomSheet = true
-                    } else {
-                        navController.navigate(MainScreen.StarredQuestions.name)
-                    }
-                },
-            )
+                HomeScreenCard(
+                    cardText = "Starred Questions",
+                    onCardClick = {
+                        if (newUser) {
+                            showBottomSheet = true
+                        } else {
+                            navController.navigate(MainScreen.StarredQuestions.name)
+                        }
+                    },
+                )
 
-            HomeScreenCard(
-                cardText = "Settings",
-                onCardClick = {
-                    navController.navigate(MainScreen.Settings.name)
-                },
+                HomeScreenCard(
+                    cardText = "Settings",
+                    onCardClick = {
+                        navController.navigate(MainScreen.Settings.name)
+                    },
+                )
+            }
+
+            Text(
+                text = "Disclaimer: This application is not affiliated with any government entity.",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                textAlign = TextAlign.Center,
             )
         }
 
