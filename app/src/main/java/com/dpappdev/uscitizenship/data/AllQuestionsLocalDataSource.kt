@@ -257,7 +257,7 @@ class AllQuestionsLocalDataSource {
                     questionNumber = 28,
                     question = "What is the name of the President of the United States now?",
                     answer = listOf(
-                        "Joe Biden"
+                        "Donald Trump"
                     ),
                 ),
                 // 29
@@ -265,7 +265,7 @@ class AllQuestionsLocalDataSource {
                     questionNumber = 29,
                     question = "What is the name of the Vice President of the United States now?",
                     answer = listOf(
-                        "Kamala Harris"
+                        "JD Vance"
                     ),
                 ),
                 // 30
@@ -426,7 +426,7 @@ class AllQuestionsLocalDataSource {
                     questionNumber = 46,
                     question = "What is the political party of the President now?",
                     answer = listOf(
-                        "Democratic (Party)"
+                        "Republican (Party)"
                     ),
                 ),
                 // 47
