@@ -3,6 +3,6 @@ If you are considering applying for US Citizenship, a crucial step in the proces
 
 This user-friendly app provides easy navigation, offers access to all the questions and answers specific to your state, includes flashcards, and works on both light and dark modes. Using this app will certainly help you on your journey to becoming a US Citizen!
 
-The app sources all its information directly from the [USCIS website](https://www.uscis.gov/citizenship/find-study-materials-and-resources/study-for-the-test).
+The app uses information sourced directly from the official [USCIS website](https://www.uscis.gov/citizenship/find-study-materials-and-resources/study-for-the-test).
 
 Disclaimer: This application is not affiliated with any government entity.
