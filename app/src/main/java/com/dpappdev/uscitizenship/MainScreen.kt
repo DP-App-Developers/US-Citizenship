@@ -2,8 +2,11 @@ package com.dpappdev.uscitizenship
 
 import android.speech.tts.TextToSpeech
 import androidx.annotation.StringRes
+import androidx.compose.foundation.layout.displayCutoutPadding
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -69,7 +72,8 @@ fun USCitizenApp(
                 canNavigateBack = navController.previousBackStackEntry != null,
                 navigateUp = { navController.navigateUp() }
             )
-        }
+        },
+        modifier = Modifier.fillMaxSize().statusBarsPadding().navigationBarsPadding().displayCutoutPadding()
     ) { innerPadding ->
         val loadingInitial = "loading"
         val userStateDataStore = UserStateDataStore(LocalContext.current)
