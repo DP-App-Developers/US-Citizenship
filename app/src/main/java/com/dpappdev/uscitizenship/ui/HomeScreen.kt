@@ -99,13 +99,6 @@ fun HomeScreen(
                         }
                     },
                 )
-
-                HomeScreenCard(
-                    cardText = "Settings",
-                    onCardClick = {
-                        navController.navigate(MainScreen.Settings.name)
-                    },
-                )
             }
 
             Text(
