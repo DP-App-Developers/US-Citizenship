@@ -32,6 +32,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.dpappdev.uscitizenship.data.Question
 import com.dpappdev.uscitizenship.data.StarredQuestionsDataStore
+import com.dpappdev.uscitizenship.data.TestYearDataStore
 import com.dpappdev.uscitizenship.data.UsRepresentativeDataStore
 import com.dpappdev.uscitizenship.data.UserStateDataStore
 import com.dpappdev.uscitizenship.data.getGovernor
@@ -78,9 +79,11 @@ fun USCitizenApp(
         modifier = Modifier.fillMaxSize().statusBarsPadding().navigationBarsPadding().displayCutoutPadding()
     ) { innerPadding ->
         val loadingInitial = "loading"
+        val testYearDataStore = TestYearDataStore(LocalContext.current)
         val userStateDataStore = UserStateDataStore(LocalContext.current)
         val usRepresentativeDataStore = UsRepresentativeDataStore(LocalContext.current)
         val starredQuestionsDataStore = StarredQuestionsDataStore(LocalContext.current)
+        val testYear = testYearDataStore.getTestYearFlow.collectAsState(initial = loadingInitial).value
         val userStateOrDistrict = userStateDataStore.getUserState.collectAsState(initial = loadingInitial).value
         val usRepresentative = usRepresentativeDataStore.getUsRepresentative.collectAsState(initial = loadingInitial).value
         val starredQuestionsString = starredQuestionsDataStore.getStarredQuestions.collectAsState(initial = "").value
@@ -97,6 +100,7 @@ fun USCitizenApp(
         ) {
             composable(route = MainScreen.Home.name) {
                 HomeScreen(
+                    currentTestYear = testYear,
                     currentUserStateOrDistrict = userStateOrDistrict,
                     currentUsRepresentative = usRepresentative,
                     navController = navController,
@@ -129,8 +133,10 @@ fun USCitizenApp(
             }
             composable(route = MainScreen.Settings.name) {
                 SettingsScreen(
+                    testYearDataStore = testYearDataStore,
                     userStateDataStore = userStateDataStore,
                     usRepresentativeDataStore = usRepresentativeDataStore,
+                    currentTestYear = testYear,
                     currentUserStateOrDistrict = userStateOrDistrict,
                     currentUsRepresentative = usRepresentative,
                     navController = navController,

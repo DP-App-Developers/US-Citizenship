@@ -17,6 +17,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.MenuAnchorType
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -42,6 +43,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.dpappdev.uscitizenship.MainScreen
+import com.dpappdev.uscitizenship.data.TestYearDataStore
 import com.dpappdev.uscitizenship.data.UsRepresentativeDataStore
 import com.dpappdev.uscitizenship.data.UserStateDataStore
 import com.dpappdev.uscitizenship.data.getStatesAndDistricts
@@ -51,8 +53,10 @@ import kotlinx.coroutines.runBlocking
 
 @Composable
 fun SettingsScreen(
+    testYearDataStore: TestYearDataStore,
     userStateDataStore: UserStateDataStore,
     usRepresentativeDataStore: UsRepresentativeDataStore,
+    currentTestYear: String,
     currentUserStateOrDistrict: String,
     currentUsRepresentative: String,
     navController: NavController,
@@ -62,15 +66,22 @@ fun SettingsScreen(
         .verticalScroll(rememberScrollState())
         .padding(20.dp)
     ) {
+        val defaultTestYearText = currentTestYear.ifEmpty {
+            "Select your test"
+        }
+        var expandedForTestYears by rememberSaveable { mutableStateOf(false) }
+        var selectedTestYear by rememberSaveable { mutableStateOf(defaultTestYearText) }
+        val testYears = listOf("2008 Civics Test", "2025 Civics Test")
+
         val defaultStateText = currentUserStateOrDistrict.ifEmpty {
             "Select your State"
         }
         val states = getStatesAndDistricts()
         var expandedForStates by rememberSaveable { mutableStateOf(false) }
         var selectedState by rememberSaveable { mutableStateOf(defaultStateText) }
-        val selectRepText = "Select your U.S. Representative"
+        val defaultRepText = "Select your U.S. Representative"
         val defaultRepresentativeText = currentUsRepresentative.ifEmpty {
-            selectRepText
+            defaultRepText
         }
         val defaultReps = if (currentUserStateOrDistrict.isEmpty()) {
             listOf()
@@ -81,42 +92,37 @@ fun SettingsScreen(
         var selectedRep by rememberSaveable { mutableStateOf(defaultRepresentativeText) }
 
         Text(
-//            text = "Disclaimer: This application is not affiliated with any government entity.",
-            text = "This is to provide you the names of your elected state officials.",
+            text = "Choose 2008 Civics Test if you file Form N-400 before October 20, 2025. Choose 2025 Civics Test if you file Form N-400 on or after October 20, 2025.",
             fontSize = 14.sp,
             modifier = Modifier.padding(bottom = 12.dp),
         )
 
         // We want to react on tap/press on TextField to show menu
         ExposedDropdownMenuBox(
-            expanded = expandedForStates,
-            onExpandedChange = { expandedForStates = it },
+            expanded = expandedForTestYears,
+            onExpandedChange = { expandedForTestYears = it },
             modifier = Modifier.padding(bottom = 36.dp),
         ) {
             TextField(
                 // The `menuAnchor` modifier must be passed to the text field for correctness.
-                modifier = Modifier.menuAnchor(),
+                modifier = Modifier.menuAnchor(MenuAnchorType.PrimaryNotEditable, true),
                 readOnly = true,
-                value = selectedState,
+                value = selectedTestYear,
                 onValueChange = {},
-                label = { Text("State or District") },
-                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandedForStates) },
+                label = { Text("Civics test") },
+                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandedForTestYears) },
                 colors = ExposedDropdownMenuDefaults.textFieldColors(),
             )
             ExposedDropdownMenu(
-                expanded = expandedForStates,
-                onDismissRequest = { expandedForStates = false },
+                expanded = expandedForTestYears,
+                onDismissRequest = { expandedForTestYears = false },
             ) {
-                states.forEach { state ->
+                testYears.forEach { test ->
                     DropdownMenuItem(
-                        text = { Text(state) },
+                        text = { Text(test) },
                         onClick = {
-                            if (selectedState != state) {
-                                selectedState = state
-                                selectedRep = selectRepText
-                                representatives = getUsRepresentatives(selectedState)
-                            }
-                            expandedForStates = false
+                            selectedTestYear = test
+                            expandedForTestYears = false
                         },
                         contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
                     )
@@ -124,36 +130,44 @@ fun SettingsScreen(
             }
         }
 
-        if (representatives.isNotEmpty()) {
-            HouseGovWebsite()
+        if (selectedTestYear == "2008 Civics Test" || selectedTestYear == "2025 Civics Test") {
 
-            var expandedForRep by rememberSaveable { mutableStateOf(false) }
+            Text(
+                text = "This is to provide you the names of your elected state officials.",
+                fontSize = 14.sp,
+                modifier = Modifier.padding(bottom = 12.dp),
+            )
+
             // We want to react on tap/press on TextField to show menu
             ExposedDropdownMenuBox(
-                expanded = expandedForRep,
-                onExpandedChange = { expandedForRep = it },
-                modifier = Modifier.padding(bottom = 12.dp),
+                expanded = expandedForStates,
+                onExpandedChange = { expandedForStates = it },
+                modifier = Modifier.padding(bottom = 36.dp),
             ) {
                 TextField(
                     // The `menuAnchor` modifier must be passed to the text field for correctness.
-                    modifier = Modifier.menuAnchor(),
+                    modifier = Modifier.menuAnchor(MenuAnchorType.PrimaryNotEditable, true),
                     readOnly = true,
-                    value = selectedRep,
+                    value = selectedState,
                     onValueChange = {},
-                    label = { Text("U.S. Representative") },
-                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandedForRep) },
+                    label = { Text("State or District") },
+                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandedForStates) },
                     colors = ExposedDropdownMenuDefaults.textFieldColors(),
                 )
                 ExposedDropdownMenu(
-                    expanded = expandedForRep,
-                    onDismissRequest = { expandedForRep = false },
+                    expanded = expandedForStates,
+                    onDismissRequest = { expandedForStates = false },
                 ) {
-                    representatives.forEach { representative ->
+                    states.forEach { state ->
                         DropdownMenuItem(
-                            text = { Text(representative) },
+                            text = { Text(state) },
                             onClick = {
-                                selectedRep = representative
-                                expandedForRep = false
+                                if (selectedState != state) {
+                                    selectedState = state
+                                    selectedRep = defaultRepText
+                                    representatives = getUsRepresentatives(selectedState)
+                                }
+                                expandedForStates = false
                             },
                             contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
                         )
@@ -161,30 +175,69 @@ fun SettingsScreen(
                 }
             }
 
-            if (selectedRep != selectRepText) {
-                BoxWithConstraints(
-                    modifier = Modifier.fillMaxWidth(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Button(
-                        modifier = Modifier
-                            .width(maxWidth * 3 / 4)
-                            .padding(vertical = 24.dp),
-                        onClick = {
-                            runBlocking {
-                                // making saving synchronous to prevent showing the new user bottom sheet when going back to home
-                                userStateDataStore.saveUserState(selectedState)
-                                usRepresentativeDataStore.saveUsRepresentative(selectedRep)
+            if (representatives.isNotEmpty()) {
+                HouseGovWebsite()
 
-                                navController.navigate(MainScreen.Home.name) {
-                                    popUpTo(MainScreen.Home.name) {
-                                        inclusive = true
+                var expandedForRep by rememberSaveable { mutableStateOf(false) }
+                // We want to react on tap/press on TextField to show menu
+                ExposedDropdownMenuBox(
+                    expanded = expandedForRep,
+                    onExpandedChange = { expandedForRep = it },
+                    modifier = Modifier.padding(bottom = 12.dp),
+                ) {
+                    TextField(
+                        // The `menuAnchor` modifier must be passed to the text field for correctness.
+                        modifier = Modifier.menuAnchor(MenuAnchorType.PrimaryNotEditable, true),
+                        readOnly = true,
+                        value = selectedRep,
+                        onValueChange = {},
+                        label = { Text("U.S. Representative") },
+                        trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandedForRep) },
+                        colors = ExposedDropdownMenuDefaults.textFieldColors(),
+                    )
+                    ExposedDropdownMenu(
+                        expanded = expandedForRep,
+                        onDismissRequest = { expandedForRep = false },
+                    ) {
+                        representatives.forEach { representative ->
+                            DropdownMenuItem(
+                                text = { Text(representative) },
+                                onClick = {
+                                    selectedRep = representative
+                                    expandedForRep = false
+                                },
+                                contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
+                            )
+                        }
+                    }
+                }
+
+                if (selectedTestYear != defaultTestYearText || selectedRep != defaultRepText) {
+                    BoxWithConstraints(
+                        modifier = Modifier.fillMaxWidth(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Button(
+                            modifier = Modifier
+                                .width(maxWidth * 3 / 4)
+                                .padding(vertical = 24.dp),
+                            onClick = {
+                                runBlocking {
+                                    // making saving synchronous to prevent showing the new user bottom sheet when going back to home
+                                    testYearDataStore.saveTestYear(selectedTestYear)
+                                    userStateDataStore.saveUserState(selectedState)
+                                    usRepresentativeDataStore.saveUsRepresentative(selectedRep)
+
+                                    navController.navigate(MainScreen.Home.name) {
+                                        popUpTo(MainScreen.Home.name) {
+                                            inclusive = true
+                                        }
                                     }
                                 }
                             }
+                        ) {
+                            Text("Save")
                         }
-                    ) {
-                        Text("Save")
                     }
                 }
             }
@@ -238,8 +291,10 @@ fun HouseGovWebsite() {
 fun SettingsPreview() {
     USCitizenshipTheme {
         SettingsScreen(
+            testYearDataStore = TestYearDataStore(LocalContext.current),
             userStateDataStore = UserStateDataStore(LocalContext.current),
             usRepresentativeDataStore = UsRepresentativeDataStore(LocalContext.current),
+            currentTestYear = "",
             currentUserStateOrDistrict = "",
             currentUsRepresentative = "",
             rememberNavController(),

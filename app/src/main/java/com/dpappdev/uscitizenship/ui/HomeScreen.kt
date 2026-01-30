@@ -39,12 +39,13 @@ import com.dpappdev.uscitizenship.ui.theme.USCitizenshipTheme
 
 @Composable
 fun HomeScreen(
+    currentTestYear: String,
     currentUserStateOrDistrict: String,
     currentUsRepresentative: String,
     navController: NavController,
     modifier: Modifier = Modifier,
 ) {
-    val loading = currentUserStateOrDistrict == "loading" || currentUsRepresentative == "loading"
+    val loading = currentTestYear == "loading" || currentUserStateOrDistrict == "loading" || currentUsRepresentative == "loading"
     if (loading) {
         Box(modifier = Modifier.fillMaxSize()) {
             LinearProgressIndicator(
@@ -55,7 +56,7 @@ fun HomeScreen(
             )
         }
     } else {
-        val newUser = currentUserStateOrDistrict.isEmpty() || currentUsRepresentative.isEmpty()
+        val newUser = currentTestYear.isEmpty() || currentUserStateOrDistrict.isEmpty() || currentUsRepresentative.isEmpty()
         var showBottomSheet by rememberSaveable { mutableStateOf(newUser) }
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -124,7 +125,7 @@ fun HomeScreen(
                         fontWeight = FontWeight.Bold,
                     )
                     Text(
-                        text = "Start by choosing your State and U.S. Representative. This is a one-time task to update the questions about your State.",
+                        text = "Start by choosing your civics test, State and U.S. Representative.",
                         modifier = Modifier.padding(bottom = 8.dp),
                     )
                     Box(modifier = Modifier.fillMaxWidth(),
@@ -178,6 +179,7 @@ fun HomeScreenCard(
 fun HomePreview() {
     USCitizenshipTheme {
         HomeScreen(
+            currentTestYear = "",
             currentUserStateOrDistrict = "Alaska",
             currentUsRepresentative = "Susan",
             navController = rememberNavController(),
