@@ -19,6 +19,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -30,16 +31,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.dpappdev.uscitizenship.data.Question
 import com.dpappdev.uscitizenship.data.StarredQuestionsDataStore
 import com.dpappdev.uscitizenship.data.TestYearDataStore
 import com.dpappdev.uscitizenship.data.UsRepresentativeDataStore
 import com.dpappdev.uscitizenship.data.UserStateDataStore
-import com.dpappdev.uscitizenship.data.getGovernor
-import com.dpappdev.uscitizenship.data.getSenators
-import com.dpappdev.uscitizenship.data.getStateCapital
 import com.dpappdev.uscitizenship.ui.AllQuestionsScreen
 import com.dpappdev.uscitizenship.ui.AllQuestionsViewModel
+import com.dpappdev.uscitizenship.ui.AllQuestionsViewModelFactory
 import com.dpappdev.uscitizenship.ui.FlashCardsScreen
 import com.dpappdev.uscitizenship.ui.HomeScreen
 import com.dpappdev.uscitizenship.ui.SettingsScreen
@@ -57,15 +55,13 @@ enum class MainScreen(@StringRes val title: Int) {
 @Composable
 fun USCitizenApp(
     textToSpeech: TextToSpeech,
-    allQuestionsViewModel: AllQuestionsViewModel = viewModel(),
     navController: NavHostController = rememberNavController()
 ) {
     // Get current back stack entry
     val backStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = backStackEntry?.destination?.route ?: MainScreen.Home.name
     // Get the name of the current screen
-    val currentScreen = MainScreen.valueOf(
-        backStackEntry?.destination?.route ?: MainScreen.Home.name
-    )
+    val currentScreen = MainScreen.valueOf(currentRoute)
 
     Scaffold(
         topBar = {
@@ -90,8 +86,17 @@ fun USCitizenApp(
         // "".split(",") returns {""}, which is not desired
         // the desired behavior is to return empty list
         val starredQuestions = starredQuestionsString.split(",").takeIf {it.size > 1 || it[0].isNotEmpty()} ?: emptyList()
+
+        val allQuestionsViewModel: AllQuestionsViewModel = viewModel(
+            factory = AllQuestionsViewModelFactory(testYear, userStateOrDistrict, usRepresentative)
+        )
+        LaunchedEffect(currentRoute) {
+            if (currentRoute == MainScreen.Home.name) { // reload data when user returns to Home screen
+                allQuestionsViewModel.reload(testYear, userStateOrDistrict, usRepresentative)
+            }
+        }
         val uiState by allQuestionsViewModel.uiState.collectAsState()
-        val questionsWithAnswers = consolidateAnswers(userStateOrDistrict, usRepresentative, uiState.questions)
+        val questionsWithAnswers = uiState.questions
 
         NavHost(
             navController = navController,
@@ -144,30 +149,6 @@ fun USCitizenApp(
             }
         }
     }
-}
-
-// FIXME: Use hilt to inject dataStore to repository
-fun consolidateAnswers(
-    userStateOrDistrict: String,
-    usRepresentative: String,
-    questions: List<Question>,
-): List<Question> {
-    val stateGovernor = getGovernor(userStateOrDistrict)
-    val stateCapital = getStateCapital(userStateOrDistrict)
-    val stateSenators = getSenators(userStateOrDistrict)
-    if (stateSenators.isNotEmpty()) {
-        questions[19].answer = stateSenators
-    }
-    if (usRepresentative.isNotEmpty()) {
-        questions[22].answer = listOf(usRepresentative)
-    }
-    if (!stateGovernor.isNullOrEmpty()) {
-        questions[42].answer = listOf(stateGovernor)
-    }
-    if (!stateCapital.isNullOrEmpty()) {
-        questions[43].answer = listOf(stateCapital)
-    }
-    return questions
 }
 
 /**

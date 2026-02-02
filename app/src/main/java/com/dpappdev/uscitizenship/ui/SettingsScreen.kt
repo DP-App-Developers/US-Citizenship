@@ -212,7 +212,8 @@ fun SettingsScreen(
                     }
                 }
 
-                if (selectedTestYear != defaultTestYearText || selectedRep != defaultRepText) {
+                val showSaveButton = selectedTestYear != "Select your test" && selectedState != "Select your State" && selectedRep != "Select your U.S. Representative"
+                if (showSaveButton) {
                     BoxWithConstraints(
                         modifier = Modifier.fillMaxWidth(),
                         contentAlignment = Alignment.Center

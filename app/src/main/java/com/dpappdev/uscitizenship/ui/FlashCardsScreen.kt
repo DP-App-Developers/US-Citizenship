@@ -53,6 +53,7 @@ fun FlashCardsScreen(
     starredQuestionsDataStore: StarredQuestionsDataStore,
     textToSpeech: TextToSpeech,
 ) {
+    if (questionsInOrder.isEmpty()) return
     var index by rememberSaveable { mutableIntStateOf(0) }
     var expanded by rememberSaveable { mutableStateOf(false) }
     val questionsShuffled by rememberSaveable {
