@@ -90,7 +90,7 @@ fun USCitizenApp(
         val allQuestionsViewModel: AllQuestionsViewModel = viewModel(
             factory = AllQuestionsViewModelFactory(testYear, userStateOrDistrict, usRepresentative)
         )
-        LaunchedEffect(currentRoute) {
+        LaunchedEffect(currentRoute, testYear, userStateOrDistrict, usRepresentative) {
             if (currentRoute == MainScreen.Home.name) { // reload data when user returns to Home screen
                 allQuestionsViewModel.reload(testYear, userStateOrDistrict, usRepresentative)
             }

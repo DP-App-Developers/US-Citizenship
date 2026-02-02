@@ -8,7 +8,6 @@ import com.dpappdev.uscitizenship.data.Question
 import com.dpappdev.uscitizenship.data.getGovernor
 import com.dpappdev.uscitizenship.data.getSenators
 import com.dpappdev.uscitizenship.data.getStateCapital
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -29,7 +28,7 @@ class AllQuestionsViewModel(
     fun reload(testYear: String, userStateOrDistrict: String, usRepresentative: String) {
         if (testYear == "loading" || userStateOrDistrict == "loading" || usRepresentative == "loading") return
 
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             AllQuestionsRepository(AllQuestionsLocalDataSource()).allQuestions.collect {
                 _uiState.value = AllQuestionsUiState(
                     questions =
