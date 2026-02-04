@@ -177,7 +177,7 @@ fun FlashCardsScreen(
             onClick = {
                 expanded = false
                 if (index == 0) {
-                    index = 99
+                    index = questionsInOrder.lastIndex
                 } else {
                     index--
                 }
@@ -225,7 +225,7 @@ fun FlashCardsScreen(
                 .align(Alignment.BottomEnd),
             onClick = {
                 expanded = false
-                if (index == 99) {
+                if (index == questionsInOrder.lastIndex) {
                     index = 0
                 } else {
                     index++

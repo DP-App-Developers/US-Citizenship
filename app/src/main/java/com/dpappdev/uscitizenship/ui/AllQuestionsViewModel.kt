@@ -4,10 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dpappdev.uscitizenship.data.AllQuestionsLocalDataSource
 import com.dpappdev.uscitizenship.data.AllQuestionsRepository
-import com.dpappdev.uscitizenship.data.Question
-import com.dpappdev.uscitizenship.data.getGovernor
-import com.dpappdev.uscitizenship.data.getSenators
-import com.dpappdev.uscitizenship.data.getStateCapital
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -29,38 +25,11 @@ class AllQuestionsViewModel(
         if (testYear == "loading" || userStateOrDistrict == "loading" || usRepresentative == "loading") return
 
         viewModelScope.launch {
-            AllQuestionsRepository(AllQuestionsLocalDataSource()).allQuestions.collect {
+            AllQuestionsRepository(AllQuestionsLocalDataSource(testYear, userStateOrDistrict, usRepresentative)).allQuestions.collect {
                 _uiState.value = AllQuestionsUiState(
-                    questions =
-                        if (testYear == "2008 Civics Test") consolidateAnswers(userStateOrDistrict, usRepresentative, it)
-                        else listOf()//change this
+                    questions = it
                 )
             }
         }
-    }
-
-    fun consolidateAnswers(
-        userStateOrDistrict: String,
-        usRepresentative: String,
-        questions: List<Question>,
-    ): List<Question> {
-        if (questions.isEmpty()) return questions
-
-        val stateGovernor = getGovernor(userStateOrDistrict)
-        val stateCapital = getStateCapital(userStateOrDistrict)
-        val stateSenators = getSenators(userStateOrDistrict)
-        if (stateSenators.isNotEmpty()) {
-            questions[19].answer = stateSenators
-        }
-        if (usRepresentative.isNotEmpty()) {
-            questions[22].answer = listOf(usRepresentative)
-        }
-        if (!stateGovernor.isNullOrEmpty()) {
-            questions[42].answer = listOf(stateGovernor)
-        }
-        if (!stateCapital.isNullOrEmpty()) {
-            questions[43].answer = listOf(stateCapital)
-        }
-        return questions
     }
 }
