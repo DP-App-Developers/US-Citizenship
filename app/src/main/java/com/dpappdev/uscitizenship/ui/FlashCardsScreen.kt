@@ -41,6 +41,7 @@ import com.dpappdev.uscitizenship.R
 import com.dpappdev.uscitizenship.data.FlashCardsShuffleDataStore
 import com.dpappdev.uscitizenship.data.Question
 import com.dpappdev.uscitizenship.data.StarredQuestionsDataStore
+import com.dpappdev.uscitizenship.data.StarredQuestionsDataStoreInterface
 import com.dpappdev.uscitizenship.ui.theme.USCitizenshipTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -50,7 +51,7 @@ import kotlinx.coroutines.launch
 fun FlashCardsScreen(
     questionsInOrder: List<Question>,
     starredQuestions: List<String>,
-    starredQuestionsDataStore: StarredQuestionsDataStore,
+    starredQuestionsDataStore: StarredQuestionsDataStoreInterface,
     textToSpeech: TextToSpeech,
 ) {
     if (questionsInOrder.isEmpty()) return

@@ -31,6 +31,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.dpappdev.uscitizenship.data.StarredQuestions2025DataStore
 import com.dpappdev.uscitizenship.data.StarredQuestionsDataStore
 import com.dpappdev.uscitizenship.data.TestYearDataStore
 import com.dpappdev.uscitizenship.data.UsRepresentativeDataStore
@@ -78,10 +79,11 @@ fun USCitizenApp(
         val testYearDataStore = TestYearDataStore(LocalContext.current)
         val userStateDataStore = UserStateDataStore(LocalContext.current)
         val usRepresentativeDataStore = UsRepresentativeDataStore(LocalContext.current)
-        val starredQuestionsDataStore = StarredQuestionsDataStore(LocalContext.current)
         val testYear = testYearDataStore.getTestYearFlow.collectAsState(initial = loadingInitial).value
         val userStateOrDistrict = userStateDataStore.getUserState.collectAsState(initial = loadingInitial).value
         val usRepresentative = usRepresentativeDataStore.getUsRepresentative.collectAsState(initial = loadingInitial).value
+
+        val starredQuestionsDataStore = if (testYear == "2025 Civics Test") StarredQuestions2025DataStore(LocalContext.current) else StarredQuestionsDataStore(LocalContext.current)
         val starredQuestionsString = starredQuestionsDataStore.getStarredQuestions.collectAsState(initial = "").value
         // "".split(",") returns {""}, which is not desired
         // the desired behavior is to return empty list

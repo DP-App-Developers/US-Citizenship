@@ -27,13 +27,14 @@ import androidx.compose.ui.unit.sp
 import com.dpappdev.uscitizenship.R
 import com.dpappdev.uscitizenship.data.Question
 import com.dpappdev.uscitizenship.data.StarredQuestionsDataStore
+import com.dpappdev.uscitizenship.data.StarredQuestionsDataStoreInterface
 import com.dpappdev.uscitizenship.ui.theme.USCitizenshipTheme
 
 @Composable
 fun StarredQuestionsScreen(
     questions: List<Question>,
     starredQuestions: List<String>,
-    starredQuestionsDataStore: StarredQuestionsDataStore,
+    starredQuestionsDataStore: StarredQuestionsDataStoreInterface,
     textToSpeech: TextToSpeech,
 ) {
     val borderPadding = 16.dp

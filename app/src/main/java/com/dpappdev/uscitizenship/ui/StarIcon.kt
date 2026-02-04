@@ -13,6 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.dpappdev.uscitizenship.R
 import com.dpappdev.uscitizenship.data.StarredQuestionsDataStore
+import com.dpappdev.uscitizenship.data.StarredQuestionsDataStoreInterface
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -20,7 +21,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun StarIcon(
     starredQuestions: List<String>,
-    starredQuestionsDataStore: StarredQuestionsDataStore,
+    starredQuestionsDataStore: StarredQuestionsDataStoreInterface,
     questionNumber: Int,
 ) {
     val starIcon: Int
