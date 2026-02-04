@@ -22,15 +22,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.dpappdev.uscitizenship.R
 import com.dpappdev.uscitizenship.data.Question
+import com.dpappdev.uscitizenship.data.StarredQuestions2008DataStore
 import com.dpappdev.uscitizenship.data.StarredQuestionsDataStore
-import com.dpappdev.uscitizenship.data.StarredQuestionsDataStoreInterface
 import com.dpappdev.uscitizenship.ui.theme.USCitizenshipTheme
 
 @Composable
 fun AllQuestionsScreen(
     questions: List<Question>,
     starredQuestions: List<String>,
-    starredQuestionsDataStore: StarredQuestionsDataStoreInterface,
+    starredQuestionsDataStore: StarredQuestionsDataStore,
     textToSpeech: TextToSpeech,
 ) {
     LazyColumn(
@@ -133,7 +133,7 @@ fun AllQuestionsPreview() {
                 ),
             ),
             starredQuestions = listOf("2,5,84"),
-            starredQuestionsDataStore = StarredQuestionsDataStore(LocalContext.current),
+            starredQuestionsDataStore = StarredQuestions2008DataStore(LocalContext.current),
             textToSpeech = TextToSpeech(LocalContext.current) {},
         )
     }

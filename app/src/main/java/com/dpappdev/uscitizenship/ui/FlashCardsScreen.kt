@@ -40,8 +40,8 @@ import androidx.compose.ui.unit.sp
 import com.dpappdev.uscitizenship.R
 import com.dpappdev.uscitizenship.data.FlashCardsShuffleDataStore
 import com.dpappdev.uscitizenship.data.Question
+import com.dpappdev.uscitizenship.data.StarredQuestions2008DataStore
 import com.dpappdev.uscitizenship.data.StarredQuestionsDataStore
-import com.dpappdev.uscitizenship.data.StarredQuestionsDataStoreInterface
 import com.dpappdev.uscitizenship.ui.theme.USCitizenshipTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -51,7 +51,7 @@ import kotlinx.coroutines.launch
 fun FlashCardsScreen(
     questionsInOrder: List<Question>,
     starredQuestions: List<String>,
-    starredQuestionsDataStore: StarredQuestionsDataStoreInterface,
+    starredQuestionsDataStore: StarredQuestionsDataStore,
     textToSpeech: TextToSpeech,
 ) {
     if (questionsInOrder.isEmpty()) return
@@ -260,7 +260,7 @@ fun FlashCardsPreview() {
                 ),
             ),
             starredQuestions = listOf("2,5,84"),
-            starredQuestionsDataStore = StarredQuestionsDataStore(LocalContext.current),
+            starredQuestionsDataStore = StarredQuestions2008DataStore(LocalContext.current),
             textToSpeech = TextToSpeech(LocalContext.current) {},
         )
     }

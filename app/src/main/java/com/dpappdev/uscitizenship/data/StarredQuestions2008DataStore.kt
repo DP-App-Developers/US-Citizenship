@@ -9,10 +9,13 @@ import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class StarredQuestions2025DataStore(private val context: Context) : StarredQuestionsDataStore {
+/**
+ * for 2008 test
+ */
+class StarredQuestions2008DataStore(private val context: Context) : StarredQuestionsDataStore {
     companion object {
-        private val Context.dataStore: DataStore<Preferences> by preferencesDataStore("starredQuestions2025")
-        private val STARRED_QUESTIONS_KEY = stringPreferencesKey("starred_questions_2025")
+        private val Context.dataStore: DataStore<Preferences> by preferencesDataStore("starredQuestions")
+        private val STARRED_QUESTIONS_KEY = stringPreferencesKey("starred_questions")
     }
 
     override val getStarredQuestions: Flow<String> = context.dataStore.data.map { preferences ->
