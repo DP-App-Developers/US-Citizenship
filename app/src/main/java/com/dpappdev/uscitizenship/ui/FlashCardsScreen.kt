@@ -72,6 +72,7 @@ fun FlashCardsScreen(
         shuffleIconColor = MaterialTheme.colorScheme.outline
     }
     val questionNumber = questions[index].questionNumber
+    val totalNumberOfQuestions = questionsInOrder.size
 
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
@@ -85,7 +86,7 @@ fun FlashCardsScreen(
                 modifier = Modifier.padding(bottom = 8.dp)
             ) {
                 Text(
-                    text = "Question $questionNumber / 100",
+                    text = "Question $questionNumber / $totalNumberOfQuestions",
                     fontWeight = FontWeight.Bold,
                     fontSize = 18.sp,
                 )
