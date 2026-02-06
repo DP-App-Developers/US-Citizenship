@@ -32,8 +32,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.dpappdev.uscitizenship.data.StarredQuestions2025DataStore
 import com.dpappdev.uscitizenship.data.StarredQuestions2008DataStore
+import com.dpappdev.uscitizenship.data.StarredQuestions2025DataStore
 import com.dpappdev.uscitizenship.data.TestYearDataStore
 import com.dpappdev.uscitizenship.data.UsRepresentativeDataStore
 import com.dpappdev.uscitizenship.data.UserStateDataStore
@@ -140,7 +140,7 @@ fun USCitizenApp(
             }
             composable(route = MainScreen.StarredQuestions.name) {
                 StarredQuestionsScreen(
-                    questions = questionsWithAnswers,
+                    starredQuestionsList = questionsWithAnswers.filter { starredQuestions.contains(it.questionNumber.toString()) },
                     starredQuestions = starredQuestions,
                     starredQuestionsDataStore = starredQuestionsDataStore,
                     textToSpeech = textToSpeech,

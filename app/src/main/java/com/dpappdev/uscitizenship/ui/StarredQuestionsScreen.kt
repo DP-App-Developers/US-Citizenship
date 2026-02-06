@@ -32,7 +32,7 @@ import com.dpappdev.uscitizenship.ui.theme.USCitizenshipTheme
 
 @Composable
 fun StarredQuestionsScreen(
-    questions: List<Question>,
+    starredQuestionsList: List<Question>,
     starredQuestions: List<String>,
     starredQuestionsDataStore: StarredQuestionsDataStore?,
     textToSpeech: TextToSpeech,
@@ -65,9 +65,6 @@ fun StarredQuestionsScreen(
         modifier = Modifier.fillMaxSize()
     ) {
         val textSize = 16.sp
-
-        val starredQuestionsList = questions.filter { starredQuestions.contains(it.questionNumber.toString()) }
-
         itemsIndexed(starredQuestionsList) { index, item ->
             val questionNumber = item.questionNumber
             val backgroundColor = if (index % 2 == 1) {
@@ -145,7 +142,7 @@ fun StarredQuestionsScreen(
 fun StarredQuestionsPreview() {
     USCitizenshipTheme {
         StarredQuestionsScreen(
-            questions = listOf(
+            starredQuestionsList = listOf(
                 Question(
                     questionNumber = 1,
                     question = "What is the supreme law of the land?",
