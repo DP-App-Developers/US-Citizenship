@@ -49,7 +49,7 @@ import com.dpappdev.uscitizenship.ui.StarredQuestionsScreen
 enum class MainScreen(@StringRes val title: Int) {
     Home(title = R.string.app_name),
     Settings(title = R.string.title_settings),
-    FlashCards(title = R.string.title_flash_cards),
+    AllFlashCards(title = R.string.title_flash_cards),
     AllQuestions(title = R.string.title_all_questions),
     StarredQuestions(title = R.string.title_starred_questions),
     StarredFlashCards(title = R.string.title_starred_flash_cards),
@@ -124,7 +124,7 @@ fun USCitizenApp(
                     modifier = Modifier.fillMaxSize(),
                 )
             }
-            composable(route = MainScreen.FlashCards.name) {
+            composable(route = MainScreen.AllFlashCards.name) {
                 FlashCardsScreen(
                     questionsInOrder = questionsWithAnswers,
                     starredQuestions = starredQuestions,

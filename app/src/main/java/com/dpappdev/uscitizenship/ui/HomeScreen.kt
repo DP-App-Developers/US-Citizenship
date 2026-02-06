@@ -69,23 +69,23 @@ fun HomeScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 HomeScreenCard(
-                    cardText = "Flash Cards",
-                    onCardClick = {
-                        if (newUser) {
-                            showBottomSheet = true
-                        } else {
-                            navController.navigate(MainScreen.FlashCards.name)
-                        }
-                    },
-                )
-
-                HomeScreenCard(
                     cardText = "All Questions",
                     onCardClick = {
                         if (newUser) {
                             showBottomSheet = true
                         } else {
                             navController.navigate(MainScreen.AllQuestions.name)
+                        }
+                    },
+                )
+
+                HomeScreenCard(
+                    cardText = "All Flash Cards",
+                    onCardClick = {
+                        if (newUser) {
+                            showBottomSheet = true
+                        } else {
+                            navController.navigate(MainScreen.AllFlashCards.name)
                         }
                     },
                 )
