@@ -30,7 +30,7 @@ import com.dpappdev.uscitizenship.ui.theme.USCitizenshipTheme
 fun AllQuestionsScreen(
     questions: List<Question>,
     starredQuestions: List<String>,
-    starredQuestionsDataStore: StarredQuestionsDataStore,
+    starredQuestionsDataStore: StarredQuestionsDataStore?,
     textToSpeech: TextToSpeech,
 ) {
     LazyColumn(

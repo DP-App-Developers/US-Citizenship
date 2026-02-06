@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun StarIcon(
     starredQuestions: List<String>,
-    starredQuestionsDataStore: StarredQuestionsDataStore,
+    starredQuestionsDataStore: StarredQuestionsDataStore?,
     questionNumber: Int,
 ) {
     val starIcon: Int
@@ -41,15 +41,17 @@ fun StarIcon(
         modifier = Modifier
             .padding(start = 8.dp)
             .size(width = 40.dp, height = 40.dp)
-            .clickable {
-                CoroutineScope(Dispatchers.Main).launch {
-                    starredQuestions.toMutableList().run {
-                        if (starredQuestions.contains("$questionNumber")) {
-                            remove("$questionNumber")
-                        } else {
-                            add("$questionNumber")
+            .clickable(enabled = starredQuestionsDataStore != null) {
+                starredQuestionsDataStore?.let { dataStore ->
+                    CoroutineScope(Dispatchers.Main).launch {
+                        starredQuestions.toMutableList().run {
+                            if (starredQuestions.contains("$questionNumber")) {
+                                remove("$questionNumber")
+                            } else {
+                                add("$questionNumber")
+                            }
+                            dataStore.saveStarredQuestions(joinToString(separator = ","))
                         }
-                        starredQuestionsDataStore.saveStarredQuestions(joinToString(separator = ","))
                     }
                 }
             },

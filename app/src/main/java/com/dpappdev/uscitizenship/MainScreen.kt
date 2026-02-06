@@ -22,6 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -76,15 +77,22 @@ fun USCitizenApp(
         modifier = Modifier.fillMaxSize().statusBarsPadding().navigationBarsPadding().displayCutoutPadding()
     ) { innerPadding ->
         val loadingInitial = "loading"
-        val testYearDataStore = TestYearDataStore(LocalContext.current)
-        val userStateDataStore = UserStateDataStore(LocalContext.current)
-        val usRepresentativeDataStore = UsRepresentativeDataStore(LocalContext.current)
+        val context = LocalContext.current
+        val testYearDataStore = remember { TestYearDataStore(context) }
+        val userStateDataStore = remember { UserStateDataStore(context) }
+        val usRepresentativeDataStore = remember { UsRepresentativeDataStore(context) }
         val testYear = testYearDataStore.getTestYearFlow.collectAsState(initial = loadingInitial).value
         val userStateOrDistrict = userStateDataStore.getUserState.collectAsState(initial = loadingInitial).value
         val usRepresentative = usRepresentativeDataStore.getUsRepresentative.collectAsState(initial = loadingInitial).value
 
-        val starredQuestionsDataStore = if (testYear == "2025 Civics Test") StarredQuestions2025DataStore(LocalContext.current) else StarredQuestions2008DataStore(LocalContext.current)
-        val starredQuestionsString = starredQuestionsDataStore.getStarredQuestions.collectAsState(initial = "").value
+        val starredQuestionsDataStore = remember(testYear) {
+            when (testYear) {
+                "2008 Civics Test" -> StarredQuestions2008DataStore(context)
+                "2025 Civics Test" -> StarredQuestions2025DataStore(context)
+                else -> null // loading state - don't create datastore yet
+            }
+        }
+        val starredQuestionsString = starredQuestionsDataStore?.getStarredQuestions?.collectAsState(initial = "")?.value ?: ""
         // "".split(",") returns {""}, which is not desired
         // the desired behavior is to return empty list
         val starredQuestions = starredQuestionsString.split(",").takeIf {it.size > 1 || it[0].isNotEmpty()} ?: emptyList()

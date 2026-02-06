@@ -34,7 +34,7 @@ import com.dpappdev.uscitizenship.ui.theme.USCitizenshipTheme
 fun StarredQuestionsScreen(
     questions: List<Question>,
     starredQuestions: List<String>,
-    starredQuestionsDataStore: StarredQuestionsDataStore,
+    starredQuestionsDataStore: StarredQuestionsDataStore?,
     textToSpeech: TextToSpeech,
 ) {
     val borderPadding = 16.dp

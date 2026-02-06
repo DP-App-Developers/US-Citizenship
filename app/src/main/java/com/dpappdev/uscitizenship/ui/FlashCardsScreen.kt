@@ -51,7 +51,7 @@ import kotlinx.coroutines.launch
 fun FlashCardsScreen(
     questionsInOrder: List<Question>,
     starredQuestions: List<String>,
-    starredQuestionsDataStore: StarredQuestionsDataStore,
+    starredQuestionsDataStore: StarredQuestionsDataStore?,
     textToSpeech: TextToSpeech,
 ) {
     if (questionsInOrder.isEmpty()) return
