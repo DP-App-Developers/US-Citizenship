@@ -100,6 +100,17 @@ fun HomeScreen(
                         }
                     },
                 )
+
+                HomeScreenCard(
+                    cardText = "Starred Flash Cards",
+                    onCardClick = {
+                        if (newUser) {
+                            showBottomSheet = true
+                        } else {
+                            navController.navigate(MainScreen.StarredFlashCards.name)
+                        }
+                    },
+                )
             }
 
             Text(

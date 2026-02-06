@@ -4,5 +4,6 @@
     <string name="title_flash_cards">Flash Cards</string>
     <string name="title_all_questions">All Questions</string>
     <string name="title_starred_questions">Starred Questions</string>
+    <string name="title_starred_flash_cards">Starred Flash Cards</string>
     <string name="back_button">Back</string>
 </resources>

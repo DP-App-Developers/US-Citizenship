@@ -37,29 +37,12 @@ fun StarredQuestionsScreen(
     starredQuestionsDataStore: StarredQuestionsDataStore?,
     textToSpeech: TextToSpeech,
 ) {
-    val borderPadding = 16.dp
     if (starredQuestions.isEmpty()) {
-        Box(modifier = Modifier
-            .fillMaxSize()
-            .padding(borderPadding)) {
-            Column(modifier = Modifier.align(Alignment.Center)) {
-                Icon(
-                    painter = painterResource(id = R.drawable.shooting_star),
-                    contentDescription = "empty state icon",
-                    tint = MaterialTheme.colorScheme.secondary,
-                    modifier = Modifier
-                        .size(width = 200.dp, height = 200.dp)
-                        .align(Alignment.CenterHorizontally)
-                )
-                Text(
-                    text = "Mark a question as starred and it will show up here.",
-                    textAlign = TextAlign.Center,
-                    fontSize = 20.sp
-                )
-            }
-        }
+        EmptyStarredState()
         return
     }
+
+    val borderPadding = 16.dp
 
     LazyColumn(
         modifier = Modifier.fillMaxSize()

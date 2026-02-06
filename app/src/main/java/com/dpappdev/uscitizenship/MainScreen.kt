@@ -43,6 +43,7 @@ import com.dpappdev.uscitizenship.ui.AllQuestionsViewModelFactory
 import com.dpappdev.uscitizenship.ui.FlashCardsScreen
 import com.dpappdev.uscitizenship.ui.HomeScreen
 import com.dpappdev.uscitizenship.ui.SettingsScreen
+import com.dpappdev.uscitizenship.ui.StarredFlashCardsScreen
 import com.dpappdev.uscitizenship.ui.StarredQuestionsScreen
 
 enum class MainScreen(@StringRes val title: Int) {
@@ -51,6 +52,7 @@ enum class MainScreen(@StringRes val title: Int) {
     FlashCards(title = R.string.title_flash_cards),
     AllQuestions(title = R.string.title_all_questions),
     StarredQuestions(title = R.string.title_starred_questions),
+    StarredFlashCards(title = R.string.title_starred_flash_cards),
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -143,6 +145,15 @@ fun USCitizenApp(
                     starredQuestionsList = questionsWithAnswers.filter { starredQuestions.contains(it.questionNumber.toString()) },
                     starredQuestions = starredQuestions,
                     starredQuestionsDataStore = starredQuestionsDataStore,
+                    textToSpeech = textToSpeech,
+                )
+            }
+            composable(route = MainScreen.StarredFlashCards.name) {
+                StarredFlashCardsScreen(
+                    starredQuestionsList = questionsWithAnswers.filter { starredQuestions.contains(it.questionNumber.toString()) },
+                    starredQuestions = starredQuestions,
+                    starredQuestionsDataStore = starredQuestionsDataStore,
+                    totalNumberOfQuestions = questionsWithAnswers.size,
                     textToSpeech = textToSpeech,
                 )
             }
