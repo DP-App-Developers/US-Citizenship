@@ -52,6 +52,8 @@ fun HomeScreen(
     currentTestYear: String,
     currentUserStateOrDistrict: String,
     currentUsRepresentative: String,
+    allQuestionsCount: Int,
+    starredQuestionsCount: Int,
     navController: NavController,
     modifier: Modifier = Modifier,
 ) {
@@ -68,6 +70,24 @@ fun HomeScreen(
     } else {
         val newUser = currentTestYear.isEmpty() || currentUserStateOrDistrict.isEmpty() || currentUsRepresentative.isEmpty()
         var showBottomSheet by rememberSaveable { mutableStateOf(newUser) }
+        val allQuestionsSubtitle = when (allQuestionsCount) {
+            0 -> {
+                "" // don't show subtitle because no questions are available yet
+            }
+            1 -> {
+                "1 Question"
+            }
+            else -> {
+                "$allQuestionsCount Questions"
+            }
+        }
+        val starredQuestionsSubtitle = if (allQuestionsCount == 0) {
+            "" // don't show subtitle because no questions are available yet
+        } else if (starredQuestionsCount == 1) {
+            "1 Question"
+        } else {
+            "$starredQuestionsCount Questions"
+        }
         Column(
             modifier = Modifier.fillMaxSize(),
         ) {
@@ -85,7 +105,7 @@ fun HomeScreen(
                 item {
                     HomeScreenCard(
                         title = "All Questions",
-                        subtitle = "128 Questions",
+                        subtitle = allQuestionsSubtitle,
                         iconId = R.drawable.outline_book_ribbon_24,
                         onCardClick = {
                             if (newUser) {
@@ -100,7 +120,7 @@ fun HomeScreen(
                 item {
                     HomeScreenCard(
                         title = "All Flash Cards",
-                        subtitle = "128 Questions",
+                        subtitle = allQuestionsSubtitle,
                         iconId = R.drawable.outline_cards_stack_24,
                         onCardClick = {
                             if (newUser) {
@@ -115,7 +135,7 @@ fun HomeScreen(
                 item {
                     HomeScreenCard(
                         title = "Starred Questions",
-                        subtitle = "128 Questions",
+                        subtitle = starredQuestionsSubtitle,
                         iconId = R.drawable.round_star_24,
                         onCardClick = {
                             if (newUser) {
@@ -130,7 +150,7 @@ fun HomeScreen(
                 item {
                     HomeScreenCard(
                         title = "Starred Flash Cards",
-                        subtitle = "128 Questions",
+                        subtitle = starredQuestionsSubtitle,
                         iconId = R.drawable.outline_cards_star_24,
                         onCardClick = {
                             if (newUser) {
@@ -236,13 +256,15 @@ fun HomeScreenCard(
                 maxLines = 2,
             )
 
-            Text(
-                text = subtitle,
-                fontFamily = FontFamily.SansSerif,
-                fontSize = 12.sp,
-                textAlign = TextAlign.Center,
-                maxLines = 2,
-            )
+            if (subtitle.isNotEmpty()) {
+                Text(
+                    text = subtitle,
+                    fontFamily = FontFamily.SansSerif,
+                    fontSize = 12.sp,
+                    textAlign = TextAlign.Center,
+                    maxLines = 2,
+                )
+            }
         }
     }
 }
@@ -255,6 +277,8 @@ fun HomePreview() {
             currentTestYear = "",
             currentUserStateOrDistrict = "Alaska",
             currentUsRepresentative = "Susan",
+            allQuestionsCount = 128,
+            starredQuestionsCount = 15,
             navController = rememberNavController(),
             modifier = Modifier.fillMaxSize(),
         )

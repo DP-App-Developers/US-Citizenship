@@ -120,6 +120,8 @@ fun USCitizenApp(
                     currentTestYear = testYear,
                     currentUserStateOrDistrict = userStateOrDistrict,
                     currentUsRepresentative = usRepresentative,
+                    allQuestionsCount = questionsWithAnswers.size,
+                    starredQuestionsCount = starredQuestions.size,
                     navController = navController,
                     modifier = Modifier.fillMaxSize(),
                 )
