@@ -69,7 +69,7 @@ fun HomeScreen(
         }
     } else {
         val newUser = currentTestYear.isEmpty() || currentUserStateOrDistrict.isEmpty() || currentUsRepresentative.isEmpty()
-        var showBottomSheet by rememberSaveable { mutableStateOf(newUser) }
+        var showNewUserBottomSheet by rememberSaveable { mutableStateOf(newUser) }
         val allQuestionsSubtitle = when (allQuestionsCount) {
             0 -> {
                 "" // don't show subtitle because no questions are available yet
@@ -109,7 +109,7 @@ fun HomeScreen(
                         iconId = R.drawable.outline_book_ribbon_24,
                         onCardClick = {
                             if (newUser) {
-                                showBottomSheet = true
+                                showNewUserBottomSheet = true
                             } else {
                                 navController.navigate(MainScreen.AllQuestions.name)
                             }
@@ -124,7 +124,7 @@ fun HomeScreen(
                         iconId = R.drawable.outline_cards_stack_24,
                         onCardClick = {
                             if (newUser) {
-                                showBottomSheet = true
+                                showNewUserBottomSheet = true
                             } else {
                                 navController.navigate(MainScreen.AllFlashCards.name)
                             }
@@ -139,7 +139,7 @@ fun HomeScreen(
                         iconId = R.drawable.round_star_24,
                         onCardClick = {
                             if (newUser) {
-                                showBottomSheet = true
+                                showNewUserBottomSheet = true
                             } else {
                                 navController.navigate(MainScreen.StarredQuestions.name)
                             }
@@ -154,7 +154,7 @@ fun HomeScreen(
                         iconId = R.drawable.outline_cards_star_24,
                         onCardClick = {
                             if (newUser) {
-                                showBottomSheet = true
+                                showNewUserBottomSheet = true
                             } else {
                                 navController.navigate(MainScreen.StarredFlashCards.name)
                             }
@@ -174,9 +174,9 @@ fun HomeScreen(
             )
         }
 
-        if (showBottomSheet) {
+        if (showNewUserBottomSheet) {
             ModalBottomSheet(
-                onDismissRequest = { showBottomSheet = false },
+                onDismissRequest = { showNewUserBottomSheet = false },
             ) {
                 Column(modifier = Modifier
                     .padding(horizontal = 16.dp)
@@ -194,7 +194,7 @@ fun HomeScreen(
                         contentAlignment = Alignment.BottomEnd
                     ) {
                         Button(onClick = {
-                            showBottomSheet = false
+                            showNewUserBottomSheet = false
                             navController.navigate(MainScreen.Settings.name)
                         }) {
                             Text(
