@@ -45,6 +45,7 @@ import com.dpappdev.uscitizenship.ui.HomeScreen
 import com.dpappdev.uscitizenship.ui.SettingsScreen
 import com.dpappdev.uscitizenship.ui.StarredFlashCardsScreen
 import com.dpappdev.uscitizenship.ui.StarredQuestionsScreen
+import com.dpappdev.uscitizenship.billing.BillingManager
 
 enum class MainScreen(@StringRes val title: Int) {
     Home(title = R.string.app_name),
@@ -59,7 +60,9 @@ enum class MainScreen(@StringRes val title: Int) {
 @Composable
 fun USCitizenApp(
     textToSpeech: TextToSpeech,
-    navController: NavHostController = rememberNavController()
+    navController: NavHostController = rememberNavController(),
+    isPremium: Boolean = false,
+    billingManager: BillingManager? = null,
 ) {
     // Get current back stack entry
     val backStackEntry by navController.currentBackStackEntryAsState()
@@ -124,6 +127,8 @@ fun USCitizenApp(
                     starredQuestionsCount = starredQuestions.size,
                     navController = navController,
                     modifier = Modifier.fillMaxSize(),
+                    isPremium = isPremium,
+                    billingManager = billingManager,
                 )
             }
             composable(route = MainScreen.AllFlashCards.name) {
@@ -132,6 +137,8 @@ fun USCitizenApp(
                     starredQuestions = starredQuestions,
                     starredQuestionsDataStore = starredQuestionsDataStore,
                     textToSpeech = textToSpeech,
+                    isPremium = isPremium,
+                    billingManager = billingManager,
                 )
             }
             composable(route = MainScreen.AllQuestions.name) {

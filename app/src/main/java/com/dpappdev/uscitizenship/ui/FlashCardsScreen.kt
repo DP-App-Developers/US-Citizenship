@@ -42,6 +42,7 @@ import com.dpappdev.uscitizenship.data.FlashCardsShuffleDataStore
 import com.dpappdev.uscitizenship.data.Question
 import com.dpappdev.uscitizenship.data.StarredQuestions2008DataStore
 import com.dpappdev.uscitizenship.data.StarredQuestionsDataStore
+import com.dpappdev.uscitizenship.billing.BillingManager
 import com.dpappdev.uscitizenship.ui.theme.USCitizenshipTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -53,10 +54,13 @@ fun FlashCardsScreen(
     starredQuestions: List<String>,
     starredQuestionsDataStore: StarredQuestionsDataStore?,
     textToSpeech: TextToSpeech,
+    isPremium: Boolean = false,
+    billingManager: BillingManager? = null,
 ) {
     if (questionsInOrder.isEmpty()) return
     var index by rememberSaveable { mutableIntStateOf(0) }
     var expanded by rememberSaveable { mutableStateOf(false) }
+    var showPaywallBottomSheet by rememberSaveable { mutableStateOf(false) }
     val questionsShuffled by rememberSaveable {
         mutableStateOf(questionsInOrder.shuffled())
     }
@@ -197,23 +201,27 @@ fun FlashCardsScreen(
                 .padding(16.dp)
                 .align(Alignment.BottomCenter)
                 .clickable {
-                    CoroutineScope(Dispatchers.Main).launch {
-                        shuffleDataStore.saveShuffleOn(!isShuffleOn)
-                        // update index so the question remains the same on the screen
-                        if (isShuffleOn) {
-                            // turning shuffle off
-                            questionsInOrder.forEachIndexed { i, question ->
-                                if (question.questionNumber == questionNumber) {
-                                    index = i
-                                    return@forEachIndexed
+                    if (!isPremium) {
+                        showPaywallBottomSheet = true
+                    } else {
+                        CoroutineScope(Dispatchers.Main).launch {
+                            shuffleDataStore.saveShuffleOn(!isShuffleOn)
+                            // update index so the question remains the same on the screen
+                            if (isShuffleOn) {
+                                // turning shuffle off
+                                questionsInOrder.forEachIndexed { i, question ->
+                                    if (question.questionNumber == questionNumber) {
+                                        index = i
+                                        return@forEachIndexed
+                                    }
                                 }
-                            }
-                        } else {
-                            // turning shuffle on
-                            questionsShuffled.forEachIndexed { i, question ->
-                                if (question.questionNumber == questionNumber) {
-                                    index = i
-                                    return@forEachIndexed
+                            } else {
+                                // turning shuffle on
+                                questionsShuffled.forEachIndexed { i, question ->
+                                    if (question.questionNumber == questionNumber) {
+                                        index = i
+                                        return@forEachIndexed
+                                    }
                                 }
                             }
                         }
@@ -236,6 +244,17 @@ fun FlashCardsScreen(
         ) {
             Text(text = "Next")
         }
+    }
+
+    if (showPaywallBottomSheet) {
+        val context = LocalContext.current
+        PaywallBottomSheet(
+            onDismiss = { showPaywallBottomSheet = false },
+            onUpgradeClick = {
+                billingManager?.launchPurchaseFlow(context as android.app.Activity)
+                showPaywallBottomSheet = false
+            }
+        )
     }
 }
 

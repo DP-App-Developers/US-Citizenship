@@ -45,7 +45,9 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.dpappdev.uscitizenship.MainScreen
 import com.dpappdev.uscitizenship.R
+import com.dpappdev.uscitizenship.billing.BillingManager
 import com.dpappdev.uscitizenship.ui.theme.USCitizenshipTheme
+import androidx.compose.ui.platform.LocalContext
 
 @Composable
 fun HomeScreen(
@@ -56,6 +58,8 @@ fun HomeScreen(
     starredQuestionsCount: Int,
     navController: NavController,
     modifier: Modifier = Modifier,
+    isPremium: Boolean = false,
+    billingManager: BillingManager? = null,
 ) {
     val loading = currentTestYear == "loading" || currentUserStateOrDistrict == "loading" || currentUsRepresentative == "loading"
     if (loading) {
@@ -70,6 +74,7 @@ fun HomeScreen(
     } else {
         val newUser = currentTestYear.isEmpty() || currentUserStateOrDistrict.isEmpty() || currentUsRepresentative.isEmpty()
         var showNewUserBottomSheet by rememberSaveable { mutableStateOf(newUser) }
+        var showPaywallBottomSheet by rememberSaveable { mutableStateOf(false) }
         val allQuestionsSubtitle = when (allQuestionsCount) {
             0 -> {
                 "" // don't show subtitle because no questions are available yet
@@ -140,6 +145,8 @@ fun HomeScreen(
                         onCardClick = {
                             if (newUser) {
                                 showNewUserBottomSheet = true
+                            } else if (!isPremium) {
+                                showPaywallBottomSheet = true
                             } else {
                                 navController.navigate(MainScreen.StarredQuestions.name)
                             }
@@ -155,6 +162,8 @@ fun HomeScreen(
                         onCardClick = {
                             if (newUser) {
                                 showNewUserBottomSheet = true
+                            } else if (!isPremium) {
+                                showPaywallBottomSheet = true
                             } else {
                                 navController.navigate(MainScreen.StarredFlashCards.name)
                             }
@@ -204,6 +213,17 @@ fun HomeScreen(
                     }
                 }
             }
+        }
+
+        if (showPaywallBottomSheet) {
+            val context = LocalContext.current
+            PaywallBottomSheet(
+                onDismiss = { showPaywallBottomSheet = false },
+                onUpgradeClick = {
+                    billingManager?.launchPurchaseFlow(context as android.app.Activity)
+                    showPaywallBottomSheet = false
+                }
+            )
         }
     }
 }
