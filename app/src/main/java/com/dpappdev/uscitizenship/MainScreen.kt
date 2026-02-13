@@ -34,6 +34,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.dpappdev.uscitizenship.billing.BillingManager
 import com.dpappdev.uscitizenship.data.StarredQuestions2008DataStore
 import com.dpappdev.uscitizenship.data.StarredQuestions2025DataStore
 import com.dpappdev.uscitizenship.data.TestYearDataStore
@@ -47,7 +48,6 @@ import com.dpappdev.uscitizenship.ui.HomeScreen
 import com.dpappdev.uscitizenship.ui.SettingsScreen
 import com.dpappdev.uscitizenship.ui.StarredFlashCardsScreen
 import com.dpappdev.uscitizenship.ui.StarredQuestionsScreen
-import com.dpappdev.uscitizenship.billing.BillingManager
 import kotlinx.coroutines.flow.MutableStateFlow
 
 enum class MainScreen(@StringRes val title: Int) {
@@ -82,10 +82,13 @@ fun USCitizenApp(
             is BillingManager.PurchaseState.Success -> {
                 snackbarHostState.showSnackbar("Advanced study tools unlocked!")
             }
+            is BillingManager.PurchaseState.Pending -> {
+                snackbarHostState.showSnackbar("Purchase pending")
+            }
             is BillingManager.PurchaseState.Error -> {
                 snackbarHostState.showSnackbar("Purchase failed. Please try again.")
             }
-            else -> { /* Idle, Cancelled, or Loading - no snackbar */ }
+            else -> { /* Idle, Cancelled or Loading - no snackbar */ }
         }
     }
 

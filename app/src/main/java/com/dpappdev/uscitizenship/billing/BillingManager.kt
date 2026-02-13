@@ -3,7 +3,16 @@ package com.dpappdev.uscitizenship.billing
 import android.app.Activity
 import android.content.Context
 import android.util.Log
-import com.android.billingclient.api.*
+import com.android.billingclient.api.AcknowledgePurchaseParams
+import com.android.billingclient.api.BillingClient
+import com.android.billingclient.api.BillingClientStateListener
+import com.android.billingclient.api.BillingFlowParams
+import com.android.billingclient.api.BillingResult
+import com.android.billingclient.api.PendingPurchasesParams
+import com.android.billingclient.api.Purchase
+import com.android.billingclient.api.PurchasesUpdatedListener
+import com.android.billingclient.api.QueryProductDetailsParams
+import com.android.billingclient.api.QueryPurchasesParams
 import com.dpappdev.uscitizenship.data.PremiumStatusDataStore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -81,20 +90,37 @@ class BillingManager(private val context: Context) : PurchasesUpdatedListener {
     
     private fun handlePurchases(purchases: List<Purchase>) {
         var hasPremium = false
+        var isPending = false
         
         for (purchase in purchases) {
-            if (purchase.products.contains(PREMIUM_PRODUCT_ID) && 
-                purchase.purchaseState == Purchase.PurchaseState.PURCHASED) {
-                
-                if (!purchase.isAcknowledged) {
-                    acknowledgePurchase(purchase)
+            if (purchase.products.contains(PREMIUM_PRODUCT_ID)) {
+                when (purchase.purchaseState) {
+                    Purchase.PurchaseState.PURCHASED -> {
+                        if (!purchase.isAcknowledged) {
+                            acknowledgePurchase(purchase)
+                        }
+                        hasPremium = true
+                    }
+                    Purchase.PurchaseState.PENDING -> {
+                        isPending = true
+                        Log.d(TAG, "Purchase is pending")
+                    }
+                    else -> {
+                        Log.d(TAG, "Purchase state: ${purchase.purchaseState}")
+                    }
                 }
-                hasPremium = true
             }
         }
         
         _isPremium.value = hasPremium
         Log.d(TAG, "Premium status updated: $hasPremium")
+        
+        // Set purchase state to pending if there's a pending purchase
+        if (isPending && !hasPremium) {
+            _purchaseState.value = PurchaseState.Pending
+        } else if (hasPremium) {
+            _purchaseState.value = PurchaseState.Success
+        }
         
         // Cache the premium status for offline support
         CoroutineScope(Dispatchers.IO).launch {
@@ -159,7 +185,6 @@ class BillingManager(private val context: Context) : PurchasesUpdatedListener {
             BillingClient.BillingResponseCode.OK -> {
                 if (purchases != null) {
                     handlePurchases(purchases)
-                    _purchaseState.value = PurchaseState.Success
                 }
             }
             BillingClient.BillingResponseCode.USER_CANCELED -> {
@@ -181,6 +206,7 @@ class BillingManager(private val context: Context) : PurchasesUpdatedListener {
         object Idle : PurchaseState()
         object Loading : PurchaseState()
         object Success : PurchaseState()
+        object Pending : PurchaseState()
         object Cancelled : PurchaseState()
         data class Error(val message: String) : PurchaseState()
     }
