@@ -2,7 +2,6 @@
 
 package com.dpappdev.uscitizenship.ui
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -34,6 +33,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -47,7 +47,6 @@ import com.dpappdev.uscitizenship.MainScreen
 import com.dpappdev.uscitizenship.R
 import com.dpappdev.uscitizenship.billing.BillingManager
 import com.dpappdev.uscitizenship.ui.theme.USCitizenshipTheme
-import androidx.compose.ui.platform.LocalContext
 
 @Composable
 fun HomeScreen(
@@ -240,7 +239,6 @@ fun HomeScreenCard(
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.secondaryContainer,
         ),
-        border = BorderStroke(2.dp, MaterialTheme.colorScheme.primary),
         modifier = Modifier.height(132.dp)
     ) {
         Column(
