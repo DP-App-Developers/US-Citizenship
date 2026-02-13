@@ -4,11 +4,13 @@ package com.dpappdev.uscitizenship.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
@@ -17,6 +19,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -60,14 +63,14 @@ fun PaywallBottomSheet(
             )
             
             Text(
-                text = "Premium Feature",
+                text = "Premium Features",
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
             )
             
             Text(
-                text = "Unlock premium features to access:",
+                text = "Unlock advanced study tools to access:",
                 fontSize = 16.sp,
                 textAlign = TextAlign.Center,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -77,9 +80,9 @@ fun PaywallBottomSheet(
                 modifier = Modifier.fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                PremiumFeatureItem("Shuffle all flash cards")
                 PremiumFeatureItem("View starred questions")
                 PremiumFeatureItem("View starred flash cards")
+                PremiumFeatureItem("Shuffle flash cards")
             }
             
             Spacer(modifier = Modifier.height(8.dp))
@@ -95,7 +98,14 @@ fun PaywallBottomSheet(
                 )
             }
             
-            Button(
+            Text(
+                text = "One-time purchase • Lifetime access",
+                fontSize = 12.sp,
+                textAlign = TextAlign.Center,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            
+            TextButton(
                 onClick = onDismiss,
                 modifier = Modifier.fillMaxWidth()
             ) {
@@ -111,12 +121,26 @@ fun PaywallBottomSheet(
 
 @Composable
 private fun PremiumFeatureItem(text: String) {
-    Text(
-        text = "• $text",
-        fontSize = 14.sp,
-        modifier = Modifier.padding(start = 16.dp),
-        color = MaterialTheme.colorScheme.onSurface,
-    )
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = 16.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Start
+    ) {
+        Icon(
+            painter = painterResource(id = R.drawable.round_star_24),
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.primary,
+            modifier = Modifier.size(20.dp)
+        )
+        Spacer(modifier = Modifier.width(12.dp))
+        Text(
+            text = text,
+            fontSize = 14.sp,
+            color = MaterialTheme.colorScheme.onSurface,
+        )
+    }
 }
 
 @Preview(showBackground = true)
