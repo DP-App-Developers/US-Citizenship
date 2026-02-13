@@ -8,7 +8,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.dpappdev.uscitizenship.billing.BillingManager
+import com.dpappdev.uscitizenship.data.FlashCardsShuffleDataStore
 import com.dpappdev.uscitizenship.ui.theme.USCitizenshipTheme
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import java.util.Locale
 
 class MainActivity : ComponentActivity() {
@@ -26,6 +31,15 @@ class MainActivity : ComponentActivity() {
         textToSpeech.language = Locale.US
 
         billingManager = BillingManager(this)
+        
+        // Reset shuffle to false on app start if user is not premium
+        CoroutineScope(Dispatchers.IO).launch {
+            val isPremium = billingManager.isPremium.first()
+            if (!isPremium) {
+                val shuffleDataStore = FlashCardsShuffleDataStore(this@MainActivity)
+                shuffleDataStore.saveShuffleOn(false)
+            }
+        }
 
         setContent {
             USCitizenshipTheme {
