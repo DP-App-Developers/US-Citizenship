@@ -15,8 +15,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -48,7 +46,6 @@ import com.dpappdev.uscitizenship.ui.HomeScreen
 import com.dpappdev.uscitizenship.ui.SettingsScreen
 import com.dpappdev.uscitizenship.ui.StarredFlashCardsScreen
 import com.dpappdev.uscitizenship.ui.StarredQuestionsScreen
-import kotlinx.coroutines.flow.MutableStateFlow
 
 enum class MainScreen(@StringRes val title: Int) {
     Home(title = R.string.app_name),
@@ -72,28 +69,8 @@ fun USCitizenApp(
     val currentRoute = backStackEntry?.destination?.route ?: MainScreen.Home.name
     // Get the name of the current screen
     val currentScreen = MainScreen.valueOf(currentRoute)
-    
-    val snackbarHostState = remember { SnackbarHostState() }
-    val purchaseState by billingManager?.purchaseState?.collectAsState() ?: remember { MutableStateFlow(BillingManager.PurchaseState.Idle) }.collectAsState()
-    
-    // Show snackbar based on purchase state
-    LaunchedEffect(purchaseState) {
-        when (purchaseState) {
-            is BillingManager.PurchaseState.Success -> {
-                snackbarHostState.showSnackbar("Advanced study tools unlocked!")
-            }
-            is BillingManager.PurchaseState.Pending -> {
-                snackbarHostState.showSnackbar("Purchase pending")
-            }
-            is BillingManager.PurchaseState.Error -> {
-                snackbarHostState.showSnackbar("Purchase failed. Please try again.")
-            }
-            else -> { /* Idle, Cancelled or Loading - no snackbar */ }
-        }
-    }
 
     Scaffold(
-        snackbarHost = { SnackbarHost(snackbarHostState) },
         topBar = {
             USCitizenAppBar(
                 currentScreen = currentScreen,
