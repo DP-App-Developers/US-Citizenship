@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">US Citizen</string>
     <string name="title_settings">Settings</string>
-    <string name="title_flash_cards">All Flash Cards</string>
+    <string name="title_flash_cards">All Flashcards</string>
     <string name="title_all_questions">All Questions</string>
     <string name="title_starred_questions">Starred Questions</string>
-    <string name="title_starred_flash_cards">Starred Flash Cards</string>
+    <string name="title_starred_flash_cards">Starred Flashcards</string>
     <string name="back_button">Back</string>
 </resources>

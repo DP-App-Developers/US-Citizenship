@@ -81,8 +81,8 @@ fun PaywallBottomSheet(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 PremiumFeatureItem("View starred questions")
-                PremiumFeatureItem("View starred flash cards")
-                PremiumFeatureItem("Shuffle flash cards")
+                PremiumFeatureItem("View starred flashcards")
+                PremiumFeatureItem("Shuffle flashcards")
             }
             
             Spacer(modifier = Modifier.height(8.dp))

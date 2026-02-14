@@ -123,7 +123,7 @@ fun HomeScreen(
 
                 item {
                     HomeScreenCard(
-                        title = "All Flash Cards",
+                        title = "All Flashcards",
                         subtitle = allQuestionsSubtitle,
                         iconId = R.drawable.outline_cards_stack_24,
                         onCardClick = {
@@ -155,7 +155,7 @@ fun HomeScreen(
 
                 item {
                     HomeScreenCard(
-                        title = "Starred Flash Cards",
+                        title = "Starred Flashcards",
                         subtitle = starredQuestionsSubtitle,
                         iconId = R.drawable.outline_cards_star_24,
                         onCardClick = {
