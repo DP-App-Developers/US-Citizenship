@@ -92,20 +92,17 @@ fun HomeScreen(
         } else {
             "$starredQuestionsCount Questions"
         }
-        Column(
-            modifier = Modifier.fillMaxSize(),
+        BoxWithConstraints(
+            modifier = modifier.fillMaxSize()
         ) {
-            BoxWithConstraints(
-                modifier = modifier.weight(1f)
+            val columns = if (maxWidth < 600.dp) 1 else 2
+
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(columns),
+                contentPadding = PaddingValues(vertical = 32.dp, horizontal = 64.dp),
+                horizontalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterHorizontally),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
             ) {
-                val columns = if (maxWidth < 600.dp) 1 else 2
-                
-                LazyVerticalGrid(
-                    columns = GridCells.Fixed(columns),
-                    contentPadding = PaddingValues(vertical = 32.dp, horizontal = 64.dp),
-                    horizontalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterHorizontally),
-                    verticalArrangement = Arrangement.spacedBy(16.dp),
-                ) {
                 item {
                     HomeScreenCard(
                         title = "All Questions",
@@ -169,17 +166,7 @@ fun HomeScreen(
                         },
                     )
                 }
-                }
             }
-
-            Text(
-                text = "Disclaimer: This application is not affiliated with any government entity.",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.bodySmall.copy(color = Color.Gray),
-            )
         }
 
         if (showNewUserBottomSheet) {
