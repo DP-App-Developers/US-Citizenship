@@ -6,4 +6,12 @@
     <string name="title_starred_questions">Starred Questions</string>
     <string name="title_starred_flash_cards">Starred Flashcards</string>
     <string name="back_button">Back</string>
+    <string name="paywall_title">Premium Features</string>
+    <string name="paywall_subtitle">Unlock advanced study tools to access:</string>
+    <string name="paywall_feature_starred_questions">View starred questions</string>
+    <string name="paywall_feature_starred_flashcards">View starred flashcards</string>
+    <string name="paywall_feature_shuffle">Shuffle flashcards</string>
+    <string name="paywall_upgrade_button">Upgrade to Premium</string>
+    <string name="paywall_purchase_info">One-time purchase • Lifetime access</string>
+    <string name="paywall_maybe_later">Maybe Later</string>
 </resources>

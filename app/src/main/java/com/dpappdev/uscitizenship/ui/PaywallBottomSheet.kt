@@ -25,6 +25,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -63,14 +64,14 @@ fun PaywallBottomSheet(
             )
             
             Text(
-                text = "Premium Features",
+                text = stringResource(R.string.paywall_title),
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
             )
             
             Text(
-                text = "Unlock advanced study tools to access:",
+                text = stringResource(R.string.paywall_subtitle),
                 fontSize = 16.sp,
                 textAlign = TextAlign.Center,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -80,9 +81,9 @@ fun PaywallBottomSheet(
                 modifier = Modifier.fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                PremiumFeatureItem("View starred questions")
-                PremiumFeatureItem("View starred flashcards")
-                PremiumFeatureItem("Shuffle flashcards")
+                PremiumFeatureItem(stringResource(R.string.paywall_feature_starred_questions))
+                PremiumFeatureItem(stringResource(R.string.paywall_feature_starred_flashcards))
+                PremiumFeatureItem(stringResource(R.string.paywall_feature_shuffle))
             }
             
             Spacer(modifier = Modifier.height(8.dp))
@@ -92,14 +93,14 @@ fun PaywallBottomSheet(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
-                    text = "Upgrade to Premium",
+                    text = stringResource(R.string.paywall_upgrade_button),
                     fontSize = 16.sp,
                     modifier = Modifier.padding(vertical = 8.dp)
                 )
             }
             
             Text(
-                text = "One-time purchase • Lifetime access",
+                text = stringResource(R.string.paywall_purchase_info),
                 fontSize = 12.sp,
                 textAlign = TextAlign.Center,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -110,7 +111,7 @@ fun PaywallBottomSheet(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
-                    text = "Maybe Later",
+                    text = stringResource(R.string.paywall_maybe_later),
                     fontSize = 16.sp,
                     modifier = Modifier.padding(vertical = 8.dp)
                 )
