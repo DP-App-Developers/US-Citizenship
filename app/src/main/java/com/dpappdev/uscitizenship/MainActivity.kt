@@ -5,10 +5,11 @@ import android.speech.tts.TextToSpeech
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import com.dpappdev.uscitizenship.ads.AdManager
+import com.dpappdev.uscitizenship.ads.AdViewModel
 import com.dpappdev.uscitizenship.billing.BillingManager
 import com.dpappdev.uscitizenship.data.FlashCardsShuffleDataStore
 import com.dpappdev.uscitizenship.ui.theme.USCitizenshipTheme
@@ -22,7 +23,7 @@ import java.util.Locale
 class MainActivity : ComponentActivity() {
     private lateinit var textToSpeech: TextToSpeech
     private lateinit var billingManager: BillingManager
-    private lateinit var adManager: AdManager
+    private val adViewModel: AdViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
@@ -49,10 +50,6 @@ class MainActivity : ComponentActivity() {
         textToSpeech.language = Locale.US
 
         billingManager = BillingManager(this)
-        adManager = AdManager(this)
-        
-        // Preload rewarded ad on app start
-        adManager.loadRewardedAd()
         
         // Reset shuffle to false on app start if user is not premium
         CoroutineScope(Dispatchers.IO).launch {
@@ -70,7 +67,7 @@ class MainActivity : ComponentActivity() {
                     textToSpeech = textToSpeech,
                     isPremium = isPremium,
                     billingManager = billingManager,
-                    adManager = adManager
+                    adManager = adViewModel.adManager
                 )
             }
         }

@@ -261,7 +261,7 @@ fun FlashCardsScreen(
         val premiumStatusDataStore = remember { PremiumStatusDataStore(context) }
         
         // Trigger ad loading if not ready
-        LaunchedEffect(showPaywallBottomSheet) {
+        LaunchedEffect(Unit) {
             if (!isAdReady) {
                 adManager.loadRewardedAd()
             }
