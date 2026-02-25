@@ -24,11 +24,11 @@ class AdManager(private val context: Context) {
     companion object {
         private const val TAG = "AdManager"
         // Grant 1 hour of premium access (3600000 milliseconds)
-        const val REWARDED_AD_TIME = 3000L
+        const val REWARDED_AD_TIME = 3600000L
         // Test ad unit ID for rewarded ads: "ca-app-pub-3940256099942544/5224354917"
         // my ad unit id: "ca-app-pub-9315374730551337/2926196875"
         // Replace with your actual ad unit ID in production
-        private const val AD_UNIT_ID = "ca-app-pub-3940256099942544/5224354917"
+        private const val AD_UNIT_ID = "ca-app-pub-9315374730551337/2926196875"
     }
     
     fun loadRewardedAd() {
