@@ -51,6 +51,9 @@ class MainActivity : ComponentActivity() {
         billingManager = BillingManager(this)
         adManager = AdManager(this)
         
+        // Preload rewarded ad on app start
+        adManager.loadRewardedAd()
+        
         // Reset shuffle to false on app start if user is not premium
         CoroutineScope(Dispatchers.IO).launch {
             val isPremium = billingManager.isPremium.first()

@@ -27,6 +27,7 @@ import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -48,6 +49,7 @@ import androidx.navigation.compose.rememberNavController
 import com.dpappdev.uscitizenship.MainScreen
 import com.dpappdev.uscitizenship.R
 import com.dpappdev.uscitizenship.ads.AdManager
+import com.dpappdev.uscitizenship.ads.AdManager.Companion.REWARDED_AD_TIME
 import com.dpappdev.uscitizenship.billing.BillingManager
 import com.dpappdev.uscitizenship.data.PremiumStatusDataStore
 import com.dpappdev.uscitizenship.ui.theme.USCitizenshipTheme
@@ -210,15 +212,15 @@ fun HomeScreen(
         }
 
         if (showPaywallBottomSheet) {
-            var isAdReady by remember { mutableStateOf(adManager.isAdReady()) }
+            val isAdReady by adManager.isAdReady.collectAsState()
             val coroutineScope = rememberCoroutineScope()
             val premiumStatusDataStore = remember { PremiumStatusDataStore(context) }
             
-            LaunchedEffect(Unit) {
-                adManager.loadRewardedAd(
-                    onAdLoaded = { isAdReady = true },
-                    onAdFailedToLoad = { isAdReady = false }
-                )
+            // Trigger ad loading if not ready
+            LaunchedEffect(showPaywallBottomSheet) {
+                if (!isAdReady) {
+                    adManager.loadRewardedAd()
+                }
             }
             
             PaywallBottomSheet(
@@ -233,16 +235,16 @@ fun HomeScreen(
                         onUserEarnedReward = {
                             coroutineScope.launch {
                                 // Grant 1 hour of premium access (3600000 milliseconds)
-                                premiumStatusDataStore.grantTemporaryPremium(3600000L)
+                                premiumStatusDataStore.grantTemporaryPremium(REWARDED_AD_TIME)
                             }
                         },
-                        onAdDismissed = {
-                            showPaywallBottomSheet = false
-                        },
-                        onAdFailedToShow = { error ->
-                            // Ad failed to show, keep the bottom sheet open
-                            isAdReady = false
-                        }
+                    onAdDismissed = {
+                        showPaywallBottomSheet = false
+                    },
+                    onAdFailedToShow = { error ->
+                        // Ad failed to show, keep the bottom sheet open
+                        // isAdReady is managed by the Flow
+                    }
                     )
                 },
                 isAdReady = isAdReady

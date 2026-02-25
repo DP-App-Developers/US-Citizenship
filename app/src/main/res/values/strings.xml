@@ -14,5 +14,4 @@
     <string name="paywall_upgrade_button">Upgrade to Premium</string>
     <string name="paywall_purchase_info">One-time purchase • Lifetime access</string>
     <string name="paywall_watch_ad_button">Watch Ad for 1 Hour Access</string>
-    <string name="paywall_ad_loading">Loading ad…</string>
 </resources>

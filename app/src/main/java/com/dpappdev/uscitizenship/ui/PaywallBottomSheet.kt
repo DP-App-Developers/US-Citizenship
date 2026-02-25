@@ -108,20 +108,17 @@ fun PaywallBottomSheet(
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             
-            OutlinedButton(
-                onClick = onWatchAdClick,
-                modifier = Modifier.fillMaxWidth(),
-                enabled = isAdReady
-            ) {
-                Text(
-                    text = if (isAdReady) {
-                        stringResource(R.string.paywall_watch_ad_button)
-                    } else {
-                        stringResource(R.string.paywall_ad_loading)
-                    },
-                    fontSize = 16.sp,
-                    modifier = Modifier.padding(vertical = 8.dp)
-                )
+            if (isAdReady) {
+                OutlinedButton(
+                    onClick = onWatchAdClick,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(
+                        text = stringResource(R.string.paywall_watch_ad_button),
+                        fontSize = 16.sp,
+                        modifier = Modifier.padding(vertical = 8.dp)
+                    )
+                }
             }
         }
     }

@@ -42,6 +42,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.dpappdev.uscitizenship.R
 import com.dpappdev.uscitizenship.ads.AdManager
+import com.dpappdev.uscitizenship.ads.AdManager.Companion.REWARDED_AD_TIME
 import com.dpappdev.uscitizenship.data.FlashCardsShuffleDataStore
 import com.dpappdev.uscitizenship.data.PremiumStatusDataStore
 import com.dpappdev.uscitizenship.data.Question
@@ -255,15 +256,15 @@ fun FlashCardsScreen(
     }
 
     if (showPaywallBottomSheet) {
-        var isAdReady by remember { mutableStateOf(adManager.isAdReady()) }
+        val isAdReady by adManager.isAdReady.collectAsState()
         val coroutineScope = rememberCoroutineScope()
         val premiumStatusDataStore = remember { PremiumStatusDataStore(context) }
         
-        LaunchedEffect(Unit) {
-            adManager.loadRewardedAd(
-                onAdLoaded = { isAdReady = true },
-                onAdFailedToLoad = { isAdReady = false }
-            )
+        // Trigger ad loading if not ready
+        LaunchedEffect(showPaywallBottomSheet) {
+            if (!isAdReady) {
+                adManager.loadRewardedAd()
+            }
         }
         
         PaywallBottomSheet(
@@ -278,7 +279,7 @@ fun FlashCardsScreen(
                     onUserEarnedReward = {
                         coroutineScope.launch {
                             // Grant 1 hour of premium access (3600000 milliseconds)
-                            premiumStatusDataStore.grantTemporaryPremium(3600000L)
+                            premiumStatusDataStore.grantTemporaryPremium(REWARDED_AD_TIME)
                         }
                     },
                     onAdDismissed = {
@@ -286,7 +287,7 @@ fun FlashCardsScreen(
                     },
                     onAdFailedToShow = { error ->
                         // Ad failed to show, keep the bottom sheet open
-                        isAdReady = false
+                        // isAdReady is managed by the Flow
                     }
                 )
             },
