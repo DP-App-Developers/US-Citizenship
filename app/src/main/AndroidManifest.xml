@@ -9,6 +9,7 @@
     </queries>
 
     <uses-permission android:name="com.android.vending.BILLING" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -20,6 +21,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.App.First"
         tools:targetApi="31">
+        
+        <!-- AdMob App ID -->
+        <!-- test app value: ca-app-pub-3940256099942544~3347511713 -->
+        <!-- my app value: ca-app-pub-9315374730551337~3272875338 -->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-3940256099942544~3347511713"/>
+        
         <activity
             android:name=".MainActivity"
             android:windowSoftInputMode="adjustResize"

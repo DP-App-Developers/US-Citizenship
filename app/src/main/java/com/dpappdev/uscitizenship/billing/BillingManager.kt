@@ -38,11 +38,14 @@ class BillingManager(private val context: Context) : PurchasesUpdatedListener {
     }
     
     init {
-        // Load cached premium status first (for offline support)
+        // Monitor premium status from DataStore (includes both purchases and temporary ad-based premium)
+        // DataStore automatically persists data, so this maintains offline support by immediately
+        // emitting the cached value, then updating when the value changes
         CoroutineScope(Dispatchers.IO).launch {
-            val cachedStatus = premiumStatusDataStore.isPremium.first()
-            _isPremium.value = cachedStatus
-            Log.d(TAG, "Loaded cached premium status: $cachedStatus")
+            premiumStatusDataStore.isPremium.collect { isPremiumFromDataStore ->
+                _isPremium.value = isPremiumFromDataStore
+                Log.d(TAG, "Premium status updated from DataStore: $isPremiumFromDataStore")
+            }
         }
         setupBillingClient()
     }
@@ -112,9 +115,6 @@ class BillingManager(private val context: Context) : PurchasesUpdatedListener {
             }
         }
         
-        _isPremium.value = hasPremium
-        Log.d(TAG, "Premium status updated: $hasPremium")
-        
         // Set purchase state to pending if there's a pending purchase
         if (isPending && !hasPremium) {
             _purchaseState.value = PurchaseState.Pending
@@ -122,11 +122,15 @@ class BillingManager(private val context: Context) : PurchasesUpdatedListener {
             _purchaseState.value = PurchaseState.Success
         }
         
-        // Cache the premium status for offline support
+        // Save the permanent premium status (from purchases) to DataStore
+        // This will NOT overwrite temporary premium from ads, as DataStore handles both separately
         CoroutineScope(Dispatchers.IO).launch {
             premiumStatusDataStore.savePremiumStatus(hasPremium)
-            Log.d(TAG, "Cached premium status: $hasPremium")
+            Log.d(TAG, "Saved permanent premium status from purchase: $hasPremium")
         }
+        
+        // Note: We don't set _isPremium.value here because it's already being updated
+        // by the collect flow in init, which includes both permanent and temporary premium
     }
     
     private fun acknowledgePurchase(purchase: Purchase) {

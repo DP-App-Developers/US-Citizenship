@@ -22,10 +22,13 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -38,7 +41,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.dpappdev.uscitizenship.R
+import com.dpappdev.uscitizenship.ads.AdManager
 import com.dpappdev.uscitizenship.data.FlashCardsShuffleDataStore
+import com.dpappdev.uscitizenship.data.PremiumStatusDataStore
 import com.dpappdev.uscitizenship.data.Question
 import com.dpappdev.uscitizenship.data.StarredQuestions2008DataStore
 import com.dpappdev.uscitizenship.data.StarredQuestionsDataStore
@@ -56,8 +61,11 @@ fun FlashCardsScreen(
     textToSpeech: TextToSpeech,
     isPremium: Boolean = false,
     billingManager: BillingManager? = null,
+    adManager: AdManager,
 ) {
     if (questionsInOrder.isEmpty()) return
+    val context = LocalContext.current
+    
     var index by rememberSaveable { mutableIntStateOf(0) }
     var expanded by rememberSaveable { mutableStateOf(false) }
     var showPaywallBottomSheet by rememberSaveable { mutableStateOf(false) }
@@ -247,13 +255,42 @@ fun FlashCardsScreen(
     }
 
     if (showPaywallBottomSheet) {
-        val context = LocalContext.current
+        var isAdReady by remember { mutableStateOf(adManager.isAdReady()) }
+        val coroutineScope = rememberCoroutineScope()
+        val premiumStatusDataStore = remember { PremiumStatusDataStore(context) }
+        
+        LaunchedEffect(Unit) {
+            adManager.loadRewardedAd(
+                onAdLoaded = { isAdReady = true },
+                onAdFailedToLoad = { isAdReady = false }
+            )
+        }
+        
         PaywallBottomSheet(
             onDismiss = { showPaywallBottomSheet = false },
             onUpgradeClick = {
                 billingManager?.launchPurchaseFlow(context as android.app.Activity)
                 showPaywallBottomSheet = false
-            }
+            },
+            onWatchAdClick = {
+                adManager.showRewardedAd(
+                    activity = context as android.app.Activity,
+                    onUserEarnedReward = {
+                        coroutineScope.launch {
+                            // Grant 1 hour of premium access (3600000 milliseconds)
+                            premiumStatusDataStore.grantTemporaryPremium(3600000L)
+                        }
+                    },
+                    onAdDismissed = {
+                        showPaywallBottomSheet = false
+                    },
+                    onAdFailedToShow = { error ->
+                        // Ad failed to show, keep the bottom sheet open
+                        isAdReady = false
+                    }
+                )
+            },
+            isAdReady = isAdReady
         )
     }
 }
@@ -261,6 +298,7 @@ fun FlashCardsScreen(
 @Preview(showBackground = true)
 @Composable
 fun FlashCardsPreview() {
+    val context = LocalContext.current
     USCitizenshipTheme {
         FlashCardsScreen(
             questionsInOrder = listOf(
@@ -280,8 +318,9 @@ fun FlashCardsPreview() {
                 ),
             ),
             starredQuestions = listOf("2,5,84"),
-            starredQuestionsDataStore = StarredQuestions2008DataStore(LocalContext.current),
-            textToSpeech = TextToSpeech(LocalContext.current) {},
+            starredQuestionsDataStore = StarredQuestions2008DataStore(context),
+            textToSpeech = TextToSpeech(context) {},
+            adManager = AdManager(context as android.app.Activity),
         )
     }
 }

@@ -5,6 +5,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -15,15 +16,28 @@ class PremiumStatusDataStore(private val context: Context) {
     
     companion object {
         private val PREMIUM_STATUS_KEY = booleanPreferencesKey("is_premium")
+        private val TEMP_PREMIUM_EXPIRY_KEY = longPreferencesKey("temp_premium_expiry")
     }
     
     val isPremium: Flow<Boolean> = context.premiumDataStore.data.map { preferences ->
-        preferences[PREMIUM_STATUS_KEY] ?: false
+        val permanentPremium = preferences[PREMIUM_STATUS_KEY] ?: false
+        val tempExpiryTime = preferences[TEMP_PREMIUM_EXPIRY_KEY] ?: 0L
+        val currentTime = System.currentTimeMillis()
+        
+        // User has premium if they have permanent premium OR if temp premium hasn't expired
+        permanentPremium || (tempExpiryTime > currentTime)
     }
     
     suspend fun savePremiumStatus(isPremium: Boolean) {
         context.premiumDataStore.edit { preferences ->
             preferences[PREMIUM_STATUS_KEY] = isPremium
+        }
+    }
+    
+    suspend fun grantTemporaryPremium(durationMillis: Long) {
+        context.premiumDataStore.edit { preferences ->
+            val expiryTime = System.currentTimeMillis() + durationMillis
+            preferences[TEMP_PREMIUM_EXPIRY_KEY] = expiryTime
         }
     }
 }

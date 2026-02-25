@@ -64,6 +64,7 @@ fun USCitizenApp(
     navController: NavHostController = rememberNavController(),
     isPremium: Boolean = false,
     billingManager: BillingManager? = null,
+    adManager: com.dpappdev.uscitizenship.ads.AdManager,
 ) {
     // Get current back stack entry
     val backStackEntry by navController.currentBackStackEntryAsState()
@@ -130,6 +131,7 @@ fun USCitizenApp(
                     modifier = Modifier.fillMaxSize(),
                     isPremium = isPremium,
                     billingManager = billingManager,
+                    adManager = adManager,
                 )
             }
             composable(route = MainScreen.AllFlashCards.name) {
@@ -140,6 +142,7 @@ fun USCitizenApp(
                     textToSpeech = textToSpeech,
                     isPremium = isPremium,
                     billingManager = billingManager,
+                    adManager = adManager,
                 )
             }
             composable(route = MainScreen.AllQuestions.name) {

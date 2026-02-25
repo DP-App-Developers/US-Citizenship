@@ -18,8 +18,8 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -38,6 +38,8 @@ import com.dpappdev.uscitizenship.ui.theme.USCitizenshipTheme
 fun PaywallBottomSheet(
     onDismiss: () -> Unit,
     onUpgradeClick: () -> Unit,
+    onWatchAdClick: () -> Unit,
+    isAdReady: Boolean = false,
 ) {
     val sheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = true
@@ -106,12 +108,17 @@ fun PaywallBottomSheet(
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             
-            TextButton(
-                onClick = onDismiss,
-                modifier = Modifier.fillMaxWidth()
+            OutlinedButton(
+                onClick = onWatchAdClick,
+                modifier = Modifier.fillMaxWidth(),
+                enabled = isAdReady
             ) {
                 Text(
-                    text = stringResource(R.string.paywall_maybe_later),
+                    text = if (isAdReady) {
+                        stringResource(R.string.paywall_watch_ad_button)
+                    } else {
+                        stringResource(R.string.paywall_ad_loading)
+                    },
                     fontSize = 16.sp,
                     modifier = Modifier.padding(vertical = 8.dp)
                 )
@@ -151,6 +158,8 @@ fun PaywallBottomSheetPreview() {
         PaywallBottomSheet(
             onDismiss = {},
             onUpgradeClick = {},
+            onWatchAdClick = {},
+            isAdReady = true
         )
     }
 }

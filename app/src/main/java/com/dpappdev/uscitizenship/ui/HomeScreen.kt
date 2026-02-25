@@ -26,13 +26,15 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
@@ -45,8 +47,11 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.dpappdev.uscitizenship.MainScreen
 import com.dpappdev.uscitizenship.R
+import com.dpappdev.uscitizenship.ads.AdManager
 import com.dpappdev.uscitizenship.billing.BillingManager
+import com.dpappdev.uscitizenship.data.PremiumStatusDataStore
 import com.dpappdev.uscitizenship.ui.theme.USCitizenshipTheme
+import kotlinx.coroutines.launch
 
 @Composable
 fun HomeScreen(
@@ -59,7 +64,10 @@ fun HomeScreen(
     modifier: Modifier = Modifier,
     isPremium: Boolean = false,
     billingManager: BillingManager? = null,
+    adManager: AdManager,
 ) {
+    val context = LocalContext.current
+    
     val loading = currentTestYear == "loading" || currentUserStateOrDistrict == "loading" || currentUsRepresentative == "loading"
     if (loading) {
         Box(modifier = Modifier.fillMaxSize()) {
@@ -202,13 +210,42 @@ fun HomeScreen(
         }
 
         if (showPaywallBottomSheet) {
-            val context = LocalContext.current
+            var isAdReady by remember { mutableStateOf(adManager.isAdReady()) }
+            val coroutineScope = rememberCoroutineScope()
+            val premiumStatusDataStore = remember { PremiumStatusDataStore(context) }
+            
+            LaunchedEffect(Unit) {
+                adManager.loadRewardedAd(
+                    onAdLoaded = { isAdReady = true },
+                    onAdFailedToLoad = { isAdReady = false }
+                )
+            }
+            
             PaywallBottomSheet(
                 onDismiss = { showPaywallBottomSheet = false },
                 onUpgradeClick = {
                     billingManager?.launchPurchaseFlow(context as android.app.Activity)
                     showPaywallBottomSheet = false
-                }
+                },
+                onWatchAdClick = {
+                    adManager.showRewardedAd(
+                        activity = context as android.app.Activity,
+                        onUserEarnedReward = {
+                            coroutineScope.launch {
+                                // Grant 1 hour of premium access (3600000 milliseconds)
+                                premiumStatusDataStore.grantTemporaryPremium(3600000L)
+                            }
+                        },
+                        onAdDismissed = {
+                            showPaywallBottomSheet = false
+                        },
+                        onAdFailedToShow = { error ->
+                            // Ad failed to show, keep the bottom sheet open
+                            isAdReady = false
+                        }
+                    )
+                },
+                isAdReady = isAdReady
             )
         }
     }
@@ -286,6 +323,7 @@ fun HomePreview() {
             starredQuestionsCount = 15,
             navController = rememberNavController(),
             modifier = Modifier.fillMaxSize(),
+            adManager = AdManager(LocalContext.current as android.app.Activity),
         )
     }
 }
