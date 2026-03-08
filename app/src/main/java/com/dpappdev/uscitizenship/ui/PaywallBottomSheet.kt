@@ -119,6 +119,13 @@ fun PaywallBottomSheet(
                         modifier = Modifier.padding(vertical = 8.dp)
                     )
                 }
+
+                Text(
+                    text = stringResource(R.string.paywall_watch_ad_button_info),
+                    fontSize = 12.sp,
+                    textAlign = TextAlign.Center,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
             }
         }
     }
