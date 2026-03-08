@@ -3,17 +3,24 @@ package com.dpappdev.uscitizenship.ads
 import android.app.Activity
 import android.content.Context
 import android.util.Log
+import com.dpappdev.uscitizenship.data.PremiumStatusDataStore
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.rewarded.RewardedAd
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 
 class AdManager(private val context: Context) {
+    
+    private val premiumStatusDataStore = PremiumStatusDataStore(context)
     
     private var rewardedAd: RewardedAd? = null
     private var isLoading = false
@@ -28,7 +35,7 @@ class AdManager(private val context: Context) {
         // Test ad unit ID for rewarded ads: "ca-app-pub-3940256099942544/5224354917"
         // my ad unit id: "ca-app-pub-9315374730551337/2926196875"
         // Replace with your actual ad unit ID in production
-        private const val AD_UNIT_ID = "ca-app-pub-9315374730551337/2926196875"
+        private const val AD_UNIT_ID = "ca-app-pub-3940256099942544/5224354917"
     }
     
     fun loadRewardedAd() {
@@ -37,30 +44,44 @@ class AdManager(private val context: Context) {
             return
         }
         
-        Log.d(TAG, "Starting to load rewarded ad...")
-        isLoading = true
-        val adRequest = AdRequest.Builder().build()
-        
-        RewardedAd.load(
-            context,
-            AD_UNIT_ID,
-            adRequest,
-            object : RewardedAdLoadCallback() {
-                override fun onAdFailedToLoad(adError: LoadAdError) {
-                    Log.e(TAG, "Ad failed to load - Code: ${adError.code}, Message: ${adError.message}, Domain: ${adError.domain}")
-                    rewardedAd = null
-                    isLoading = false
-                    _isAdReady.value = false
-                }
-                
-                override fun onAdLoaded(ad: RewardedAd) {
-                    Log.d(TAG, "Ad loaded successfully!")
-                    rewardedAd = ad
-                    isLoading = false
-                    _isAdReady.value = true
-                }
+        // Check if user is premium before loading ad
+        CoroutineScope(Dispatchers.IO).launch {
+            val isPremium = premiumStatusDataStore.isPremium.first()
+            if (isPremium) {
+                Log.d(TAG, "User is premium, skipping ad load")
+                isLoading = false
+                _isAdReady.value = false
+                return@launch
             }
-        )
+            
+            // Switch to Main dispatcher for ad loading (required by Google Ads SDK)
+            CoroutineScope(Dispatchers.Main).launch {
+                Log.d(TAG, "Starting to load rewarded ad...")
+                isLoading = true
+                val adRequest = AdRequest.Builder().build()
+                
+                RewardedAd.load(
+                    context,
+                    AD_UNIT_ID,
+                    adRequest,
+                    object : RewardedAdLoadCallback() {
+                        override fun onAdFailedToLoad(adError: LoadAdError) {
+                            Log.e(TAG, "Ad failed to load - Code: ${adError.code}, Message: ${adError.message}, Domain: ${adError.domain}")
+                            rewardedAd = null
+                            isLoading = false
+                            _isAdReady.value = false
+                        }
+                        
+                        override fun onAdLoaded(ad: RewardedAd) {
+                            Log.d(TAG, "Ad loaded successfully!")
+                            rewardedAd = ad
+                            isLoading = false
+                            _isAdReady.value = true
+                        }
+                    }
+                )
+            }
+        }
     }
     
     fun showRewardedAd(
