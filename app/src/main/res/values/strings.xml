@@ -13,6 +13,6 @@
     <string name="paywall_feature_shuffle">Shuffle flashcards</string>
     <string name="paywall_upgrade_button">Upgrade to Premium</string>
     <string name="paywall_purchase_info">One-time purchase • Lifetime access</string>
-    <string name="paywall_watch_ad_button">Unlock 24h Free</string>
-    <string name="paywall_watch_ad_button_info">Watch Ad • Unlock 24 Hours Free</string>
+    <string name="paywall_watch_ad_button">Unlock 1h Premium</string>
+    <string name="paywall_watch_ad_button_info">Watch a short ad to get 1 hour of premium access</string>
 </resources>
