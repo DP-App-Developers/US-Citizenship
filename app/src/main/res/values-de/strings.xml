@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">US Citizen</string>
+    <string name="title_settings">Einstellungen</string>
+    <string name="title_flash_cards">Alle Lernkarten</string>
+    <string name="title_all_questions">Alle Fragen</string>
+    <string name="title_starred_questions">Markierte Fragen</string>
+    <string name="title_starred_flash_cards">Markierte Lernkarten</string>
+    <string name="back_button">Zurück</string>
+    <string name="paywall_title">Premium-Funktionen</string>
+    <string name="paywall_feature_starred_questions">Markierte Fragen anzeigen</string>
+    <string name="paywall_feature_starred_flashcards">Markierte Lernkarten anzeigen</string>
+    <string name="paywall_feature_shuffle">Lernkarten mischen</string>
+    <string name="paywall_upgrade_button">Auf Premium upgraden</string>
+    <string name="paywall_purchase_info">Einmaliger Kauf • Lebenslanger Zugang</string>
+    <string name="paywall_watch_ad_button">1 Std. Premium freischalten</string>
+    <string name="paywall_watch_ad_button_info">Sehen Sie sich eine kurze Werbung an, um 1 Stunde Premium-Zugang zu erhalten</string>
+</resources>

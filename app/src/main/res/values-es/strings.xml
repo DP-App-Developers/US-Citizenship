@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">US Citizen</string>
+    <string name="title_settings">Configuración</string>
+    <string name="title_flash_cards">Todas las tarjetas</string>
+    <string name="title_all_questions">Todas las preguntas</string>
+    <string name="title_starred_questions">Preguntas favoritas</string>
+    <string name="title_starred_flash_cards">Tarjetas favoritas</string>
+    <string name="back_button">Atrás</string>
+    <string name="paywall_title">Funciones Premium</string>
+    <string name="paywall_feature_starred_questions">Ver preguntas favoritas</string>
+    <string name="paywall_feature_starred_flashcards">Ver tarjetas favoritas</string>
+    <string name="paywall_feature_shuffle">Mezclar tarjetas</string>
+    <string name="paywall_upgrade_button">Actualizar a Premium</string>
+    <string name="paywall_purchase_info">Compra única • Acceso de por vida</string>
+    <string name="paywall_watch_ad_button">Desbloquear 1h Premium</string>
+    <string name="paywall_watch_ad_button_info">Mira un anuncio corto para obtener 1 hora de acceso premium</string>
+</resources>

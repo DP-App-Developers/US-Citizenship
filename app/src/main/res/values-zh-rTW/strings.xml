@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">US Citizen</string>
+    <string name="title_settings">設定</string>
+    <string name="title_flash_cards">所有閃卡</string>
+    <string name="title_all_questions">所有問題</string>
+    <string name="title_starred_questions">已收藏的問題</string>
+    <string name="title_starred_flash_cards">已收藏的閃卡</string>
+    <string name="back_button">返回</string>
+    <string name="paywall_title">高級功能</string>
+    <string name="paywall_feature_starred_questions">查看已收藏的問題</string>
+    <string name="paywall_feature_starred_flashcards">查看已收藏的閃卡</string>
+    <string name="paywall_feature_shuffle">隨機排列閃卡</string>
+    <string name="paywall_upgrade_button">升級至高級版</string>
+    <string name="paywall_purchase_info">一次性購買 • 終身使用</string>
+    <string name="paywall_watch_ad_button">解鎖1小時高級版</string>
+    <string name="paywall_watch_ad_button_info">觀看短廣告即可獲得1小時高級版使用權</string>
+</resources>
