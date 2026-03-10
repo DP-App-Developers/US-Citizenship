@@ -72,13 +72,6 @@ fun PaywallBottomSheet(
                 textAlign = TextAlign.Center,
             )
             
-            Text(
-                text = stringResource(R.string.paywall_subtitle),
-                fontSize = 16.sp,
-                textAlign = TextAlign.Center,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-            
             Column(
                 modifier = Modifier.fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
