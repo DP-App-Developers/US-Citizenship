@@ -2,6 +2,10 @@
 
 package com.dpappdev.uscitizenship.ui
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -115,7 +119,15 @@ fun HomeScreen(
         
         Column(modifier = modifier.fillMaxSize()) {
             // Show banner when ad is ready, user is not premium, and not a new user
-            if (isAdReady && !isPremium && !newUser) {
+            AnimatedVisibility(
+                visible = isAdReady && !isPremium && !newUser,
+                enter = expandVertically(
+                    animationSpec = tween(durationMillis = 500)
+                ),
+                exit = shrinkVertically(
+                    animationSpec = tween(durationMillis = 300)
+                )
+            ) {
                 AdReadyBanner(
                     onClick = {
                         adManager.showRewardedAd(
