@@ -15,4 +15,5 @@
     <string name="paywall_watch_ad_button">1 Std. Premium freischalten</string>
     <string name="ad_ready_banner_title">Kostenloser Premium-Zugang verfügbar!</string>
     <string name="watch_ad_label">Sehen Sie sich eine kurze Werbung an, um 1 Stunde Premium-Funktionen freizuschalten</string>
+    <string name="watch_ad_button">Werbung ansehen</string>
 </resources>

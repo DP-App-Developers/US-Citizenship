@@ -15,4 +15,5 @@
     <string name="paywall_watch_ad_button">Unlock 1h Premium</string>
     <string name="ad_ready_banner_title">Free Premium Access Available!</string>
     <string name="watch_ad_label">Watch a short ad to unlock 1 hour of premium features</string>
+    <string name="watch_ad_button">Watch Ad</string>
 </resources>

@@ -15,4 +15,5 @@
     <string name="paywall_watch_ad_button">Débloquer 1h Premium</string>
     <string name="ad_ready_banner_title">Accès Premium Gratuit Disponible !</string>
     <string name="watch_ad_label">Regardez une courte publicité pour débloquer 1 heure de fonctionnalités premium</string>
+    <string name="watch_ad_button">Regarder la publicité</string>
 </resources>

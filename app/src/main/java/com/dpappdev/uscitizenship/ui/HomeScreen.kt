@@ -399,7 +399,7 @@ fun AdReadyBanner(
                     containerColor = MaterialTheme.colorScheme.primary
                 )
             ) {
-                Text(text = "Watch Ad")
+                Text(text = stringResource(R.string.watch_ad_button))
             }
         }
     }
