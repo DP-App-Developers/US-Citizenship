@@ -3,7 +3,11 @@
 package com.dpappdev.uscitizenship.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
@@ -17,6 +21,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -38,6 +43,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -102,12 +108,38 @@ fun HomeScreen(
         } else {
             "$starredQuestionsCount Questions"
         }
-        BoxWithConstraints(
-            modifier = modifier.fillMaxSize()
-        ) {
-            val columns = if (maxWidth < 600.dp) 1 else 2
+        
+        val isAdReady by adManager.isAdReady.collectAsState()
+        val coroutineScope = rememberCoroutineScope()
+        val premiumStatusDataStore = remember { PremiumStatusDataStore(context) }
+        
+        Column(modifier = modifier.fillMaxSize()) {
+            // Show banner when ad is ready, user is not premium, and not a new user
+            if (isAdReady && !isPremium && !newUser) {
+                AdReadyBanner(
+                    onClick = {
+                        adManager.showRewardedAd(
+                            activity = context as android.app.Activity,
+                            onUserEarnedReward = {
+                                coroutineScope.launch {
+                                    premiumStatusDataStore.grantTemporaryPremium(REWARDED_AD_TIME)
+                                }
+                            },
+                            onAdDismissed = { },
+                            onAdFailedToShow = { error ->
+                                // Handle error if needed
+                            }
+                        )
+                    }
+                )
+            }
+            
+            BoxWithConstraints(
+                modifier = Modifier.fillMaxSize()
+            ) {
+                val columns = if (maxWidth < 600.dp) 1 else 2
 
-            LazyVerticalGrid(
+                LazyVerticalGrid(
                 columns = GridCells.Fixed(columns),
                 contentPadding = PaddingValues(vertical = 32.dp, horizontal = 64.dp),
                 horizontalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterHorizontally),
@@ -176,6 +208,7 @@ fun HomeScreen(
                         },
                     )
                 }
+            }
             }
         }
 
@@ -308,6 +341,53 @@ fun HomeScreenCard(
                     textAlign = TextAlign.Center,
                     maxLines = 2,
                 )
+            }
+        }
+    }
+}
+
+@Composable
+fun AdReadyBanner(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick)
+            .background(MaterialTheme.colorScheme.primaryContainer)
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Column(
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(
+                    text = stringResource(R.string.ad_ready_banner_title),
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onPrimaryContainer
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = stringResource(R.string.watch_ad_label),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onPrimaryContainer
+                )
+            }
+            Spacer(modifier = Modifier.width(8.dp))
+            Button(
+                onClick = onClick,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.primary
+                )
+            ) {
+                Text(text = "Watch Ad")
             }
         }
     }

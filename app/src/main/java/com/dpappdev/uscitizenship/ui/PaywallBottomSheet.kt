@@ -114,7 +114,7 @@ fun PaywallBottomSheet(
                 }
 
                 Text(
-                    text = stringResource(R.string.paywall_watch_ad_button_info),
+                    text = stringResource(R.string.watch_ad_label),
                     fontSize = 12.sp,
                     textAlign = TextAlign.Center,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,

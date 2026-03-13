@@ -35,7 +35,7 @@ class AdManager(private val context: Context) {
         // Test ad unit ID for rewarded ads: "ca-app-pub-3940256099942544/5224354917"
         // my ad unit id: "ca-app-pub-9315374730551337/2926196875"
         // Replace with your actual ad unit ID in production
-        private const val AD_UNIT_ID = "ca-app-pub-9315374730551337/2926196875"
+        private const val AD_UNIT_ID = "ca-app-pub-3940256099942544/5224354917"
     }
     
     fun loadRewardedAd() {

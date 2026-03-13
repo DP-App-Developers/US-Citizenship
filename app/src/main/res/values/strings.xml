@@ -13,5 +13,6 @@
     <string name="paywall_upgrade_button">Upgrade to Premium</string>
     <string name="paywall_purchase_info">One-time purchase • Lifetime access</string>
     <string name="paywall_watch_ad_button">Unlock 1h Premium</string>
-    <string name="paywall_watch_ad_button_info">Watch a short ad to get 1 hour of premium access</string>
+    <string name="ad_ready_banner_title">Free Premium Access Available!</string>
+    <string name="watch_ad_label">Watch a short ad to unlock 1 hour of premium features</string>
 </resources>

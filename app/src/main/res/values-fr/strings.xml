@@ -13,5 +13,6 @@
     <string name="paywall_upgrade_button">Passer à Premium</string>
     <string name="paywall_purchase_info">Achat unique • Accès à vie</string>
     <string name="paywall_watch_ad_button">Débloquer 1h Premium</string>
-    <string name="paywall_watch_ad_button_info">Regardez une courte publicité pour obtenir 1 heure d\'accès premium</string>
+    <string name="ad_ready_banner_title">Accès Premium Gratuit Disponible !</string>
+    <string name="watch_ad_label">Regardez une courte publicité pour débloquer 1 heure de fonctionnalités premium</string>
 </resources>

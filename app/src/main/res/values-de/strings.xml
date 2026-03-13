@@ -13,5 +13,6 @@
     <string name="paywall_upgrade_button">Auf Premium upgraden</string>
     <string name="paywall_purchase_info">Einmaliger Kauf • Lebenslanger Zugang</string>
     <string name="paywall_watch_ad_button">1 Std. Premium freischalten</string>
-    <string name="paywall_watch_ad_button_info">Sehen Sie sich eine kurze Werbung an, um 1 Stunde Premium-Zugang zu erhalten</string>
+    <string name="ad_ready_banner_title">Kostenloser Premium-Zugang verfügbar!</string>
+    <string name="watch_ad_label">Sehen Sie sich eine kurze Werbung an, um 1 Stunde Premium-Funktionen freizuschalten</string>
 </resources>
