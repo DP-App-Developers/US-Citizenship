@@ -68,6 +68,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.9.2")
     implementation("androidx.navigation:navigation-compose:2.9.3")
     implementation("androidx.navigation:navigation-runtime-ktx:2.9.3")
+    implementation("androidx.work:work-runtime-ktx:2.10.0")
     implementation("com.android.billingclient:billing-ktx:8.3.0")
     implementation("com.google.android.gms:play-services-ads:25.0.0")
 
