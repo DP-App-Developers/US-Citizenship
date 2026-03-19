@@ -4,6 +4,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.plugin.compose") version "2.2.0"
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -71,6 +72,10 @@ dependencies {
     implementation("androidx.work:work-runtime-ktx:2.10.0")
     implementation("com.android.billingclient:billing-ktx:8.3.0")
     implementation("com.google.android.gms:play-services-ads:25.0.0")
+    
+    // Firebase
+    implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
+    implementation("com.google.firebase:firebase-analytics-ktx")
 
     testImplementation("junit:junit:4.13.2")
 

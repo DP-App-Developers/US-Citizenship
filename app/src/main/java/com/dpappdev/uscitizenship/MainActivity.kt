@@ -21,6 +21,9 @@ import com.dpappdev.uscitizenship.notifications.NotificationHelper
 import com.dpappdev.uscitizenship.notifications.NotificationScheduler
 import com.dpappdev.uscitizenship.ui.theme.USCitizenshipTheme
 import com.google.android.gms.ads.MobileAds
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
@@ -31,6 +34,7 @@ class MainActivity : ComponentActivity() {
     private lateinit var textToSpeech: TextToSpeech
     private lateinit var billingManager: BillingManager
     private val adViewModel: AdViewModel by viewModels()
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
 
     // Notification permission launcher
     private val requestPermissionLauncher = registerForActivityResult(
@@ -46,6 +50,9 @@ class MainActivity : ComponentActivity() {
         installSplashScreen()
 
         super.onCreate(savedInstanceState)
+
+        // Initialize Firebase Analytics
+        firebaseAnalytics = Firebase.analytics
 
         // Initialize Mobile Ads SDK
         MobileAds.initialize(this) { initializationStatus ->
