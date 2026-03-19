@@ -39,6 +39,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.dpappdev.uscitizenship.MainScreen
+import com.dpappdev.uscitizenship.analytics.AnalyticsHelper
 import com.dpappdev.uscitizenship.data.TestYearDataStore
 import com.dpappdev.uscitizenship.data.UsRepresentativeDataStore
 import com.dpappdev.uscitizenship.data.UserStateDataStore
@@ -217,6 +218,10 @@ fun SettingsScreen(
                                 .width(maxWidth * 3 / 4)
                                 .padding(vertical = 24.dp),
                             onClick = {
+                                // Log analytics events when user saves settings
+                                AnalyticsHelper.logTestYearSelected(selectedTestYear)
+                                AnalyticsHelper.logStateSelected(selectedState)
+                                
                                 runBlocking {
                                     // making saving synchronous to prevent showing the new user bottom sheet when going back to home
                                     testYearDataStore.saveTestYear(selectedTestYear)

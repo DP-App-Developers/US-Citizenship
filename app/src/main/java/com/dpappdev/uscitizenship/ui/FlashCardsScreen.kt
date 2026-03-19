@@ -43,6 +43,7 @@ import androidx.compose.ui.unit.sp
 import com.dpappdev.uscitizenship.R
 import com.dpappdev.uscitizenship.ads.AdManager
 import com.dpappdev.uscitizenship.ads.AdManager.Companion.REWARDED_AD_TIME
+import com.dpappdev.uscitizenship.analytics.AnalyticsHelper
 import com.dpappdev.uscitizenship.data.FlashCardsShuffleDataStore
 import com.dpappdev.uscitizenship.data.PremiumStatusDataStore
 import com.dpappdev.uscitizenship.data.Question
@@ -196,6 +197,8 @@ fun FlashCardsScreen(
                 } else {
                     index--
                 }
+                // Log analytics event
+                AnalyticsHelper.logFlashcardNavigation("Previous")
             },
         ) {
             Text(text = "Previous")
@@ -249,6 +252,8 @@ fun FlashCardsScreen(
                 } else {
                     index++
                 }
+                // Log analytics event
+                AnalyticsHelper.logFlashcardNavigation("Next")
             },
         ) {
             Text(text = "Next")

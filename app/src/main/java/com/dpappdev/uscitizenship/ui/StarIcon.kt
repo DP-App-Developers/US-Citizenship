@@ -12,6 +12,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.dpappdev.uscitizenship.R
+import com.dpappdev.uscitizenship.analytics.AnalyticsHelper
 import com.dpappdev.uscitizenship.data.StarredQuestions2008DataStore
 import com.dpappdev.uscitizenship.data.StarredQuestionsDataStore
 import kotlinx.coroutines.CoroutineScope
@@ -44,11 +45,16 @@ fun StarIcon(
             .clickable(enabled = starredQuestionsDataStore != null) {
                 starredQuestionsDataStore?.let { dataStore ->
                     CoroutineScope(Dispatchers.Main).launch {
+                        val isCurrentlyStarred = starredQuestions.contains("$questionNumber")
                         starredQuestions.toMutableList().run {
-                            if (starredQuestions.contains("$questionNumber")) {
+                            if (isCurrentlyStarred) {
                                 remove("$questionNumber")
+                                // Log unstar event
+                                AnalyticsHelper.logQuestionUnstarred(questionNumber)
                             } else {
                                 add("$questionNumber")
+                                // Log star event
+                                AnalyticsHelper.logQuestionStarred(questionNumber)
                             }
                             dataStore.saveStarredQuestions(joinToString(separator = ","))
                         }
