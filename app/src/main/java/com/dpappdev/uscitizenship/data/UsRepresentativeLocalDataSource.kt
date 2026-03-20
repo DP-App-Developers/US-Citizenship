@@ -107,6 +107,8 @@ fun getUsRepresentatives(stateOrDistrict: String): List<String> {
         ),
         "Delaware" to listOf(
             "Sarah McBride",
+        ),
+        "District of Columbia" to listOf(
             "Eleanor Norton",
         ),
         "Florida" to listOf(
