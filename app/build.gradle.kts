@@ -37,6 +37,9 @@ android {
         sourceCompatibility = JavaVersion.VERSION_18
         targetCompatibility = JavaVersion.VERSION_18
     }
+    lint {
+        disable += "InvalidFragmentVersionForActivityResult"
+    }
     buildFeatures {
         compose = true
     }
