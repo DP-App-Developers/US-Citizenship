@@ -262,6 +262,7 @@ fun FlashCardsScreen(
 
     if (showPaywallBottomSheet) {
         val isAdReady by adManager.isAdReady.collectAsState()
+        val productPrice by billingManager?.productPrice?.collectAsState() ?: remember { mutableStateOf(null) }
         val coroutineScope = rememberCoroutineScope()
         val premiumStatusDataStore = remember { PremiumStatusDataStore(context) }
         
@@ -296,7 +297,8 @@ fun FlashCardsScreen(
                     }
                 )
             },
-            isAdReady = isAdReady
+            isAdReady = isAdReady,
+            productPrice = productPrice,
         )
     }
 }

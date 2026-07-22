@@ -258,6 +258,7 @@ fun HomeScreen(
 
         if (showPaywallBottomSheet) {
             val isAdReady by adManager.isAdReady.collectAsState()
+            val productPrice by billingManager?.productPrice?.collectAsState() ?: remember { mutableStateOf(null) }
             val coroutineScope = rememberCoroutineScope()
             val premiumStatusDataStore = remember { PremiumStatusDataStore(context) }
             
@@ -292,7 +293,8 @@ fun HomeScreen(
                     }
                     )
                 },
-                isAdReady = isAdReady
+                isAdReady = isAdReady,
+                productPrice = productPrice,
             )
         }
     }

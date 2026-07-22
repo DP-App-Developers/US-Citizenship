@@ -30,6 +30,9 @@ class BillingManager(private val context: Context) : PurchasesUpdatedListener {
     
     private val _purchaseState = MutableStateFlow<PurchaseState>(PurchaseState.Idle)
     val purchaseState: StateFlow<PurchaseState> = _purchaseState.asStateFlow()
+
+    private val _productPrice = MutableStateFlow<String?>(null)
+    val productPrice: StateFlow<String?> = _productPrice.asStateFlow()
     
     companion object {
         private const val TAG = "BillingManager"
@@ -63,6 +66,7 @@ class BillingManager(private val context: Context) : PurchasesUpdatedListener {
                 if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
                     Log.d(TAG, "Billing client connected")
                     queryPurchases()
+                    queryProductPrice()
                 } else {
                     Log.e(TAG, "Billing setup failed: ${billingResult.debugMessage}")
                 }
@@ -76,6 +80,28 @@ class BillingManager(private val context: Context) : PurchasesUpdatedListener {
         })
     }
     
+    private fun queryProductPrice() {
+        val params = QueryProductDetailsParams.newBuilder()
+            .setProductList(
+                listOf(
+                    QueryProductDetailsParams.Product.newBuilder()
+                        .setProductId(PREMIUM_PRODUCT_ID)
+                        .setProductType(BillingClient.ProductType.INAPP)
+                        .build()
+                )
+            )
+            .build()
+
+        billingClient?.queryProductDetailsAsync(params) { billingResult, queryProductDetailsResult ->
+            val productDetailsList = queryProductDetailsResult.productDetailsList
+            if (billingResult.responseCode == BillingClient.BillingResponseCode.OK && productDetailsList.isNotEmpty()) {
+                _productPrice.value = productDetailsList.first().oneTimePurchaseOfferDetails?.formattedPrice
+            } else {
+                Log.e(TAG, "Failed to query product price: ${billingResult.debugMessage}")
+            }
+        }
+    }
+
     private fun queryPurchases() {
         billingClient?.queryPurchasesAsync(
             QueryPurchasesParams.newBuilder()

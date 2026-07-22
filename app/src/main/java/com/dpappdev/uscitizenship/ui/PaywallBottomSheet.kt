@@ -40,6 +40,7 @@ fun PaywallBottomSheet(
     onUpgradeClick: () -> Unit,
     onWatchAdClick: () -> Unit,
     isAdReady: Boolean = false,
+    productPrice: String? = null,
 ) {
     val sheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = true
@@ -95,7 +96,11 @@ fun PaywallBottomSheet(
             }
             
             Text(
-                text = stringResource(R.string.paywall_purchase_info),
+                text = if (productPrice != null) {
+                    "$productPrice • ${stringResource(R.string.paywall_purchase_info)}"
+                } else {
+                    stringResource(R.string.paywall_purchase_info)
+                },
                 fontSize = 12.sp,
                 textAlign = TextAlign.Center,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
