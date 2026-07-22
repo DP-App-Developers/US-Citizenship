@@ -9,12 +9,12 @@ plugins {
 
 android {
     namespace = "com.dpappdev.uscitizenship"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.dpappdev.uscitizenship"
         minSdk = 24
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 22
         versionName = "2.0.11"
 
