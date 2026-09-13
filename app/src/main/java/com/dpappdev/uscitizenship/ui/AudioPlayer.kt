@@ -3,11 +3,20 @@ package com.dpappdev.uscitizenship.ui
 import android.content.Context
 import android.media.MediaPlayer
 
+private var currentPlayer: MediaPlayer? = null
+
 fun playAudio(context: Context, resourceName: String) {
+    currentPlayer?.stop()
+    currentPlayer?.release()
+    currentPlayer = null
+
     val resId = context.resources.getIdentifier(resourceName, "raw", context.packageName)
     if (resId != 0) {
-        MediaPlayer.create(context, resId)?.apply {
-            setOnCompletionListener { release() }
+        currentPlayer = MediaPlayer.create(context, resId)?.apply {
+            setOnCompletionListener {
+                release()
+                currentPlayer = null
+            }
             start()
         }
     }
