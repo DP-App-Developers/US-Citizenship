@@ -1,6 +1,5 @@
 package com.dpappdev.uscitizenship.ui
 
-import android.speech.tts.TextToSpeech
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -35,13 +34,14 @@ fun StarredQuestionsScreen(
     starredQuestionsList: List<Question>,
     starredQuestions: List<String>,
     starredQuestionsDataStore: StarredQuestionsDataStore?,
-    textToSpeech: TextToSpeech,
+    testYear: String,
 ) {
     if (starredQuestions.isEmpty()) {
         EmptyStarredState()
         return
     }
 
+    val context = LocalContext.current
     val borderPadding = 16.dp
 
     LazyColumn(
@@ -69,7 +69,7 @@ fun StarredQuestionsScreen(
                     modifier = Modifier
                         .padding(end = 8.dp)
                         .clickable {
-                            textToSpeech.speak(item.question, TextToSpeech.QUEUE_FLUSH, null, null)
+                            playAudio(context, questionAudioName(testYear, questionNumber))
                         },
                 )
 
@@ -82,18 +82,13 @@ fun StarredQuestionsScreen(
                         modifier = Modifier
                             .padding(bottom = 8.dp)
                             .clickable {
-                                textToSpeech.speak(
-                                    item.question,
-                                    TextToSpeech.QUEUE_FLUSH,
-                                    null,
-                                    null
-                                )
+                                playAudio(context, questionAudioName(testYear, questionNumber))
                             }
                     )
-                    item.answer.forEach {
+                    item.answer.forEach { answer ->
                         Row(
                             modifier = Modifier.clickable {
-                                textToSpeech.speak(it, TextToSpeech.QUEUE_FLUSH, null, null)
+                                playAudio(context, answerAudioName(answer))
                             }
                         ) {
                             Icon(
@@ -103,7 +98,7 @@ fun StarredQuestionsScreen(
                                 modifier = Modifier.padding(end = 8.dp)
                             )
                             Text(
-                                text = it,
+                                text = answer,
                                 fontSize = textSize,
                             )
                         }
@@ -143,7 +138,7 @@ fun StarredQuestionsPreview() {
             ),
             starredQuestions = listOf("2,5,84"),
             starredQuestionsDataStore = StarredQuestions2008DataStore(LocalContext.current),
-            textToSpeech = TextToSpeech(LocalContext.current) {},
+            testYear = "2008 Civics Test",
         )
     }
 }

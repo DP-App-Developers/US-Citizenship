@@ -1,0 +1,14 @@
+Make sure names of President, Vice President, Speaker of the House of Representatives are up to date.
+
+In UsRepresentativeLocalDataSource.kt, make sure names of US representatives are up to date based on the current names here:
+https://www.house.gov/representatives
+
+In UsSenatorsLocalDataSource.kt, make sure names of all 100 US senators are up to date based on the current names here:
+https://www.senate.gov/senators/
+
+In GovernorsLocalDataSource.kt, make sure names of all State governors are up to date based on the current names here:
+https://www.nga.org/governors/
+
+Make sure the audio files for people's names are updated too.
+When a name is deleted, its audio file should be deleted too.
+For new names, generate audio files using Google Cloud TTS. Google cloud API key is: AIzaSyBJTofcs6DmXZyzuwd-p7_RSMG7IA6l95k

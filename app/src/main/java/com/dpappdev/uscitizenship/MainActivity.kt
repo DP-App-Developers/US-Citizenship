@@ -4,7 +4,6 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.speech.tts.TextToSpeech
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -28,10 +27,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import java.util.Locale
-
 class MainActivity : ComponentActivity() {
-    private lateinit var textToSpeech: TextToSpeech
     private lateinit var billingManager: BillingManager
     private val adViewModel: AdViewModel by viewModels()
     private lateinit var firebaseAnalytics: FirebaseAnalytics
@@ -68,11 +64,6 @@ class MainActivity : ComponentActivity() {
 //            .build()
 //        MobileAds.setRequestConfiguration(requestConfiguration)
 
-        textToSpeech = TextToSpeech(this) {
-            // no-op
-        }
-        textToSpeech.language = Locale.US
-
         billingManager = BillingManager(this)
         
         // Reset shuffle to false on app start if user is not premium
@@ -91,7 +82,6 @@ class MainActivity : ComponentActivity() {
             USCitizenshipTheme {
                 val isPremium by billingManager.isPremium.collectAsState()
                 USCitizenApp(
-                    textToSpeech = textToSpeech,
                     isPremium = isPremium,
                     billingManager = billingManager,
                     adManager = adViewModel.adManager
@@ -131,7 +121,6 @@ class MainActivity : ComponentActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        textToSpeech.shutdown()
         billingManager.endConnection()
     }
 }

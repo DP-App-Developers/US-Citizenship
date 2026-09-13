@@ -1,6 +1,5 @@
 package com.dpappdev.uscitizenship.ui
 
-import android.speech.tts.TextToSpeech
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -54,18 +53,18 @@ fun StarredFlashCardsScreen(
     starredQuestions: List<String>,
     starredQuestionsDataStore: StarredQuestionsDataStore?,
     totalNumberOfQuestions: Int,
-    textToSpeech: TextToSpeech,
+    testYear: String,
 ) {
-    // Create a snapshot of the initial starred questions list so un-starring doesn't remove cards until user backs out
     val initialStarredQuestionsList by rememberSaveable {
         mutableStateOf(starredQuestionsList)
     }
-    
+
     if (initialStarredQuestionsList.isEmpty()) {
         EmptyStarredState()
         return
     }
 
+    val context = LocalContext.current
     var index by rememberSaveable { mutableIntStateOf(0) }
     var expanded by rememberSaveable { mutableStateOf(false) }
     val questionsShuffled by rememberSaveable {
@@ -82,7 +81,7 @@ fun StarredFlashCardsScreen(
         questions = initialStarredQuestionsList
         shuffleIconColor = MaterialTheme.colorScheme.outline
     }
-    
+
     val questionNumber = questions[index].questionNumber
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -125,10 +124,9 @@ fun StarredFlashCardsScreen(
                         .fillMaxWidth()
                 ) {
                     Row(
-                        modifier = Modifier
-                            .clickable {
-                                textToSpeech.speak(questions[index].question, TextToSpeech.QUEUE_FLUSH, null, null)
-                            },
+                        modifier = Modifier.clickable {
+                            playAudio(context, questionAudioName(testYear, questions[index].questionNumber))
+                        },
                     ) {
                         Icon(
                             painter = painterResource(id = R.drawable.baseline_volume_up_24),
@@ -156,12 +154,12 @@ fun StarredFlashCardsScreen(
                     } else {
                         Divider(color = MaterialTheme.colorScheme.outline)
                         Spacer(modifier = Modifier.height(20.dp))
-                        questions[index].answer.forEach {
+                        questions[index].answer.forEach { answer ->
                             Row(
                                 modifier = Modifier
                                     .padding(start = 32.dp)
                                     .clickable {
-                                        textToSpeech.speak(it, TextToSpeech.QUEUE_FLUSH, null, null)
+                                        playAudio(context, answerAudioName(answer))
                                     },
                             ) {
                                 Icon(
@@ -173,7 +171,7 @@ fun StarredFlashCardsScreen(
                                         .padding(top = 2.dp)
                                 )
                                 Text(
-                                    text = it,
+                                    text = answer,
                                     fontSize = 20.sp,
                                 )
                             }
@@ -210,9 +208,7 @@ fun StarredFlashCardsScreen(
                 .clickable {
                     CoroutineScope(Dispatchers.Main).launch {
                         shuffleDataStore.saveShuffleOn(!isShuffleOn)
-                        // update index so the question remains the same on the screen
                         if (isShuffleOn) {
-                            // turning shuffle off
                             initialStarredQuestionsList.forEachIndexed { i, question ->
                                 if (question.questionNumber == questionNumber) {
                                     index = i
@@ -220,7 +216,6 @@ fun StarredFlashCardsScreen(
                                 }
                             }
                         } else {
-                            // turning shuffle on
                             questionsShuffled.forEachIndexed { i, question ->
                                 if (question.questionNumber == questionNumber) {
                                     index = i
@@ -274,7 +269,7 @@ fun StarredFlashCardsPreview() {
             starredQuestions = listOf("2", "5"),
             starredQuestionsDataStore = StarredQuestions2008DataStore(LocalContext.current),
             totalNumberOfQuestions = 100,
-            textToSpeech = TextToSpeech(LocalContext.current) {},
+            testYear = "2008 Civics Test",
         )
     }
 }

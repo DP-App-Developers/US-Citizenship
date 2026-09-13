@@ -1,6 +1,5 @@
 package com.dpappdev.uscitizenship.ui
 
-import android.speech.tts.TextToSpeech
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -60,14 +59,14 @@ fun FlashCardsScreen(
     questionsInOrder: List<Question>,
     starredQuestions: List<String>,
     starredQuestionsDataStore: StarredQuestionsDataStore?,
-    textToSpeech: TextToSpeech,
+    testYear: String,
     isPremium: Boolean = false,
     billingManager: BillingManager? = null,
     adManager: AdManager,
 ) {
     if (questionsInOrder.isEmpty()) return
     val context = LocalContext.current
-    
+
     var index by rememberSaveable { mutableIntStateOf(0) }
     var expanded by rememberSaveable { mutableStateOf(false) }
     var showPaywallBottomSheet by rememberSaveable { mutableStateOf(false) }
@@ -117,7 +116,7 @@ fun FlashCardsScreen(
                     .wrapContentHeight()
                     .fillMaxWidth()
                     .padding(bottom = 100.dp)
-                    .clickable(enabled = !expanded) { expanded = true }, // card is not clickable when it's expanded
+                    .clickable(enabled = !expanded) { expanded = true },
                 elevation = CardDefaults.cardElevation(
                     defaultElevation = 6.dp
                 )
@@ -128,10 +127,9 @@ fun FlashCardsScreen(
                         .fillMaxWidth()
                 ) {
                     Row(
-                        modifier = Modifier
-                            .clickable {
-                                textToSpeech.speak(questions[index].question, TextToSpeech.QUEUE_FLUSH, null, null)
-                            },
+                        modifier = Modifier.clickable {
+                            playAudio(context, questionAudioName(testYear, questions[index].questionNumber))
+                        },
                     ) {
                         Icon(
                             painter = painterResource(id = R.drawable.baseline_volume_up_24),
@@ -159,12 +157,12 @@ fun FlashCardsScreen(
                     } else {
                         Divider(color = MaterialTheme.colorScheme.outline)
                         Spacer(modifier = Modifier.height(20.dp))
-                        questions[index].answer.forEach {
+                        questions[index].answer.forEach { answer ->
                             Row(
                                 modifier = Modifier
                                     .padding(start = 32.dp)
                                     .clickable {
-                                        textToSpeech.speak(it, TextToSpeech.QUEUE_FLUSH, null, null)
+                                        playAudio(context, answerAudioName(answer))
                                     },
                             ) {
                                 Icon(
@@ -176,7 +174,7 @@ fun FlashCardsScreen(
                                         .padding(top = 2.dp)
                                 )
                                 Text(
-                                    text = it,
+                                    text = answer,
                                     fontSize = 20.sp,
                                 )
                             }
@@ -197,7 +195,6 @@ fun FlashCardsScreen(
                 } else {
                     index--
                 }
-                // Log analytics event
                 AnalyticsHelper.logFlashcardNavigation("Previous")
             },
         ) {
@@ -218,9 +215,7 @@ fun FlashCardsScreen(
                     } else {
                         CoroutineScope(Dispatchers.Main).launch {
                             shuffleDataStore.saveShuffleOn(!isShuffleOn)
-                            // update index so the question remains the same on the screen
                             if (isShuffleOn) {
-                                // turning shuffle off
                                 questionsInOrder.forEachIndexed { i, question ->
                                     if (question.questionNumber == questionNumber) {
                                         index = i
@@ -228,7 +223,6 @@ fun FlashCardsScreen(
                                     }
                                 }
                             } else {
-                                // turning shuffle on
                                 questionsShuffled.forEachIndexed { i, question ->
                                     if (question.questionNumber == questionNumber) {
                                         index = i
@@ -252,7 +246,6 @@ fun FlashCardsScreen(
                 } else {
                     index++
                 }
-                // Log analytics event
                 AnalyticsHelper.logFlashcardNavigation("Next")
             },
         ) {
@@ -265,14 +258,13 @@ fun FlashCardsScreen(
         val productPrice by billingManager?.productPrice?.collectAsState() ?: remember { mutableStateOf(null) }
         val coroutineScope = rememberCoroutineScope()
         val premiumStatusDataStore = remember { PremiumStatusDataStore(context) }
-        
-        // Trigger ad loading if not ready
+
         LaunchedEffect(Unit) {
             if (!isAdReady) {
                 adManager.loadRewardedAd()
             }
         }
-        
+
         PaywallBottomSheet(
             onDismiss = { showPaywallBottomSheet = false },
             onUpgradeClick = {
@@ -284,17 +276,13 @@ fun FlashCardsScreen(
                     activity = context as android.app.Activity,
                     onUserEarnedReward = {
                         coroutineScope.launch {
-                            // Grant 1 hour of premium access (3600000 milliseconds)
                             premiumStatusDataStore.grantTemporaryPremium(REWARDED_AD_TIME)
                         }
                     },
                     onAdDismissed = {
                         showPaywallBottomSheet = false
                     },
-                    onAdFailedToShow = { error ->
-                        // Ad failed to show, keep the bottom sheet open
-                        // isAdReady is managed by the Flow
-                    }
+                    onAdFailedToShow = { _ -> },
                 )
             },
             isAdReady = isAdReady,
@@ -327,7 +315,7 @@ fun FlashCardsPreview() {
             ),
             starredQuestions = listOf("2,5,84"),
             starredQuestionsDataStore = StarredQuestions2008DataStore(context),
-            textToSpeech = TextToSpeech(context) {},
+            testYear = "2008 Civics Test",
             adManager = AdManager(context as android.app.Activity),
         )
     }

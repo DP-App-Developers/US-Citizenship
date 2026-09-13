@@ -1,6 +1,5 @@
 package com.dpappdev.uscitizenship
 
-import android.speech.tts.TextToSpeech
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.displayCutoutPadding
 import androidx.compose.foundation.layout.fillMaxSize
@@ -60,7 +59,6 @@ enum class MainScreen(@StringRes val title: Int) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun USCitizenApp(
-    textToSpeech: TextToSpeech,
     navController: NavHostController = rememberNavController(),
     isPremium: Boolean = false,
     billingManager: BillingManager? = null,
@@ -139,7 +137,7 @@ fun USCitizenApp(
                     questionsInOrder = questionsWithAnswers,
                     starredQuestions = starredQuestions,
                     starredQuestionsDataStore = starredQuestionsDataStore,
-                    textToSpeech = textToSpeech,
+                    testYear = testYear,
                     isPremium = isPremium,
                     billingManager = billingManager,
                     adManager = adManager,
@@ -150,7 +148,7 @@ fun USCitizenApp(
                     questions = questionsWithAnswers,
                     starredQuestions = starredQuestions,
                     starredQuestionsDataStore = starredQuestionsDataStore,
-                    textToSpeech = textToSpeech,
+                    testYear = testYear,
                 )
             }
             composable(route = MainScreen.StarredQuestions.name) {
@@ -158,7 +156,7 @@ fun USCitizenApp(
                     starredQuestionsList = questionsWithAnswers.filter { starredQuestions.contains(it.questionNumber.toString()) },
                     starredQuestions = starredQuestions,
                     starredQuestionsDataStore = starredQuestionsDataStore,
-                    textToSpeech = textToSpeech,
+                    testYear = testYear,
                 )
             }
             composable(route = MainScreen.StarredFlashCards.name) {
@@ -167,7 +165,7 @@ fun USCitizenApp(
                     starredQuestions = starredQuestions,
                     starredQuestionsDataStore = starredQuestionsDataStore,
                     totalNumberOfQuestions = questionsWithAnswers.size,
-                    textToSpeech = textToSpeech,
+                    testYear = testYear,
                 )
             }
             composable(route = MainScreen.Settings.name) {
